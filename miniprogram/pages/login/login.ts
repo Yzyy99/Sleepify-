@@ -1,38 +1,55 @@
-// pages/login/login.ts
-// pages/login/login.js
+// 引入 theme.js 工具文件
+const themelogin = require('../../utils/theme.js');
+
 Page({
   data: {
-    username: '',  // 存储用户名
-    password: ''   // 存储密码
+    phoneNumber: '',
+    password: ''
   },
-
-  // 用户名输入框输入事件
-  onInputUsername(e: any) {
+  onShow() {
+    // 页面显示时根据全局夜间模式状态切换主题
+    themelogin.applyTheme(this);
+  },
+  // 获取输入的手机号
+  onPhoneInput(event:any) {
     this.setData({
-      username: e.detail.value
+      phoneNumber: event.detail.value
     });
   },
 
-  // 密码输入框输入事件
-  onInputPassword(e: any) {
+  // 获取输入的密码
+  onPasswordInput(event:any) {
     this.setData({
-      password: e.detail.value
+      password: event.detail.value
     });
   },
 
-  // 登录按钮点击事件
+  // 登录按钮逻辑
   onLogin() {
-    const { username, password } = this.data;
-    if (!username || !password) {
+    const { phoneNumber, password } = this.data;
+
+    // 简单的表单验证
+    if (!phoneNumber || !password) {
       wx.showToast({
-        title: '请输入用户名和密码',
+        title: '请填写手机号和密码',
         icon: 'none'
       });
       return;
     }
+
+    // 模拟登录成功后的跳转
     wx.showToast({
-      title: '成功！',
-      icon: 'none'
+      title: '登录成功',
+      icon: 'success',
+      duration: 2000,
+      success: () => {
+        // 延时跳转到主页
+        setTimeout(() => {
+          wx.redirectTo({
+            url: '/pages/index/index'  // 跳转到主页
+          });
+        }, 2000);  // 延迟2秒后跳转
+      }
     });
     /*
     // 发起网络请求，验证用户名和密码
