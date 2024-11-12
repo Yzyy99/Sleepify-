@@ -21,32 +21,32 @@
     "borderStyle": "white",
     "list": [
       {
-        "selectedIconPath": "assets/sleep-icon.png",
-        "iconPath": "assets/sleep-icon.png",
+        "selectedIconPath": "assets/home-3-fill.png",
+        "iconPath": "assets/home-3-line.png",
         "pagePath": "pages/index/index",
         "text": "首页"
       },
       {
-        "selectedIconPath": "assets/sleep-icon.png",
-        "iconPath": "assets/sleep-icon.png",
+        "selectedIconPath": "assets/discuss-fill.png",
+        "iconPath": "assets/discuss-line.png",
         "pagePath": "pages/community/community",
         "text": "社区"
       },
       {
-        "selectedIconPath": "assets/sleep-icon.png",
-        "iconPath": "assets/sleep-icon.png",
+        "selectedIconPath": "assets/file-add-fill.png",
+        "iconPath": "assets/file-add-line.png",
         "pagePath": "pages/post_new/post_new",
         "text": "发布"
       },
       {
-        "selectedIconPath": "assets/sleep-icon.png",
-        "iconPath": "assets/sleep-icon.png",
+        "selectedIconPath": "assets/file-chart-fill.png",
+        "iconPath": "assets/file-chart-line.png",
         "pagePath": "pages/report/report",
         "text": "报告"
       },
       {
-        "selectedIconPath": "assets/sleep-icon.png",
-        "iconPath": "assets/sleep-icon.png",
+        "selectedIconPath": "assets/account-box-fill.png",
+        "iconPath": "assets/account-box-line.png",
         "pagePath": "pages/me/me",
         "text": "我的"
       }
