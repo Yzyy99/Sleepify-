@@ -4,12 +4,53 @@
     "pages/register/register",
     "pages/login/login",
     "pages/index/index",
+    "pages/community/community",
+    "pages/post_new/post_new",
+    "pages/report/report",
+    "pages/me/me",
     "pages/logs/logs"
   ],
   "window": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "Weixin",
     "navigationBarBackgroundColor": "#ffffff"
+  },
+  "tabBar": {
+    "color": "#a9b7b7",
+    "selectedColor": "#11cd6e",
+    "borderStyle": "white",
+    "list": [
+      {
+        "selectedIconPath": "assets/sleep-icon.png",
+        "iconPath": "assets/sleep-icon.png",
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "selectedIconPath": "assets/sleep-icon.png",
+        "iconPath": "assets/sleep-icon.png",
+        "pagePath": "pages/community/community",
+        "text": "社区"
+      },
+      {
+        "selectedIconPath": "assets/sleep-icon.png",
+        "iconPath": "assets/sleep-icon.png",
+        "pagePath": "pages/post_new/post_new",
+        "text": "发布"
+      },
+      {
+        "selectedIconPath": "assets/sleep-icon.png",
+        "iconPath": "assets/sleep-icon.png",
+        "pagePath": "pages/report/report",
+        "text": "报告"
+      },
+      {
+        "selectedIconPath": "assets/sleep-icon.png",
+        "iconPath": "assets/sleep-icon.png",
+        "pagePath": "pages/me/me",
+        "text": "我的"
+      }
+    ]
   },
   "style": "v2",
   "componentFramework": "glass-easel",
