@@ -11,14 +11,14 @@ Page({
     themelogin.applyTheme(this);
   },
   // 获取输入的手机号
-  onPhoneInput(event:any) {
+  onPhoneInput(event: any) {
     this.setData({
       phoneNumber: event.detail.value
     });
   },
 
   // 获取输入的密码
-  onPasswordInput(event:any) {
+  onPasswordInput(event: any) {
     this.setData({
       password: event.detail.value
     });
@@ -34,7 +34,7 @@ Page({
         title: '请填写手机号和密码',
         icon: 'none'
       });
-      return;
+      // return;
     }
 
     // 模拟登录成功后的跳转
@@ -45,12 +45,13 @@ Page({
       success: () => {
         // 延时跳转到主页
         setTimeout(() => {
-          wx.redirectTo({
+          wx.switchTab({
             url: '/pages/index/index'  // 跳转到主页
           });
         }, 2000);  // 延迟2秒后跳转
       }
     });
+
     /*
     // 发起网络请求，验证用户名和密码
     wx.request({
@@ -79,5 +80,11 @@ Page({
       }
     });
     */
+  },
+
+  onBack() {
+    wx.navigateBack({
+      delta: 1
+    });
   }
 });

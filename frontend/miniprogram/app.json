@@ -8,6 +8,7 @@
     "pages/post_new/post_new",
     "pages/report/report",
     "pages/me/me",
+    "pages/forget_passwd/forget_passwd",
     "pages/logs/logs"
   ],
   "window": {

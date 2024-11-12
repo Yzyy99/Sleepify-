@@ -21,6 +21,11 @@
   font-size: 16px;
 }
 
+.back-image {
+  width: 30px;
+  height: 30px;
+}
+
 /* 欢迎登录标题样式 */
 .login-header {
   margin-top: 80px; /* 标题距离顶部的间距 */

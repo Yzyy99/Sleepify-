@@ -1,5 +1,4 @@
-// 引入 theme.js 工具文件
-const themeregister = require('../../utils/theme.js');
+// pages/forget_passwd/forget_passwd.ts
 
 Page({
   data: {
@@ -19,6 +18,12 @@ Page({
     });
   },
 
+  onValidationInput(event: any) {
+    this.setData({
+      validationCode: event.detail.value
+    })
+  },
+
   // 获取输入的密码
   onPasswordInput(event: any) {
     this.setData({
@@ -34,17 +39,19 @@ Page({
   },
 
   // 注册按钮逻辑
-  onRegister() {
-    const { phoneNumber, password, confirmPassword } = this.data;
+  onReset() {
+    const { phoneNumber, validationCode, password, confirmPassword } = this.data;
 
     // 简单的表单验证
-    if (!phoneNumber || !password || !confirmPassword) {
+    if (!phoneNumber || !validationCode || !password || !confirmPassword) {
       wx.showToast({
         title: '请填写完整的信息',
         icon: 'none'
       });
       return;
     }
+
+    // TODO: 检查验证码
 
     if (password !== confirmPassword) {
       wx.showToast({
@@ -56,7 +63,7 @@ Page({
 
     // 模拟注册成功后的跳转
     wx.showToast({
-      title: '注册成功',
+      title: '重置成功',
       icon: 'success',
       duration: 2000,
       success: () => {

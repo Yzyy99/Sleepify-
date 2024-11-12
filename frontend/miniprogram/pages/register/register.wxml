@@ -1,9 +1,9 @@
 <!--pages/login/login.wxml-->
 <view class="container" style="background-color: {{pageBackgroundColor}}; color: {{textColor}};">
   <!-- 返回按钮 -->
-  <navigator url="/pages/homepage/homepage" class="back-button">
-    <text class="back-text">返回</text>
-  </navigator>
+  <div bindtap="onBack" class="back-button">
+    <image src="/assets/arrow-left-s-line.png" class="back-image"></image>
+  </div>
 
   <!-- 欢迎登录标题 -->
   <view class="login-header">
