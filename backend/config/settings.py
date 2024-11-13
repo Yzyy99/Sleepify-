@@ -10,3 +10,6 @@ if ENVIRONMENT == 'production':
     from .settings_prod import *
 else:
     from .settings_dev import *
+    from dotenv import load_dotenv
+    load_dotenv()
+
