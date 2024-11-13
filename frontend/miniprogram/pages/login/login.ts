@@ -55,7 +55,7 @@ Page({
     /*
     // 发起网络请求，验证用户名和密码
     wx.request({
-      url: 'https://your-server-url.com/login', // 替换为你的服务器地址
+      url: 'https://localhost:/login', // 替换为你的服务器地址
       method: 'POST',
       data: {
         username,
