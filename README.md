@@ -14,11 +14,11 @@
 
 ## 🛠️ 技术栈
 
-- **前端**：微信小程序，JavaScript，WXML，WXSS
-- **后端**：Node.js，Django
-- **数据库**：MongoDB
+- **前端**：微信小程序，JavaScript，WXML，WXSS, TypeScript
+- **后端**：Django
+- **数据库**：Sqlite3(dev), PostgreSQL(prod)
 - **API**：微信小程序 API，第三方睡眠数据接口
-- **开发工具**：微信开发者工具，VS Code
+- **开发工具**：微信开发者工具，VS Code, Pycharm, Webstorm
 
 ## 🚧 开发进度
 
