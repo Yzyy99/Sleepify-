@@ -3,3 +3,8 @@ psycopg2-binary
 gunicorn
 djangorestframework
 djangorestframework-simplejwt
+alibabacloud_dysmsapi20170525
+alibabacloud_tea_openapi
+alibabacloud_tea_util
+python-dotenv
+redis
