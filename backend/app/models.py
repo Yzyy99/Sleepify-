@@ -10,3 +10,4 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.phone_number
+
