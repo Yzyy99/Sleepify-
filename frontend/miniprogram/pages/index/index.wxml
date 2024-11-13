@@ -1,3 +1,37 @@
-<view class="container">
-  <text class="welcome-text">欢迎来到主页</text>
+<!-- pages/index/index.wxml -->
+<view class="container" style="background-color: {{pageBackgroundColor}}; color: {{textColor}};">
+  
+  <!-- 顶部导航栏 -->
+  <view class="header">
+    <text class="title">Sleepify</text>
+    <text class="settings" bindtap="onSleepReminder">设置睡眠提醒</text>
+  </view>
+  
+  <!-- 中心按钮 -->
+  <view class="center-button">
+    <view class="sleep-button" bindtap="startSleep">
+      <text>睡觉啦</text>
+    </view>
+  </view>
+
+  <!-- 功能按钮区 -->
+  <view class="feature-buttons">
+    <view class="feature-item" bindtap="onWhiteNoise">
+      <image src="/assets/whitenoise.png" mode="aspectFit"/>
+      <text>白噪音</text>
+    </view>
+    <view class="feature-item" bindtap="onMusic">
+      <image src="/assets/music.png" mode="aspectFit"/>
+      <text>音乐</text>
+    </view>
+    <view class="feature-item" bindtap="onBreathing">
+      <image src="/assets/breathing.png" mode="aspectFit"/>
+      <text>呼吸训练</text>
+    </view>
+    <view class="feature-item" bindtap="onSleepJournal">
+      <image src="/assets/sleepjournal.png" mode="aspectFit"/>
+      <text>睡眠小记</text>
+    </view>
+  </view>
+  
 </view>
