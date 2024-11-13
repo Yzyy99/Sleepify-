@@ -31,9 +31,9 @@
     "tabSize": 2
   },
   "libVersion": "trial",
+  "appid": "wxf716a4ebeebca16b",
   "packOptions": {
     "ignore": [],
     "include": []
-  },
-  "appid": "wxf716a4ebeebca16b"
+  }
 }
