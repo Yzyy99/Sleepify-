@@ -1,3 +1,4 @@
+import os
 import unittest
 
 from django.test import Client, TestCase
@@ -36,6 +37,44 @@ class APITestCase(TestCase):
                                            'password': str('password')},
                                      content_type='application/json')
         self.assertEqual(response3.status_code, 405)
+
+    def test_sendSMS(self):
+        response1 = self.client.post(reverse('send_verification_code'),
+                                     data={'phone_number': os.getenv('SMS_TEST_PHONE_NUMBER')},
+                                     content_type='application/json')
+        self.assertIn(response1.status_code, [200, 429])
+
+        response2 = self.client.post(reverse('send_verification_code'),
+                                     data={'phone_number': 'testcase'},
+                                     content_type='application/json')
+        self.assertEqual(response2.status_code, 400)
+
+        response3 = self.client.post(reverse('send_verification_code'),
+                                     content_type='application/json')
+        self.assertEqual(response3.status_code, 400)
+
+    def test_verifySMS(self):
+        response1 = self.client.post(reverse('verify_code'),
+                                     content_type='application/json')
+        self.assertEqual(response1.status_code, 400)
+
+    def test_logout(self):
+        response1 = self.client.post(reverse('login'),
+                                     data={'username': 'testcase',
+                                           'password': str('password')},
+                                     content_type='application/json')
+        refresh = response1.json().get('refresh')
+        response2 = self.client.post(reverse('logout'),
+                                     data={'refresh': refresh},
+                                     content_type='application/json')
+        self.assertEqual(response2.status_code, 200)
+        response3 = self.client.post(reverse('logout'),
+                                     data={'refresh': refresh+'1'},
+                                     content_type='application/json')
+        self.assertEqual(response3.status_code, 401)
+        response4 = self.client.post(reverse('logout'),
+                                     content_type='application/json')
+        self.assertEqual(response4.status_code, 400)
 
 if __name__ == '__main__':
     unittest.main()

@@ -3,23 +3,18 @@ version: '3'
 services:
   db:
     image: postgres:13
-    environment:
-      POSTGRES_DB: db
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: sleepify
+    env_file:
+      - .env
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - mynetwork
 
   app:
+    image: python:3.10
     build: .
-    environment:
-      DJANGO_ENV: production
-      POSTGRES_DB: db
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: sleepify
-      POSTGRES_HOST: db
+    env_file:
+      - .env
     volumes:
       - .:/app
       - static_volume:/app/staticfiles
