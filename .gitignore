@@ -96,3 +96,6 @@ build
 #IDEA
 .idea/
 .env
+
+frontend/project.config.json
+frontend/project.private.config.json

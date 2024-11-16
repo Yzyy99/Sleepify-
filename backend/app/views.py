@@ -68,15 +68,18 @@ class SendVerificationCodeView(APIView):
 
         # 生成验证码并发送短信
         code = f'{random.randint(100000, 999999)}'
-        SMSClient.main(phone_number, code)
-
+        try:
+            SMSClient.main(phone_number, code)
+        except Exception as e:
+            return Response({'error': 'Invalid phone number.'},
+                            status=status.HTTP_400_BAD_REQUEST)
         # 缓存验证码和发送时间，10分钟有效
         cache.set(f'verify_code_{phone_number}', code, timeout=600)  # 验证码有效期10分钟
         cache.set(f'verify_code_{phone_number}_time', True, timeout=60)  # 防止60秒内重复发送
 
         # 创建一个临时令牌（Token），关联电话号码
         temp_token = jwt.encode(
-            {'phone_number': phone_number, 'exp': datetime.utcnow() + datetime.timedelta(minutes=10)},
+            {'phone_number': phone_number, 'exp': datetime.datetime.now(tz=datetime.timezone.utc) + datetime.timedelta(minutes=10)},
             settings.SECRET_KEY, algorithm='HS256'
         )
 

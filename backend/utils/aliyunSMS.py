@@ -51,8 +51,7 @@ class SMSClient:
             # 此处仅做打印展示，请谨慎对待异常处理，在工程项目中切勿直接忽略异常。
             # 错误 message
             print(error)
-            # 诊断地址
-            print(error)
+            raise error
             # UtilClient.assert_as_string(error)
 
     @staticmethod
@@ -74,8 +73,7 @@ class SMSClient:
             # 此处仅做打印展示，请谨慎对待异常处理，在工程项目中切勿直接忽略异常。
             # 错误 message
             print(error)
-            # 诊断地址
-            print(error)
+            raise error
             # UtilClient.assert_as_string(error.message)
 
 if __name__ == '__main__':
