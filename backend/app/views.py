@@ -25,8 +25,12 @@ class LoginAPIView(APIView):
     def post(self, request, *args, **kwargs):
         phone_number = request.data.get('username')
         password = request.data.get('password')
-        # print(f'{phone_number} {password}')
-
+        if not phone_number:
+            return Response({'error': 'Phone Number is required'},
+                            status=status.HTTP_400_BAD_REQUEST)
+        if not password:
+            return Response({'error': 'Password is required'},
+                            status=status.HTTP_400_BAD_REQUEST)
         user = authenticate(request, phone_number=phone_number, password=password)
         if user is not None:
             # 登录成功，生成 token
@@ -34,26 +38,32 @@ class LoginAPIView(APIView):
             return Response({
                 'refresh': str(refresh),
                 'access': str(refresh.access_token),
-            },status=status.HTTP_200_OK)
+            },
+                status=status.HTTP_200_OK)
         else:
-            return Response({'error': 'Invalid phone number or password'}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response({'error': 'Invalid phone number or password'},
+                            status=status.HTTP_401_UNAUTHORIZED)
 
 class LogoutAPIView(APIView):
     def post(self, request, *args, **kwargs):
         token = request.data.get('refresh')
         if not token:
-            return Response({'error': 'Refresh token is required.'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'Refresh token is required.'},
+                            status=status.HTTP_400_BAD_REQUEST)
         try:
             token = RefreshToken(token)
-            return Response({'message': 'Successfully logged out.'}, status=status.HTTP_200_OK)
+            return Response({'message': 'Successfully logged out.'},
+                            status=status.HTTP_200_OK)
         except TokenError:
-            return Response({'error': 'Invalid token.'}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response({'error': 'Invalid token.'},
+                            status=status.HTTP_401_UNAUTHORIZED)
 
 class SendVerificationCodeView(APIView):
     def post(self, request):
         phone_number = request.data.get('phone_number')
         if not phone_number:
-            return Response({'error': 'Phone number is required.'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'Phone number is required.'},
+                            status=status.HTTP_400_BAD_REQUEST)
 
         # 检查是否已有该电话号码的用户
         if CustomUser.objects.filter(phone_number=phone_number).exists():
@@ -79,11 +89,13 @@ class SendVerificationCodeView(APIView):
 
         # 创建一个临时令牌（Token），关联电话号码
         temp_token = jwt.encode(
-            {'phone_number': phone_number, 'exp': datetime.datetime.now(tz=datetime.timezone.utc) + datetime.timedelta(minutes=10)},
+            {'phone_number': phone_number,
+             'exp': datetime.datetime.now(tz=datetime.timezone.utc) + datetime.timedelta(minutes=10)},
             settings.SECRET_KEY, algorithm='HS256'
         )
 
-        return Response({'message': 'Verification code sent successfully.', 'token': temp_token},
+        return Response({'message': 'Verification code sent successfully.',
+                         'token': temp_token},
                         status=status.HTTP_200_OK)
 
 
@@ -95,6 +107,12 @@ class VerifyCodeSerializer(serializers.Serializer):
         token = data.get('token')
         code = data.get('code')
         password = data.get('password')
+        if token is None:
+            raise serializers.ValidationError('Token is required.')
+        if password is None:
+            raise serializers.ValidationError('Password is required.')
+        if code is None:
+            raise serializers.ValidationError('Code is required.')
 
         # 解码 token 以获取 phone_number
         try:
@@ -138,3 +156,41 @@ class VerifyCodeView(APIView):
 
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class ResetPasswordView(APIView):
+    def post(self, request, *args, **kwargs):
+        token = request.data.get('token')
+        code = request.data.get('code')
+        new_password = request.data.get('new_password')
+        if token is None:
+            return Response({'error': 'Token is required.'}, status=status.HTTP_400_BAD_REQUEST)
+        if code is None:
+            return Response({'error': 'Code is required.'}, status=status.HTTP_400_BAD_REQUEST)
+        if new_password is None:
+            return Response({'error': 'New password is required.'}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            payload = jwt.decode(token, settings.SECRET_KEY, algorithms=['HS256'])
+            phone_number = payload.get('phone_number')
+        except jwt.ExpiredSignatureError:
+            return Response({'data':'The token has expired.'},
+                            status=status.HTTP_400_BAD_REQUEST)
+        except jwt.InvalidTokenError:
+            return Response({'data':'Invalid token.'},
+                            status=status.HTTP_400_BAD_REQUEST)
+        cached_code = cache.get(f'verify_code_{phone_number}')
+        if not cached_code or cached_code != code:
+            return Response({'data': 'Invalid or expired verification code.'},
+                            status=status.HTTP_400_BAD_REQUEST)
+        cache.delete(f'verify_code_{phone_number}')
+
+        user = authenticate(request, phone_number=phone_number, password=new_password)
+        if not CustomUser.objects.filter(phone_number=phone_number).exists():
+            return Response({'error': 'User with this phone number does not exist.'},
+                            status=status.HTTP_400_BAD_REQUEST)
+        if user is not None:
+            return Response({'error': 'Cannot set new password same with old one'},
+                            status=status.HTTP_400_BAD_REQUEST)
+        user = CustomUser.objects.get(phone_number=phone_number)
+        user.set_password(new_password)
+        return Response({'message':'Password changed successfully.'},
+                        status=status.HTTP_200_OK)

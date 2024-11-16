@@ -96,5 +96,18 @@ class APITestCase(TestCase):
                                      content_type='application/json')
         self.assertEqual(response4.status_code, 400)
 
+    def test_reset_password(self):
+        """
+            由于需要SMS发送模块随机生成的code作为参数，因此无法自动测试200样例以及一部分样例
+            没有参数进行验证，检查返回值为失败
+        """
+        response1 = self.client.post(reverse('reset_password'),
+                                     content_type='application/json')
+        self.assertEqual(response1.status_code, 400)
+        response2 = self.client.post(reverse('reset_password'),
+                                     data={'new_password': 'password',
+                                           'token': '123',
+                                           'code': '1234'},)
+        self.assertEqual(response2.status_code, 400)
 if __name__ == '__main__':
     unittest.main()
