@@ -126,15 +126,20 @@
 | **Field** | **Type** | **Description**                                  |
 | --------- | -------- | ------------------------------------------------ |
 | `error`   | `string` | if phone number is invalid OR it already exists. |
+```json
+{
+    "error": "Phone number is required."
+}
+```
+**Error Response (409 Conflict)**:
+
+| **Field** | **Type** | **Description**                                  |
+| --------- | -------- | ------------------------------------------------ |
+| `error`   | `string` | if phone number is invalid OR it already exists. |
 
 ```json
 {
     "error": "User with this phone number already exists."
-}
-```
-```json
-{
-    "error": "Phone number is required."
 }
 ```
 **Error Response (429 Too many requests)**:
@@ -252,5 +257,6 @@
 | `400`           | Bad request                               |
 | `401`           | Unauthorized - Invalid credentials or expired token |
 | `405`           | Method not allowed                               |
+| `409`           | Conflict                               |
 | `429`           | Too many requests                               |
 | `500`           | Internal Server Error                               |

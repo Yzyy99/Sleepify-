@@ -58,7 +58,7 @@ class SendVerificationCodeView(APIView):
         # 检查是否已有该电话号码的用户
         if CustomUser.objects.filter(phone_number=phone_number).exists():
             return Response({'error': 'User with this phone number already exists.'},
-                            status=status.HTTP_400_BAD_REQUEST)
+                            status=status.HTTP_409_CONFLICT)
 
         # 检查 60 秒内是否已经发送过验证码
         cached_code = cache.get(f'verify_code_{phone_number}_time')
