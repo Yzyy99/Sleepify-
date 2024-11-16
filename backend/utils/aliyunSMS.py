@@ -50,10 +50,10 @@ class SMSClient:
         except Exception as error:
             # 此处仅做打印展示，请谨慎对待异常处理，在工程项目中切勿直接忽略异常。
             # 错误 message
-            print(error.message)
+            print(error)
             # 诊断地址
-            print(error.data.get("Recommend"))
-            UtilClient.assert_as_string(error.message)
+            print(error)
+            # UtilClient.assert_as_string(error)
 
     @staticmethod
     async def main_async(
@@ -73,10 +73,10 @@ class SMSClient:
         except Exception as error:
             # 此处仅做打印展示，请谨慎对待异常处理，在工程项目中切勿直接忽略异常。
             # 错误 message
-            print(error.message)
+            print(error)
             # 诊断地址
-            print(error.data.get("Recommend"))
-            UtilClient.assert_as_string(error.message)
+            print(error)
+            # UtilClient.assert_as_string(error.message)
 
 if __name__ == '__main__':
     # SMSClient.main(sys.argv[1:])
