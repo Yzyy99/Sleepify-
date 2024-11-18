@@ -1,66 +1,39 @@
-// pages/breathing/breathing.ts
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    timeOptions: [1, 2, 3, 4, 5], // 时间选项
+    selectedTimeIndex: 0, // 默认选中第一个选项
+    selectedTime: 1, // 默认时间为1分钟
+    selectedMethod: 'even', // 默认呼吸方式为均匀呼吸法
+    isTraining: false, // 是否正在训练
+    breathingText: '' // 当前呼吸提示
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad() {
-
+  // 用户选择时间
+  setTime(e: { detail: { value: any; }; }) {
+    const index = e.detail.value;
+    this.setData({
+      selectedTimeIndex: index,
+      selectedTime: this.data.timeOptions[index] // 设置时间
+    });
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
+  // 用户选择呼吸方式
+  selectMethod(e: { currentTarget: { dataset: { method: any; }; }; }) {
+    const method = e.currentTarget.dataset.method;
+    this.setData({
+      selectedMethod: method
+    });
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
+  // 点击开始训练
+  startBreathing() {
+    console.log("呼吸训练开始按钮被点击");
 
-  },
+    const { selectedTime, selectedMethod } = this.data;
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
+    // 跳转到新页面并传递参数
+    wx.navigateTo({
+      url: `/pages/breathingDisplay/breathingDisplay?time=${selectedTime}&method=${selectedMethod}`
+    });
   }
-})
+});
