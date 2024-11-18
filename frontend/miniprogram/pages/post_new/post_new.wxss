@@ -6,7 +6,7 @@
 
 .upload_img_item{
   position: relative; 
-  width: 180rpx; height: 180rpx; 
+  width: 200rpx; height: 200rpx; 
   display: inline-block; 
   box-sizing: border-box; left: 0rpx; top: 0rpx;
   padding: auto;
