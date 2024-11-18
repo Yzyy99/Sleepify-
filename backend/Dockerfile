@@ -12,7 +12,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # 设置环境变量
-ENV DJANGO_ENV=production
 ENV PYTHONUNBUFFERED=1
 
 # 运行静态文件收集命令

@@ -5,10 +5,10 @@ function applyTheme(pageInstance) {
   if (isDarkMode) {
     wx.setNavigationBarColor({
       frontColor: '#ffffff',
-      backgroundColor: '#000015'
+      backgroundColor: '#000000'
     });
     pageInstance.setData({
-      pageBackgroundColor: '#000015',
+      pageBackgroundColor: '#000000',
       textColor: '#ffffff'
     });
   } else {
@@ -17,7 +17,7 @@ function applyTheme(pageInstance) {
       backgroundColor: '#ffffff'
     });
     pageInstance.setData({
-      pageBackgroundColor: '#dcdee0',
+      pageBackgroundColor: '#90aabbf8',
       textColor: '#000000'
     });
   }

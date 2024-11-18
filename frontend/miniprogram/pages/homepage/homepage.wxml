@@ -12,5 +12,5 @@
   <!-- 注册按钮 -->
   <button class="button" bindtap="onRegister">注册</button>
 
-  <switch class="mode-switch" bindchange="onToggleDarkMode" checked="{{isDarkMode}}" >夜间模式</switch>
+  <switch class="mode-switch" color="#4a4a4a" bindchange="onToggleDarkMode" checked="{{isDarkMode}}" >夜间模式</switch>
 </view>
