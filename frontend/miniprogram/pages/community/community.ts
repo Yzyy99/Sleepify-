@@ -5,6 +5,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    replynow: -1,
+    comment_value: "",
     posts: [
       {
         userphotosrc: "../../assets/photo_default.png",
@@ -22,7 +24,7 @@ Page({
           }
         ]
       },
-      
+
       {
         userphotosrc: "../../assets/music2.png",
         username: "测试测试",
@@ -42,7 +44,7 @@ Page({
         }
         ]
       },
-      
+
       {
         userphotosrc: "../../assets/music7.png",
         username: "username",
@@ -52,7 +54,7 @@ Page({
         time: "3分钟前",
         like: 996,
         commentnum: 0,
-        comments:[]
+        comments: []
       }
     ]
   },
@@ -61,7 +63,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad() {
-
+    // TODO: load real posts data from backend
   },
 
   /**
@@ -111,5 +113,25 @@ Page({
    */
   onShareAppMessage() {
 
+  },
+
+  like_post(e: any) {
+    const index = e?.currentTarget?.dataset.index;
+    console.log("user liked " + index);
+    // TODO: post to backend
+  },
+
+  comment_post(e: any) {
+    this.setData({replynow: e?.currentTarget.dataset.index})
+  },
+
+  send_comment(e:any){
+    const index = e?.currentTarget.dataset.index;
+    console.log("send to " + index + ": " + this.data.comment_value);
+    // TODO: post new comments
+  },
+
+  get_comment_value(e: any){
+    this.setData({comment_value: e.detail.value})
   }
 })

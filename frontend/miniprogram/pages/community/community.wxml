@@ -23,12 +23,16 @@
       </view>
     </view>
     <view class="post_action">
-      <view class="post_like">
+      <view class="post_like" bindtap="like_post" data-index="{{index}}">
         <text>👍 {{item.like}}</text>
       </view>
-      <view class="post_comment">
+      <view class="post_comment" bindtap="comment_post" data-index="{{index}}">
         <text>💬 {{item.commentnum}}</text>
       </view>
+    </view>
+    <view class="post_new_comment" style="display: flex; flex-direction: row; margin-top: 5px; display: {{replynow == index ? 'display' : 'none'}};">
+    <input class="post_comment_input" bindinput="get_comment_value"/>
+    <button class="post_comment_send" bindtap="send_comment" data-index="{{index}}">✔</button>
     </view>
     <view class="post_comment_box" style="display:{{item.commentnum == 0 ? 'none' : 'display'}};">
       <view class="post_comment_item" wx:for="{{item.comments}}" wx:key="index">
