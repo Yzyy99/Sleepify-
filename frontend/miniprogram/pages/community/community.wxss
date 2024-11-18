@@ -1,1 +1,52 @@
 /* pages/community/community.wxss */
+
+.post_list{
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* 占满整个屏幕高度 */
+  padding: 20px;
+  padding-top: 5px;
+  background-color: #F5F5DC;
+}
+
+.post_head{
+  align-items: center;
+  justify-content: center;
+}
+
+.post_box{
+  margin-bottom: 15px;
+}
+
+.post_user_name{
+  /* width: 50%; */
+  font-size: 20px;
+  bottom: 0px;
+}
+
+.post_time{
+  /* width: 50%; */
+  align-items: right;
+  text-align: right;
+  margin-right: 10px;
+  color: #333333;
+}
+
+.post_user_photo{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 10px;
+    float: left;
+    border: 3px solid #f0f0f0;
+}
+
+.post_content{
+  padding-top: 10px;
+}
+
+.post_like{
+  text-align: right;
+  margin-top: 5px;
+  margin-right: 10px;
+}
