@@ -13,6 +13,7 @@
     "pages/whitenoise/whitenoise",
     "pages/music/music",
     "pages/breathing/breathing",
+    "pages/breathingDisplay/breathingDisplay",
     "pages/sleep_journal/sleep_journal",
     "pages/sleep_reminder/sleep_reminder"
   ],
