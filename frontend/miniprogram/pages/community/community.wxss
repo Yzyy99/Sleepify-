@@ -3,7 +3,7 @@
 .post_list{
   display: flex;
   flex-direction: column;
-  height: 100vh; /* 占满整个屏幕高度 */
+  min-height: 100vh; /* 占满整个屏幕高度 */
   padding: 20px;
   padding-top: 5px;
   background-color: #F5F5DC;
@@ -15,7 +15,7 @@
 }
 
 .post_box{
-  margin-bottom: 15px;
+  margin-bottom: 25px;
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -74,4 +74,22 @@
   background-color: #E5E5CC;
   margin-top: 3px;
   padding: 3px;
+}
+
+.post_comment_input{
+  flex: 2; 
+  border-radius: 10px; 
+  border: #E07B39 solid 2px; 
+  width: max-content; 
+  height: 36px;
+  margin-right: 8px;
+}
+
+.post_comment_send{
+  flex: 1;
+  max-width: 40px; 
+  height: 40px; 
+  padding: 10px;
+  font-size: x-small; 
+  background-color: #E07B39;
 }
