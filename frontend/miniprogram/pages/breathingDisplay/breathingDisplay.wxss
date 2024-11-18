@@ -1,0 +1,34 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f5f5dc; /* 浅米黄色背景 */
+}
+
+/* 倒计时样式 */
+.countdown {
+  font-size: 48rpx;
+  color: #432e54; /* 深紫色文字 */
+  margin-bottom: 400rpx;
+}
+
+/* 呼吸气泡样式 */
+.breathing-bubble {
+  width: 300rpx;
+  height: 300rpx;
+  border-radius: 50%;
+  background-color: #e07b39; /* 气泡颜色 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform ease-in-out; /* 气泡大小平滑变化 */
+}
+
+/* 呼吸文字样式 */
+.breathing-text {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #432e54;
+}
