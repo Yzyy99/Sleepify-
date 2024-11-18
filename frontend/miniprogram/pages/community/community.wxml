@@ -17,8 +17,24 @@
     <view class="post_content">
       <text>{{item.content}}</text>
     </view>
-    <view class="post_like">
-      <text>👍 {{item.like}}</text>
+    <view class="post_image_box" style="display:{{item.imagenum == 0 ? 'none' : 'display'}}; margin-top: 10px">
+      <view class="post_image_item" wx:for="{{item.images}}" wx:key="index">
+        <image src="{{item}}" style="width: 150px; height: 150px; object-fit: cover;"></image>
+      </view>
+    </view>
+    <view class="post_action">
+      <view class="post_like">
+        <text>👍 {{item.like}}</text>
+      </view>
+      <view class="post_comment">
+        <text>💬 {{item.commentnum}}</text>
+      </view>
+    </view>
+    <view class="post_comment_box" style="display:{{item.commentnum == 0 ? 'none' : 'display'}};">
+      <view class="post_comment_item" wx:for="{{item.comments}}" wx:key="index">
+        <text style="color: #333333;">{{item.username}}: </text>
+        <text style="color: #555555;">{{item.content}}</text>
+      </view>
     </view>
   </view>
 </view>

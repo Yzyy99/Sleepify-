@@ -10,27 +10,49 @@ Page({
         userphotosrc: "../../assets/photo_default.png",
         username: "test1",
         content: "我好困我好困我好困",
-        photo: [],
+        imagenum: 0,
+        images: [],
         time: "3分钟前",
-        like: 10
+        like: 10,
+        commentnum: 1,
+        comments: [
+          {
+            username: "username",
+            content: "你怎么还不睡！"
+          }
+        ]
       },
       
       {
         userphotosrc: "../../assets/music2.png",
         username: "测试测试",
         content: "不想写软工不想写软工",
-        photo: [],
+        imagenum: 1,
+        images: ["../../assets/music6.png"],
         time: "3分钟前",
-        like: 100
+        like: 100,
+        commentnum: 2,
+        comments: [{
+          username: "aaa",
+          content: "你也没写多少啊。。。"
+        },
+        {
+          username: "bbb",
+          content: "快点写😡"
+        }
+        ]
       },
       
       {
         userphotosrc: "../../assets/music7.png",
         username: "username",
         content: "content",
-        photo: [],
+        imagenum: 0,
+        images: [],
         time: "3分钟前",
-        like: 996
+        like: 996,
+        commentnum: 0,
+        comments:[]
       }
     ]
   },
