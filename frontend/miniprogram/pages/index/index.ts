@@ -1,4 +1,4 @@
-const themeindex = require('../../utils/theme.js');
+const themeindex = require('../../utils/theme_index.js');
 Page({
   data: {
     pageBackgroundColor: "#4A4A8E", // 页面背景色
@@ -7,7 +7,7 @@ Page({
   },
   onShow() {
     // 页面显示时根据全局夜间模式状态切换主题
-    //themeindex.applyTheme(this);
+    themeindex.applyTheme(this);
   },
   // 点击“设置睡眠提醒”跳转到提醒设置页面
   onSleepReminder() {
