@@ -1,0 +1,13 @@
+<view class="container">
+  <!-- 倒计时 -->
+  <view class="countdown">
+    <text>{{countdownText}}</text>
+  </view>
+
+  <!-- 呼吸气泡 -->
+  <view
+  class="breathing-bubble"
+  style="transform: scale({{bubbleScale}}); transition-duration: {{bubbleTransitionDuration}}s;">
+  <text class="breathing-text">{{breathingText}}</text>
+</view>
+</view>
