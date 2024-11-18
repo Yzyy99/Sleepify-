@@ -5,7 +5,34 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    posts: [
+      {
+        userphotosrc: "../../assets/photo_default.png",
+        username: "test1",
+        content: "我好困我好困我好困",
+        photo: [],
+        time: "3分钟前",
+        like: 10
+      },
+      
+      {
+        userphotosrc: "../../assets/music2.png",
+        username: "测试测试",
+        content: "不想写软工不想写软工",
+        photo: [],
+        time: "3分钟前",
+        like: 100
+      },
+      
+      {
+        userphotosrc: "../../assets/music7.png",
+        username: "username",
+        content: "content",
+        photo: [],
+        time: "3分钟前",
+        like: 996
+      }
+    ]
   },
 
   /**
