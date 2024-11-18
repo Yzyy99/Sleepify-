@@ -10,8 +10,10 @@
   style="width: auto; border-radius: 25px; border: 1px solid gray; padding: 10px;"/>
 </view>
 <view style="flex: 1; padding: 10px;">
-  <view id='imagetable' wx:for="{{chooseImgs}}" wx:key="index" style="display: inline-block; margin: 10px;">
+  <view class="image_box" style="margin: 5px;">
+  <view class='image_item' wx:for="{{chooseImgs}}" wx:key="index" style="display: inline-block; margin: 5px;">
     <image class="upload_img_item" src="{{item}}" bindtap="preview_image" data-index="{{index}}" />
+  </view>
   </view>
   <image class="upload_img_item" src="../../assets/upload_new_image.png" bindtap="upload_new_img" style="visibility: {{image_full ? 'hidden' : 'visible'}};"/>
   </view>

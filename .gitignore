@@ -96,3 +96,7 @@ build
 #IDEA
 .idea/
 .env
+
+
+#VSCODE
+.vscode/
