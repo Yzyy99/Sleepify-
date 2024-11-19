@@ -4,17 +4,17 @@
 <view style="background-color: #eac3da; height: 100vh; padding: 50px; padding-top:10px">
 <view class="profile_section" bindtap="modify_photo">
     <text class="profile_title">头像</text>
-    <image class="profile_photo" src="../../assets/photo_default.png" style="object-fit: cover;"></image>
+    <image class="profile_photo" src="{{photo}}" style="object-fit: cover;"></image>
     <text class="modify_arrow">></text>
 </view>
-<view class="profile_section" bindtap="modify_username">
+<view class="profile_section">
     <text class="profile_title">用户名</text>
-    <text class="profile_value">username</text>
+    <input class="profile_value" value="{{username}}" bindchange="modify_username"/>
     <text class="modify_arrow">></text>
 </view>
 <view class="profile_section" bindtap="modify_phone">
     <text class="profile_title">手机号</text>
-    <!-- <text class="profile_value">username</text> -->
+    <text class="profile_value">{{phone}}</text>
     <text class="modify_arrow">></text>
 </view>
 <view class="profile_section" bindtap="modify_passwd">
