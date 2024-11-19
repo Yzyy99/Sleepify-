@@ -25,6 +25,7 @@
 .profile_value{
   font-size: 15px;
   color: #333333;
+  text-align: right;
 }
 
 .modify_arrow{
