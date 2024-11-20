@@ -5,7 +5,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    chooseImgs: [] as string[],
+    image_full: false
   },
 
   /**
@@ -62,5 +63,37 @@ Page({
    */
   onShareAppMessage() {
 
+  },
+
+  upload_new_img() {
+    wx.chooseImage({
+      count: 3,
+      sizeType: ['compressed', 'original'],
+      sourceType: ['camera', 'album'],
+      success: (result) => {
+        this.setData({
+          chooseImgs: [...this.data.chooseImgs, ...result.tempFilePaths]
+        });
+        if (this.data.chooseImgs.length > 3) {
+          this.setData({
+            chooseImgs: this.data.chooseImgs.slice(0, 3)
+          })
+          wx.showToast({
+            title: '最多只可上传三张图片',
+            icon: 'none',
+            duration: 1000
+          });
+        }
+        if(this.data.chooseImgs.length == 3){
+          this.setData({image_full: true})
+        }
+        console.log(this.data.chooseImgs)
+      }
+
+    })
+  },
+  upload(){
+    //TODO
   }
 })
+

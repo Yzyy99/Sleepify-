@@ -1,1 +1,41 @@
 /* pages/me/me.wxss */
+
+.profile_section{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  border-bottom: gray solid 1px;
+}
+
+.profile_photo{
+  width: 50px; 
+  height: 50px;
+  border-radius: 50%;
+  border: gray solid 1px;
+}
+
+.profile_title{
+  font-size: 16px;
+  flex: 2;
+}
+
+.profile_value{
+  font-size: 15px;
+  color: #333333;
+  text-align: right;
+}
+
+.modify_arrow{
+  padding: 10px;
+  font-size: 18px;
+  color: #888888;
+}
+
+.button{
+  background-color: transparent;
+  max-width: 150px;
+  padding: 10px;
+}
