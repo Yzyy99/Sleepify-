@@ -1,24 +1,34 @@
 function applyTheme(pageInstance) {
-  const app = getApp();
-  const isDarkMode = app.globalData.isDarkMode;
+  const app = getApp(); // 获取全局变量
+  const isDarkMode = app.globalData.isDarkMode; // 判断是否为夜间模式
 
   if (isDarkMode) {
+    // 设置夜间模式的导航栏颜色和页面样式
     wx.setNavigationBarColor({
-      frontColor: '#ffffff',
-      backgroundColor: '#000015'
+      frontColor: '#ffffff', // 导航栏文字白色
+      backgroundColor: '#1E1E2F' // 导航栏背景深蓝灰
     });
     pageInstance.setData({
-      pageBackgroundColor: '#000015',
-      textColor: '#ffffff'
+      pageBackgroundColor: '#1E1E2F', // 页面背景深蓝灰
+      textColor: '#F4F4F9', // 页面文字白色
+      buttonBackgroundColor: '#28293E', // 按钮背景深蓝灰
+      buttonTextColor: '#FFFFFF', // 按钮文字白色
+      highlightColor: '#D35450', // 高亮色深橙红
+      shadowColor: 'rgba(0, 0, 0, 0.5)' // 阴影深色
     });
   } else {
+    // 设置浅色模式的导航栏颜色和页面样式
     wx.setNavigationBarColor({
-      frontColor: '#000000',
-      backgroundColor: '#ffffff'
+      frontColor: '#000000', // 导航栏文字黑色
+      backgroundColor: '#f5f5dc' // 导航栏背景浅米色
     });
     pageInstance.setData({
-      pageBackgroundColor: '#dcdee0',
-      textColor: '#000000'
+      pageBackgroundColor: '#f5f5dc', // 页面背景浅米色
+      textColor: '#333', // 页面文字深灰色
+      buttonBackgroundColor: '#dce4c9', // 按钮背景绿色
+      buttonTextColor: '#432e54', // 按钮文字深紫色
+      highlightColor: '#e07b39', // 高亮色温暖橙
+      shadowColor: 'rgba(0, 0, 0, 0.2)' // 阴影浅色
     });
   }
 }
