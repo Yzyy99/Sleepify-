@@ -5,7 +5,7 @@
   justify-content: space-between;
   align-items: center;
   height: 100vh;
-  background-color: #f0f0f0; /* 页面背景色 */
+  background-color: #1E1E2F; /* 深蓝灰背景 */
   padding: 20rpx;
 }
 
@@ -18,7 +18,7 @@
 .main-title-text {
   font-size: 48rpx;
   font-weight: bold;
-  color: #333;
+  color: #F4F4F9; /* 柔和的白色文字 */
 }
 
 /* 每一部分 */
@@ -35,8 +35,8 @@
   font-size: 36rpx;
   font-weight: bold;
   margin-top: -200rpx;
-  text-align: center;
-  color: #333;
+  text-align: left;
+  color: #A1A1B2; /* 柔和灰色文字 */
 }
 
 /* 时间选择部分 */
@@ -49,13 +49,14 @@
 .picker-button {
   width: 300rpx;
   height: 200rpx;
-  background-color: #dce4c9;
-  color: #432e54;
+  background-color: #28293E; /* 深蓝灰按钮背景 */
+  color: #FFFFFF; /* 白色文字 */
   text-align: center;
   line-height: 180rpx;
   border-radius: 20rpx;
   font-size: 32rpx;
   font-weight: bold;
+  box-shadow: 0px 2rpx 8rpx rgba(0, 0, 0, 0.4); /* 增加轻微的立体感 */
 }
 
 /* 呼吸方式选择部分 */
@@ -68,31 +69,36 @@
 .option-button {
   width: 300rpx;
   height: 200rpx;
-  background-color: #f5f5dc;
-  color: #432e54;
+  background-color: #28293E; /* 深蓝灰按钮背景 */
+  color: #FFFFFF; /* 白色文字 */
   text-align: center;
   line-height: 180rpx;
   border-radius: 20rpx;
   font-size: 32rpx;
   font-weight: bold;
   margin: 0 10rpx;
+  box-shadow: 0px 2rpx 8rpx rgba(0, 0, 0, 0.4); /* 按钮阴影 */
 }
 
 .option-button.selected {
-  background-color: #e07b39;
-  color: #ffffff;
+  background-color: #d35450; /* 深橙红色高亮 */
+  color: #FFFFFF; /* 白色文字 */
 }
 
 /* 开始训练按钮 */
 .start-button {
   width: 300rpx;
   height: 200rpx; /* 放大按钮 */
-  background-color: #432e54; /* 按钮背景色 */
-  color: #dce4c9; /* 按钮文字颜色 */
+  background-color: #28293E; /* 深蓝灰背景 */
+  color: #FFFFFF; /* 白色文字 */
   text-align: center;
   line-height: 180rpx; /* 调整文字位置偏下 */
   border-radius: 20rpx; /* 方形按钮，轻微圆角 */
   font-size: 36rpx; /* 调整字体大小 */
   font-weight: bold;
-  box-shadow: 0px 4rpx 10rpx rgba(0, 0, 0, 0.2); /* 添加按钮阴影 */
+  box-shadow: 0px 4rpx 12rpx rgba(0, 0, 0, 0.5); /* 增加立体感 */
+}
+
+.start-button:hover {
+  background-color: #394260; /* 鼠标悬停时稍微变亮 */
 }

@@ -1,12 +1,12 @@
 <view class="container" style="background-color: {{pageBackgroundColor}}; color: {{textColor}};">
   <!-- 页面主标题 -->
   <view class="main-title">
-    <text class="main-title-text">呼吸训练</text>
+    <text class="main-title-text"style="color: {{textColor}};">呼吸训练</text>
   </view>
 
   <!-- 时间选择部分 -->
   <view class="section">
-    <text class="section-title">训练时间</text>
+    <text class="section-title" style="color: {{textColor}};">训练时间</text>
     <view class="picker-container">
       <picker
         mode="selector"
@@ -14,24 +14,28 @@
         value="{{selectedTimeIndex}}"
         bindchange="setTime"
       >
-        <view class="picker-button">当前时间：{{selectedTime}} 分钟</view>
+        <view class="picker-button" style="background-color: {{buttonBackgroundColor}}; color: {{buttonTextColor}};">
+          当前时间：{{selectedTime}} 分钟
+        </view>
       </picker>
     </view>
   </view>
 
   <!-- 呼吸方式选择部分 -->
   <view class="section">
-    <text class="section-title">呼吸方式</text>
+    <text class="section-title" style="color: {{textColor}};">呼吸方式</text>
     <view class="breathing-options">
       <view
-        class="option-button {{selectedMethod === 'even' ? 'selected' : ''}}"
+        class="option-button"
+        style="background-color: {{selectedMethod === 'even' ? highlightColor : buttonBackgroundColor}}; color: {{buttonTextColor}};"
         bindtap="selectMethod"
         data-method="even"
       >
         均匀呼吸法
       </view>
       <view
-        class="option-button {{selectedMethod === '478' ? 'selected' : ''}}"
+        class="option-button"
+        style="background-color: {{selectedMethod === '478' ? highlightColor : buttonBackgroundColor}}; color: {{buttonTextColor}};"
         bindtap="selectMethod"
         data-method="478"
       >
@@ -42,6 +46,12 @@
 
   <!-- 开始按钮部分 -->
   <view class="section">
-    <view class="start-button" bindtap="startBreathing">开始训练</view>
+    <view
+      class="start-button"
+      style="background-color: {{buttonBackgroundColor}}; color: {{buttonTextColor}};"
+      bindtap="startBreathing"
+    >
+      开始训练
+    </view>
   </view>
 </view>
