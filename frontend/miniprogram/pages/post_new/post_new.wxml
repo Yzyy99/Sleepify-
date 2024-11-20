@@ -1,2 +1,21 @@
-<!--pages/post_new/post_new.wxml-->
-<text>pages/post_new/post_new.wxml</text>
+<view style="display:flex; flex-direction:column; height: 150px; padding: 10px; margin-bottom: 10px;">
+<view class="post_new_title">
+<div style="width: 50%; height:max-content; top:100px; font-size: 28px;">
+新状态
+</div>
+<button type="primary" style="background-color: #E07B39; float: right; width: 25%; height: auto;" bindtap="upload">发布</button>
+</view>
+<view style="flex: 1">
+  <textarea placeholder="请输入" placeholder-style="color:gray;" 
+  style="width: auto; border-radius: 25px; border: 1px solid gray; padding: 10px;"/>
+</view>
+<view style="flex: 1; padding: 10px;">
+  <view class="image_box" style="margin: 5px;">
+  <view class='image_item' wx:for="{{chooseImgs}}" wx:key="index" style="display: inline-block; margin: 5px;">
+    <image class="upload_img_item" src="{{item}}" bindtap="preview_image" data-index="{{index}}" />
+  </view>
+  </view>
+  <image class="upload_img_item" src="../../assets/upload_new_image.png" bindtap="upload_new_img" style="visibility: {{image_full ? 'hidden' : 'visible'}};"/>
+  </view>
+</view>
+      

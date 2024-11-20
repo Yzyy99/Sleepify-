@@ -1,5 +1,7 @@
+
 const app = getApp();
 const { applyTheme } = require('../../utils/theme.js'); // 引入主题切换工具
+
 
 Page({
   data: {
@@ -47,6 +49,7 @@ Page({
   // 点击开始训练
   startBreathing() {
     console.log('呼吸训练开始按钮被点击');
+
     const { selectedTime, selectedMethod } = this.data;
 
     // 跳转到新页面并传递参数

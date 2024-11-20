@@ -1,3 +1,4 @@
+
 const app2=getApp()
 const { themeBreathingDisplay } = require('../../utils/theme.js'); // 引入主题工具
 Page({
@@ -84,6 +85,7 @@ Page({
         transitionDuration = 2; // 均匀呼吸，固定 2 秒
       } else if (method === '478') {
         const cycle = 19 - remainingSeconds % 19; // 4-7-8 总周期
+
         if (cycle < 4) {
           text = '吸气';
           scale = 1.5;

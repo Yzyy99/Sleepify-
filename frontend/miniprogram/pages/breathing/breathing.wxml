@@ -2,11 +2,13 @@
   <!-- 页面主标题 -->
   <view class="main-title">
     <text class="main-title-text"style="color: {{textColor}};">呼吸训练</text>
+
   </view>
 
   <!-- 时间选择部分 -->
   <view class="section">
     <text class="section-title" style="color: {{textColor}};">训练时间</text>
+
     <view class="picker-container">
       <picker
         mode="selector"
@@ -14,9 +16,11 @@
         value="{{selectedTimeIndex}}"
         bindchange="setTime"
       >
+
         <view class="picker-button" style="background-color: {{buttonBackgroundColor}}; color: {{buttonTextColor}};">
           当前时间：{{selectedTime}} 分钟
         </view>
+
       </picker>
     </view>
   </view>
