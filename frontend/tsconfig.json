@@ -19,7 +19,8 @@
     "pretty": true,
     "strictPropertyInitialization": true,
     "typeRoots": [
-      "./typings"
+      "./typings",
+      "node_modules/@types"
     ]
   },
   "include": [
