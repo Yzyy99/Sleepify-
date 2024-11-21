@@ -72,6 +72,7 @@ curl -X <Method> http://localhost:8000/<api>/ -H "application/json" -d "<data>"
 ```
 
 Test Using a Browser
+
 access http://127.0.0.1:8000/api/register/
 
 
