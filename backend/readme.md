@@ -71,12 +71,9 @@ Curl
 curl -X <Method> http://localhost:8000/<api>/ -H "application/json" -d "<data>"
 ```
 
-Curl in Windows Powershell
+Test Using a Browser
+access http://127.0.0.1:8000/api/register/
 
-```bash
-curl.exe -X POST http://127.0.0.1:8000/api/register/ `
-  -H "Content-Type: application/json" `
-  -d '{"username": "1234567890", "password": "password123"}'
-```
+
 
 If you are windows, PLEASE USE CMD, instead of Powershell, which uses Invoke-Webrequest, not curl.
