@@ -1,0 +1,16 @@
+<!--pages/homepage/homepage.wxml-->
+<view class="container" style="background-color: {{pageBackgroundColor}}; color: {{textColor}};">
+  <!-- 图标 -->
+  <image class="logo" src="/assets/sleep-icon.png" mode="widthFix"></image>
+
+  <!-- 应用标题 -->
+  <text class="title">Sleepify睡眠助手</text>
+
+  <!-- 登录按钮 -->
+  <button class="button" bindtap="onLogin">登录</button>
+
+  <!-- 注册按钮 -->
+  <button class="button" bindtap="onRegister">注册</button>
+
+  <switch class="mode-switch" color="#4a4a4a" bindchange="onToggleDarkMode" checked="{{isDarkMode}}" >夜间模式</switch>
+</view>

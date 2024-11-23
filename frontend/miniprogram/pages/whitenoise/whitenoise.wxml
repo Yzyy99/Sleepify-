@@ -1,0 +1,41 @@
+<view class="container" style="background-color: {{pageBackgroundColor}}; color: {{textColor}};">
+<!-- 页面标题 -->
+<view class="main-title">
+    <text class="main-title-text">白噪音</text>
+  </view>
+  <!-- 第一行：雨幕轻吟 -->
+  <view class="section">
+    <text class="section-title">雨幕轻吟</text>
+    <view class="image-row">
+      <image src="{{imageList[0].src}}" class="grid-image" data-index="0" bindtap="onImageTap" />
+      <image src="{{imageList[1].src}}" class="grid-image" data-index="1" bindtap="onImageTap" />
+      <image src="{{imageList[2].src}}" class="grid-image" data-index="2" bindtap="onImageTap" />
+    </view>
+  </view>
+
+  <!-- 第二行：炉火低语 -->
+  <view class="section">
+    <text class="section-title">炉火低语</text>
+    <view class="image-row">
+      <image src="{{imageList[3].src}}" class="grid-image" data-index="3" bindtap="onImageTap" />
+      <image src="{{imageList[4].src}}" class="grid-image" data-index="4" bindtap="onImageTap" />
+      <image src="{{imageList[5].src}}" class="grid-image" data-index="5" bindtap="onImageTap" />
+    </view>
+  </view>
+
+  <!-- 第三行：风驰鸣响 -->
+  <view class="section">
+    <text class="section-title">风驰鸣响</text>
+    <view class="image-row">
+      <image src="{{imageList[6].src}}" class="grid-image" data-index="6" bindtap="onImageTap" />
+      <image src="{{imageList[7].src}}" class="grid-image" data-index="7" bindtap="onImageTap" />
+      <image src="{{imageList[8].src}}" class="grid-image" data-index="8" bindtap="onImageTap" />
+    </view>
+  </view>
+
+   <!-- 音乐播放器控制栏 -->
+   <view class="player-bar">
+    <text class="player-text">{{currentStatus}}</text>
+    <button bindtap="togglePlay">{{currentStatus === '播放中' ? '暂停' : '播放'}}</button>
+  </view>
+</view>

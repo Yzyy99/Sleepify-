@@ -1,0 +1,80 @@
+/* 页面整体容器 */
+.container {
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+  background-color: #f0f0f0;
+  padding: 100rpx;
+}
+
+/* 页面主标题 */
+.main-title {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20rpx; /* 页面标题与内容之间的间隔 */
+  margin-top: -10rpx;
+}
+
+.main-title-text {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #333;
+}
+/* 每一行的容器 */
+.section {
+  margin-bottom: 100rpx; /* 调整行与行之间的间隔 */
+}
+
+/* 标题样式 */
+.section-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5rpx; /* 减少标题与图片之间的间隔 */
+}
+
+/* 图片行的容器 */
+.image-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20rpx;
+  margin-bottom: 0rpx;
+}
+
+/* 图片样式 */
+.grid-image {
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: 20rpx;
+  margin-right: 35rpx; /* 调整图片之间的间隔 */
+}
+
+.grid-image:last-child {
+  margin-right: 0; /* 移除最后一张图片的右边距 */
+}
+
+/* 占位符图片（透明） */
+.placeholder {
+  opacity: 0;
+}
+
+/* 播放器控制栏 */
+.player-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 20rpx;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10rpx 10rpx 0 0;
+  box-shadow: 0 -10rpx 20rpx rgba(0, 0, 0, 0.1);
+}
+
+/* 播放器文字 */
+.player-text {
+  font-size: 32rpx;
+  color: #333;
+}

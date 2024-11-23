@@ -1,0 +1,13 @@
+{
+  "name": "miniprogram-ts-less-quickstart",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "",
+  "devDependencies": {
+    "@types/wechat-miniprogram": "^3.4.8",
+    "miniprogram-api-typings": "^2.8.3-1"
+  }
+}

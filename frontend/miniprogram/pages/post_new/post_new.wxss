@@ -1,0 +1,14 @@
+/* pages/post_new/post_new.wxss */
+
+.post_new_title{
+  padding: 8px 8px 8px 8px;
+}
+
+.upload_img_item{
+  position: relative; 
+  width: 200rpx; height: 200rpx; 
+  display: inline-block; 
+  box-sizing: border-box; left: 0rpx; top: 0rpx;
+  padding: auto;
+  margin: auto;
+}

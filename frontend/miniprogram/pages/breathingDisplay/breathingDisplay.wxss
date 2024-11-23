@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+}
+
+/* 倒计时样式 */
+.countdown {
+  font-size: 48rpx;
+  margin-bottom: 400rpx;
+}
+
+/* 呼吸气泡样式 */
+.breathing-bubble {
+  width: 300rpx;
+  height: 300rpx;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform ease-in-out; /* 气泡大小平滑变化 */
+}
+
+/* 呼吸文字样式 */
+.breathing-text {
+  font-size: 48rpx;
+  font-weight: bold;
+}
