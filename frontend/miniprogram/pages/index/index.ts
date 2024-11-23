@@ -1,9 +1,12 @@
 const themeindex = require('../../utils/theme_index.js');
 Page({
   data: {
-    pageBackgroundColor: "#4A4A8E", // 页面背景色
-    textColor: "#FFFFFF"            // 页面文字颜色
-    //颜色暂时硬编码与原型设计统一，后续和夜间模式统一调整
+        pageBackgroundColor: '', // 页面背景色
+    textColor: '', // 页面文字颜色
+    buttonBackgroundColor: '', // 按钮背景颜色
+    buttonTextColor: '', // 按钮文字颜色
+    highlightColor: '', // 高亮颜色
+    shadowColor: '' // 阴影颜色
   },
   onShow() {
     // 页面显示时根据全局夜间模式状态切换主题
