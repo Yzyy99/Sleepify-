@@ -1,0 +1,36 @@
+<!--pages/login/login.wxml-->
+<view class="container" style="background-color: {{pageBackgroundColor}}; color: {{textColor}};">
+  <!-- 返回按钮 -->
+  <div bindtap="onBack" class="back-button">
+    <image src="/assets/arrow-left-s-line.png" class="back-image"></image>
+  </div>
+
+  <!-- 欢迎登录标题 -->
+  <view class="login-header">
+    <text class="welcome-text">注册</text>
+    <view class="underline"></view>
+  </view>
+
+  <!-- 手机号输入框 -->
+  <view class="input-container">
+    <text class="input-label">手机号</text>
+    <input class="input-field" placeholder="请输入用户名" type="number"bindinput="onPhoneInput" />
+  </view>
+
+  <!-- 密码输入框 -->
+  <view class="input-container">
+    <text class="input-label">密码</text>
+    <input class="input-field" placeholder="请输入密码" type="password" bindinput="onPasswordInput"/>
+  </view>
+  
+  <!-- 密码输入框 -->
+  <view class="input-container">
+    <text class="input-label">确认密码</text>
+    <input class="input-field" placeholder="请再次输入密码" type="password" bindinput="onConfirmPasswordInput"/>
+  </view>
+  
+  <!-- 登录按钮 -->
+  <button class="login-button" bindtap="onRegister">注册</button>
+
+  
+</view>

@@ -1,0 +1,67 @@
+{
+  "pages": [
+    "pages/homepage/homepage",
+    "pages/register/register",
+    "pages/login/login",
+    "pages/index/index",
+    "pages/community/community",
+    "pages/post_new/post_new",
+    "pages/report/report",
+    "pages/me/me",
+    "pages/forget_passwd/forget_passwd",
+    "pages/logs/logs",
+    "pages/whitenoise/whitenoise",
+    "pages/music/music",
+    "pages/breathing/breathing",
+    "pages/breathingDisplay/breathingDisplay",
+    "pages/sleep_journal/sleep_journal",
+    "pages/sleep_reminder/sleep_reminder",
+    "pages/modify_passwd/modify_passwd",
+    "pages/modify_phone/modify_phone"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "Weixin",
+    "navigationBarBackgroundColor": "#ffffff"
+  },
+  "tabBar": {
+    "color": "#a9b7b7",
+    "selectedColor": "#11cd6e",
+    "borderStyle": "white",
+    "list": [
+      {
+        "selectedIconPath": "assets/home-3-fill.png",
+        "iconPath": "assets/home-3-line.png",
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "selectedIconPath": "assets/discuss-fill.png",
+        "iconPath": "assets/discuss-line.png",
+        "pagePath": "pages/community/community",
+        "text": "社区"
+      },
+      {
+        "selectedIconPath": "assets/file-add-fill.png",
+        "iconPath": "assets/file-add-line.png",
+        "pagePath": "pages/post_new/post_new",
+        "text": "发布"
+      },
+      {
+        "selectedIconPath": "assets/file-chart-fill.png",
+        "iconPath": "assets/file-chart-line.png",
+        "pagePath": "pages/report/report",
+        "text": "报告"
+      },
+      {
+        "selectedIconPath": "assets/account-box-fill.png",
+        "iconPath": "assets/account-box-line.png",
+        "pagePath": "pages/me/me",
+        "text": "我的"
+      }
+    ]
+  },
+  "style": "v2",
+  "componentFramework": "glass-easel",
+  "lazyCodeLoading": "requiredComponents"
+}
