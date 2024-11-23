@@ -21,6 +21,26 @@ from django.contrib.auth import authenticate
 from app.models import VerificationCode, CustomUser
 from utils.aliyunSMS import SMSClient
 
+class RegisterAPIView(APIView):
+    def post(self, request, *args, **kwargs):
+        # 获取前端传递的手机号和密码
+        phone_number = request.data.get('username')  # 前端字段是 username
+        password = request.data.get('password')
+
+        # 验证输入是否合法
+        if not phone_number or not password:
+            return Response({'error': 'Phone number and password are required.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # 检查手机号是否已注册
+        if CustomUser.objects.filter(phone_number=phone_number).exists():
+            return Response({'error': 'Phone number is already registered.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # 创建用户
+        user = CustomUser.objects.create_user(phone_number=phone_number, password=password)
+
+        # 注册成功，返回成功信息
+        return Response({'message': 'Registration successful.'}, status=status.HTTP_201_CREATED)
+
 class LoginAPIView(APIView):
     def post(self, request, *args, **kwargs):
         phone_number = request.data.get('username')
