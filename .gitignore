@@ -92,6 +92,10 @@ drivers/*
 !drivers/.gitkeep
 build
 
+# static for docker
+/backend/static/
+
+
 
 #IDEA
 .idea/
