@@ -80,7 +80,6 @@ class CreateForumPost(APIView):
             except:
                 return Response({'error': 'Invalid picture_names'}, status=400)
         # check if picture_names is a list with picture_count * string elements
-        print(picture_names)
         if not isinstance(picture_names, list) or len(picture_names) != picture_count \
             or not all(isinstance(i, str) for i in picture_names):
             return Response({'error': 'Invalid picture_names'}, status=400)

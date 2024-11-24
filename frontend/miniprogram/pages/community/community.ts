@@ -60,7 +60,7 @@ Page({
             })),
             isliked: post.isliked
           }));
-          console.log(datan.map((post: any) => post.images));
+          console.log(datan.map((post: any) => post.images))
           this.setData({ posts: datan as Array<{ [key: string]: any }> });
         } else {
           console.error('Failed to load posts:', res);
