@@ -20,5 +20,8 @@ RUN python manage.py collectstatic --noinput
 # 运行数据库迁移命令
 RUN python manage.py migrate
 
+RUN mkdir -p /app/staticfiles/media/forum_pictures
+
+
 # 启动命令，使用 Gunicorn 作为 WSGI 服务器
 CMD ["gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "3"]
