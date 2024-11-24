@@ -33,6 +33,7 @@ Page({
    */
   onLoad() {
     // TODO: load real posts data from backend
+    this.setData({ phone_number: wx.getStorageSync('phone_number') })
     wx.request({
       url: 'http://127.0.0.1:8000/api/forum/posts/',
       method: 'POST',
@@ -96,7 +97,6 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload() {
-
   },
 
   /**
@@ -205,5 +205,34 @@ Page({
 
   get_comment_value(e: any) {
     this.setData({ comment_value: e.detail.value })
+  },
+
+  delete_post(e: any) {
+    const index = e?.currentTarget?.dataset.index;
+    console.log("delete " + index);
+    const id = this.data.posts[index].id;
+    wx.request({
+      url: 'http://127.0.0.1:8000/api/forum/delete_post/',
+      method: 'POST',
+      header: {
+        'content-type': 'application/json',
+        'Authorization': 'Bearer ' + wx.getStorageSync('access_token')
+      },
+      data: {
+        postid: id
+      },
+      success: (res) => {
+        if (res.statusCode === 200) {
+          const updatedPosts = this.data.posts.filter((post, idx) => idx !== index);
+          this.setData({ posts: updatedPosts });
+        } else {
+          console.error('Failed to delete post:', res);
+        }
+      },
+      fail: (err) => {
+        console.error('Request failed:', err);
+      }
+    });
   }
+
 })

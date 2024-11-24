@@ -29,6 +29,9 @@
       <view class="post_comment" bindtap="comment_post" data-index="{{index}}">
         <image style="height:15px; width:15px" src="../../assets/message-3-line.png"/><text>  {{item.commentnum}}</text>
       </view>
+      <view class="post_delete" bindtap="delete_post" data-index="{{index}}" style="display:{{item.username==phone_number ? 'display' : 'none'}};">
+        <image style="height:15px; width:15px" src="../../assets/delete-bin-2-line.png"/>
+      </view>
     </view>
     <view class="post_new_comment" style="display: flex; flex-direction: row; margin-top: 5px; display: {{replynow == index ? 'display' : 'none'}};">
     <input class="post_comment_input" bindinput="get_comment_value"/>
