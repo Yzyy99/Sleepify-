@@ -9,9 +9,13 @@
 | `/api/send_verification_code/` | POST   | Send temporary code.                            |
 | `/api/verify-code/`            | POST   | Verify the code and token and login.            |
 | `/api/logout/`                 | POST   | Logout                                          |
-| `/api/forum/posts/`            | POST   | Retrieve 10 forum posts since specific index.   |
-| `/api/forum/post_pictures/{postid}/{picture_index}/` | POST    | Retrieve a specific picture from a forum post.   |
-
+| `/api/forum/posts/`          | POST    | Retrieve forum posts.                           |
+| `/api/forum/get_picture/`    | POST    | Retrieve a picture from a forum post.           |
+| `/api/forum/create_post/`    | POST   | Create a new forum post.                        |
+| `/api/forum/create_picture/` | POST   | Upload a picture for a forum post.              |
+| `/api/forum/like_post/`      | POST   | Like or unlike a forum post.                    |
+| `/api/forum/reply_post/`     | POST   | Reply to a forum post.                          |
+| `/api/forum/delete_post/`    | POST | Delete a forum post.                            |
 ---
 
 ## Detailed Endpoint Specifications
@@ -559,7 +563,8 @@
 
 | **Field** | **Type** | **Description** |
 | --------- | -------- | --------------- |
-| `replies` | `array`  | List of replies to the forum post. |
+| `replies` | `integer`| Total number of replies. |
+| `reply_content` | `array`  | List of replies to the forum post. |
 
 ```json
 {
@@ -640,6 +645,81 @@
 ```json
 {
     "error": "Access token is required"
+}
+```
+
+**Error Response (404 Not Found)**:
+
+| **Field** | **Type** | **Description** |
+| --------- | -------- | --------------- |
+| `error`   | `string` | Error message.  |
+
+```json
+{
+    "error": "Post not found"
+}
+```
+
+### 12. Delete Forum Post
+
+| **Field** | **Type** | **Description** | **Required** |
+| --------- | -------- | --------------- | ------------ |
+| `Authorization` | `string` | Access token for authentication. | Yes |
+| `postid` | `integer` | ID of the forum post to delete. | Yes |
+
+**Request Example**:
+```json
+{
+    "Authorization": "Bearer <access_token>",
+    "postid": 1
+}
+```
+
+**Response Example (200 OK)**:
+
+| **Field** | **Type** | **Description** |
+| --------- | -------- | --------------- |
+| `message` | `string` | Success message. |
+
+```json
+{
+    "message": "Post deleted successfully"
+}
+```
+
+**Error Response (400 Bad Request)**:
+
+| **Field** | **Type** | **Description** |
+| --------- | -------- | --------------- |
+| `error`   | `string` | Error message.  |
+
+```json
+{
+    "error": "Postid is required"
+}
+```
+
+**Error Response (401 Unauthorized)**:
+
+| **Field** | **Type** | **Description** |
+| --------- | -------- | --------------- |
+| `error`   | `string` | Error message.  |
+
+```json
+{
+    "error": "User is not authenticated"
+}
+```
+
+**Error Response (403 Forbidden)**:
+
+| **Field** | **Type** | **Description** |
+| --------- | -------- | --------------- |
+| `error`   | `string` | Error message.  |
+
+```json
+{
+    "error": "You do not have permission to delete this post"
 }
 ```
 
