@@ -6,7 +6,8 @@ Page({
    */
   data: {
     chooseImgs: [] as string[],
-    image_full: false
+    image_full: false,
+    content: ''
   },
 
   /**
@@ -65,6 +66,12 @@ Page({
 
   },
 
+  content_input(e: any) {
+    this.setData({
+      content: e.detail.value
+    });
+  },
+
   upload_new_img() {
     wx.chooseImage({
       count: 3,
@@ -84,16 +91,111 @@ Page({
             duration: 1000
           });
         }
-        if(this.data.chooseImgs.length == 3){
-          this.setData({image_full: true})
+        if (this.data.chooseImgs.length == 3) {
+          this.setData({ image_full: true })
         }
         console.log(this.data.chooseImgs)
       }
 
     })
   },
-  upload(){
-    //TODO
+  upload() {
+    const fs = wx.getFileSystemManager();
+    var image_names: string[] = [];
+
+    const uploadImage = (filePath: string): Promise<string> => {
+      return new Promise((resolve, reject) => {
+        fs.readFile({
+          filePath: filePath,
+          encoding: 'base64',
+          success: (res) => {
+            const imageType = filePath.split('.').pop();
+            wx.request({
+              url: 'http://127.0.0.1:8000/api/forum/create_picture/',
+              method: 'POST',
+              header: {
+                'content-type': 'application/json',
+                'Authorization': 'Bearer ' + wx.getStorageSync('access_token')
+              },
+              data: {
+                image_type: imageType,
+                image_data: res.data
+              },
+              success: (uploadRes) => {
+                console.log('Image uploaded successfully', uploadRes);
+                resolve((uploadRes.data as any).filename);
+              },
+              fail: (err) => {
+                console.error('Image upload failed', err);
+                reject(err);
+              }
+            });
+          },
+          fail: (err) => {
+            console.error('Failed to read file', err);
+            reject(err);
+          }
+        });
+      });
+    };
+
+    const uploadPost = async () => {
+      try {
+        for (let i = 0; i < this.data.chooseImgs.length; i++) {
+          const filePath = this.data.chooseImgs[i];
+          const filename = await uploadImage(filePath);
+          image_names.push(filename);
+        }
+        console.log('image_names', image_names);
+
+        // upload post
+        wx.request({
+          url: 'http://127.0.0.1:8000/api/forum/create_post/',
+          method: 'POST',
+          header: {
+            'content-type': 'application/json',
+            'Authorization': 'Bearer ' + wx.getStorageSync('access_token')
+          },
+          data: {
+            content: this.data.content,
+            picture_count: image_names.length,
+            picture_names: image_names
+          },
+          success: (res) => {
+            console.log('Post created successfully', res);
+            wx.showToast({
+              title: 'Post created successfully',
+              icon: 'success',
+              duration: 2000
+            });
+          },
+          fail: (err) => {
+            console.error('Post creation failed', err);
+            wx.showToast({
+              title: 'Post creation failed',
+              icon: 'none',
+              duration: 2000
+            });
+          }
+        });
+
+        // clear textarea and images
+        this.setData({
+          content: '',
+          chooseImgs: [],
+          image_full: false
+        });
+
+        // redirect to community
+        wx.switchTab({
+          url: '/pages/community/community',
+        });
+      } catch (error) {
+        console.error('Error uploading images', error);
+      }
+    };
+
+    uploadPost();
   }
 })
 

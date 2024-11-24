@@ -74,11 +74,13 @@ class CreateForumPost(APIView):
             return Response({'error': 'Invalid picture_count'}, status=400)
         # picture_names is a list of filenames, each is the response of the upload api
         picture_names = request.data.get('picture_names')
-        try:
-            picture_names = json.loads(picture_names)
-        except:
-            return Response({'error': 'Invalid picture_names'}, status=400)
+        if isinstance(picture_names, str):
+            try:
+                picture_names = json.loads(picture_names)
+            except:
+                return Response({'error': 'Invalid picture_names'}, status=400)
         # check if picture_names is a list with picture_count * string elements
+        print(picture_names)
         if not isinstance(picture_names, list) or len(picture_names) != picture_count \
             or not all(isinstance(i, str) for i in picture_names):
             return Response({'error': 'Invalid picture_names'}, status=400)
