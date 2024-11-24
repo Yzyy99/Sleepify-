@@ -92,6 +92,10 @@ drivers/*
 !drivers/.gitkeep
 build
 
+# static for docker
+/backend/static/
+
+
 
 #IDEA
 .idea/
@@ -100,3 +104,5 @@ build
 
 #VSCODE
 .vscode/
+
+/fronted/node_modules/
