@@ -7,7 +7,8 @@
 </view>
 <view style="flex: 1">
   <textarea placeholder="请输入" placeholder-style="color:gray;" 
-  style="width: auto; border-radius: 25px; border: 1px solid gray; padding: 10px;"/>
+  style="width: auto; border-radius: 25px; border: 1px solid gray; padding: 10px;"
+  bindinput="content_input" value="{{content}}"/>
 </view>
 <view style="flex: 1; padding: 10px;">
   <view class="image_box" style="margin: 5px;">

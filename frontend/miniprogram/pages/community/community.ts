@@ -60,7 +60,7 @@ Page({
             })),
             isliked: post.isliked
           }));
-          console.log(datan.map((post: any) => post.imagenum));
+          console.log(datan.map((post: any) => post.images));
           this.setData({ posts: datan as Array<{ [key: string]: any }> });
         } else {
           console.error('Failed to load posts:', res);
@@ -83,7 +83,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    this.onLoad();
   },
 
   /**
