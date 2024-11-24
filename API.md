@@ -16,6 +16,7 @@
 | `/api/forum/like_post/`      | POST   | Like or unlike a forum post.                    |
 | `/api/forum/reply_post/`     | POST   | Reply to a forum post.                          |
 | `/api/forum/delete_post/`    | POST | Delete a forum post.                            |
+
 ---
 
 ## Detailed Endpoint Specifications
