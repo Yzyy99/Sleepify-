@@ -51,6 +51,7 @@ class LoginAPIView(APIView):
         if user is not None:
             # 登录成功，生成 token
             refresh = RefreshToken.for_user(user)
+            refresh.set_exp(lifetime=datetime.timedelta(days=7)) 
             return Response({
                 'refresh': str(refresh),
                 'access': str(refresh.access_token),
