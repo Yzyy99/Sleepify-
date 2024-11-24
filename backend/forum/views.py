@@ -91,6 +91,22 @@ class CreateForumPost(APIView):
         post = ForumPost.objects.create(username=username, content=content, picture_count=str(picture_count), picture_names=picture_names)
         return Response({'postid': post.postid, 'created_at': post.created_at}, status=201)
 
+class DeleteForumPost(APIView):
+    def post(self, request):
+        if not request.user.is_authenticated:
+            return Response({'error': 'User is not authenticated'}, status=401)
+        postid = request.data.get('postid')
+        if not postid:
+            return Response({'error': 'Postid is required'}, status=400)
+        post = get_object_or_404(ForumPost, postid=postid)
+        if post is None:
+            return Response({'error': 'Post not found'}, status=404)
+        if post.username != request.user.phone_number:
+            return Response({'error': 'You do not have permission to delete this post'}, status=403)
+        post.delete()
+        # TODO: process the pictures
+        return Response({'message': 'Post deleted successfully'}, status=200)
+
 
 class CreateForumPicture(APIView):
     def post(self, request):
@@ -103,7 +119,9 @@ class CreateForumPicture(APIView):
         image_data = request.data.get('image_data')
         if not image_data:
             return Response({'error': 'Image data is required'}, status=400)
-        
+        # if it begins with 'data:image/xxx;base64,', remove it
+        if image_data.startswith('data:image/'):
+            image_data = image_data.split(',', 1)[1]
         try:
             image_bytes = base64.b64decode(image_data)
         except Exception as e:
