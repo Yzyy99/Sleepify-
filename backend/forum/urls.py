@@ -8,4 +8,5 @@ urlpatterns = [
     path('create_picture/', views.CreateForumPicture.as_view(), name='create_forum_picture'),
     path('like_post/', views.LikeForumPost.as_view(), name='like_forum_post'),
     path('reply_post/', views.ReplyForumPost.as_view(), name='reply_forum_post'),
+    path('delete_post/', views.DeleteForumPost.as_view(), name='delete_forum_post'),
 ]
