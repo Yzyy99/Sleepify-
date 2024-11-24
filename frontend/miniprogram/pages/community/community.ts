@@ -44,6 +44,7 @@ Page({
         if (res.statusCode === 200) {
           var datan = Array.isArray(res.data) ? res.data : [];
           datan = datan.map((post: any) => ({
+            id: post.id,
             userphotosrc: "../../assets/photo_default.png",
             username: post.username,
             content: post.content,
@@ -123,6 +124,38 @@ Page({
     const index = e?.currentTarget?.dataset.index;
     console.log("user liked " + index);
     // TODO: post to backend
+    const id = this.data.posts[index].id;
+    wx.request({
+      url: 'http://127.0.0.1:8000/api/forum/like_post/',
+      method: 'POST',
+      header: {
+        'content-type': 'application/json',
+        'Authorization': 'Bearer ' + wx.getStorageSync('access_token')
+      },
+      data: {
+        postid: id
+      },
+      success: (res) => {
+        if (res.statusCode === 200) {
+          const updatedPosts = this.data.posts.map((post, idx) => {
+            if (idx === index) {
+              return {
+                ...post,
+                like: (res.data as any).likes,
+                isliked: (res.data as any).isliked
+              };
+            }
+            return post;
+          });
+          this.setData({ posts: updatedPosts });
+        } else {
+          console.error('Failed to like post:', res);
+        }
+      },
+      fail: (err) => {
+        console.error('Request failed:', err);
+      }
+    });
   },
 
   comment_post(e: any) {
@@ -132,7 +165,42 @@ Page({
   send_comment(e: any) {
     const index = e?.currentTarget.dataset.index;
     console.log("send to " + index + ": " + this.data.comment_value);
-    // TODO: post new comments
+    const id = this.data.posts[index].id;
+    wx.request({
+      url: 'http://127.0.0.1:8000/api/forum/reply_post/',
+      method: 'POST',
+      header: {
+        'content-type': 'application/json',
+        'Authorization': 'Bearer ' + wx.getStorageSync('access_token')
+      },
+      data: {
+        postid: id,
+        reply_content: this.data.comment_value
+      },
+      success: (res) => {
+        if (res.statusCode === 200) {
+          const updatedPosts = this.data.posts.map((post, idx) => {
+            if (idx === index) {
+              return {
+                ...post,
+                commentnum: (res.data as any).replies,
+                comments: (res.data as any).reply_content.map((reply: any) => ({
+                  username: reply.username,
+                  content: reply.content
+                }))
+              };
+            }
+            return post;
+          });
+          this.setData({ posts: updatedPosts, comment_value: "", replynow: -1 });
+        } else {
+          console.error('Failed to send comment:', res);
+        }
+      },
+      fail: (err) => {
+        console.error('Request failed:', err);
+      }
+    });
   },
 
   get_comment_value(e: any) {
