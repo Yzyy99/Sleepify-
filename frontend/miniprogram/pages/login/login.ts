@@ -69,11 +69,11 @@ Page({
           // 使用类型守卫判断 res.data 是否是成功的 TokenResponse
           if (isTokenResponse(res.data)) {
             const { access, refresh } = res.data;
-    
+
             // 保存 token 到本地存储
             wx.setStorageSync('access_token', access);
             wx.setStorageSync('refresh_token', refresh);
-    
+            wx.setStorageSync('phone_number', phoneNumber);
             wx.showToast({
               title: '登录成功',
               icon: 'success',
@@ -127,7 +127,7 @@ Page({
     });
     */
 
-    
+
   },
 
   onBack() {
