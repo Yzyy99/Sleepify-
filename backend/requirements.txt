@@ -8,3 +8,4 @@ alibabacloud_tea_openapi
 alibabacloud_tea_util
 python-dotenv
 django-redis
+pillow
