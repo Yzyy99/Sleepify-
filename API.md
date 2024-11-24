@@ -4,6 +4,7 @@
 
 | Endpoint                       | Method | Description                                     |
 | ------------------------------ | ------ | ----------------------------------------------- |
+| `/api/register/`               | POST   | Register new user
 | `/api/login/`                  | POST   | Authenticates user and returns JWT tokens.      |
 | `/api/token/refresh/`          | POST   | Refreshes access token using the refresh token. |
 | `/api/send_verification_code/` | POST   | Send temporary code.                            |
@@ -21,7 +22,51 @@
 
 ## Detailed Endpoint Specifications
 
-### 1. User Login
+### 1. User Rigester
+| **Field**  | **Type** | **Description**                                   | **Required** |
+| ---------- | -------- | ------------------------------------------------- | ------------ |
+| `username` | `string` | The user's username.(actually it is phone number) | Yes          |
+| `password` | `string` | The user's password.                              | Yes          |
+
+**Request Example**:
+```json
+{
+    "username": "example_user",
+    "password": "example_password"
+}
+```
+
+**Response Example (201 OK)**:
+
+| **Field** | **Type** | **Description** |
+| --------- | -------- | --------------- |
+| `massage` | `string` | successful message.  |
+
+```json
+{
+    "message": "Registration successful"
+}
+```
+
+**Error Response (401 Unauthorized)**:
+
+| **Field** | **Type** | **Description** |
+| --------- | -------- | --------------- |
+| `error`   | `string` | Error message.  |
+
+```json
+{
+    "error": "Phone number and password are required"
+}
+```
+
+```json
+{
+    "error": "Phone number is already registered"
+}
+```
+
+### 2. User Login
 
 | **Field**  | **Type** | **Description**                                   | **Required** |
 | ---------- | -------- | ------------------------------------------------- | ------------ |
@@ -36,7 +81,7 @@
 }
 ```
 
-**Response Example (200 OK)**:
+**Response Example (200 CREATED)**:
 
 | **Field** | **Type** | **Description** |
 | --------- | -------- | --------------- |
@@ -50,7 +95,7 @@
 }
 ```
 
-**Error Response (401 Unauthorized)**:
+**Error Response (400 BAD_REQUEST)**:
 
 | **Field** | **Type** | **Description** |
 | --------- | -------- | --------------- |
@@ -64,7 +109,7 @@
 
 ---
 
-### 2. Token Refresh
+### 3. Token Refresh
 
 | **Field** | **Type** | **Description**    | **Required** |
 | --------- | -------- | ------------------ | ------------ |
