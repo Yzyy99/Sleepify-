@@ -186,4 +186,4 @@ class ReplyForumPost(APIView):
             'content': reply_content,
         })
         post.save()
-        return Response({'replies': post.replies}, status=200)
+        return Response({'replies': post.replies, "reply_content": post.reply_content}, status=200)
