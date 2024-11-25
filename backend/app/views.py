@@ -45,9 +45,19 @@ class LoginAPIView(APIView):
     def post(self, request, *args, **kwargs):
         phone_number = request.data.get('username')
         password = request.data.get('password')
-        # print(f'{phone_number} {password}')
+        print(f'{phone_number} {password}')
 
-        user = authenticate(request, phone_number=phone_number, password=password)
+        # user = authenticate(request, phone_number=phone_number, password=password)
+        # 检查用户是否存在
+        try:
+            user = CustomUser.objects.get(phone_number=phone_number)
+            print(f"User found: {user}")
+        except CustomUser.DoesNotExist:
+            return Response({'error': 'User does not exist'}, status=status.HTTP_401_UNAUTHORIZED)
+
+        # 手动验证密码
+        if not user.check_password(password):
+            return Response({'error': 'Invalid password'}, status=status.HTTP_401_UNAUTHORIZED)
         if user is not None:
             # 登录成功，生成 token
             refresh = RefreshToken.for_user(user)
@@ -111,6 +121,7 @@ class SendVerificationCodeView(APIView):
 class VerifyCodeSerializer(serializers.Serializer):
     code = serializers.CharField(max_length=6)
     token = serializers.CharField()
+    password = serializers.CharField(write_only=True)
 
     def validate(self, data):
         token = data.get('token')
@@ -136,8 +147,12 @@ class VerifyCodeSerializer(serializers.Serializer):
 
         # 检查或创建用户
         if not CustomUser.objects.filter(phone_number=phone_number).exists():
-            user = CustomUser.objects.create_user(phone_number=phone_number)
-            user.set_password(password)
+            #user = CustomUser.objects.create_user(phone_number=phone_number)
+            #user.set_password(password)
+            #user.save()
+            user = CustomUser.objects.create_user(phone_number=phone_number, password=password)
+            print(f'User created: {user}, password: {password}')
+            user.is_active = True
             user.save()
         else:
             user = CustomUser.objects.get(phone_number=phone_number)
@@ -148,6 +163,7 @@ class VerifyCodeSerializer(serializers.Serializer):
 
 class VerifyCodeView(APIView):
     def post(self, request):
+        print(request.data.get('password'))  # 确认后端接收到的密码
         serializer = VerifyCodeSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.validated_data['user']

@@ -9,26 +9,10 @@
   padding: 20px;
 }
 
-/* 返回按钮样式 */
-.back-button {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-}
-
-.back-text {
-  color: #333333;  /* 返回按钮文字颜色改为深色 */
-  font-size: 16px;
-}
-
-.back-image {
-  width: 30px;
-  height: 30px;
-}
 
 /* 欢迎登录标题样式 */
 .login-header {
-  margin-top: 80px; /* 标题距离顶部的间距 */
+  margin-top: 10px; /* 标题距离顶部的间距 */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
