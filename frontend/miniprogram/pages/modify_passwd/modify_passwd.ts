@@ -1,4 +1,5 @@
 // pages/forget_passwd/forget_passwd.ts
+const themeregister = require('../../utils/theme.js');
 
 Page({
   data: {
