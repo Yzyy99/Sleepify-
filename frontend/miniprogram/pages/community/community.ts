@@ -1,10 +1,12 @@
-// pages/community/community.ts
+// pages/community/community.ts\
+const app4=getApp();
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    isDarkMode: app4.globalData.isDarkMode, // 是否夜间模式
     replynow: -1,
     comment_value: "",
     posts: [
@@ -84,8 +86,40 @@ Page({
    */
   onShow() {
     this.onLoad();
+    this.themeCommunity(); 
   },
 
+  themeCommunity() {
+    const isDarkMode = this.data.isDarkMode;
+
+    if (isDarkMode) {
+      this.setData({
+        pageBackgroundColor: '#1E1E2F', // 深蓝灰背景
+        textColor: '#F4F4F9', // 柔和白色文字
+        bubbleColor: '#28293E' // 深色气泡颜色
+      });
+      wx.setNavigationBarColor({
+        frontColor: '#ffffff', // 导航栏文字白色
+        backgroundColor: '#1E1E2F' // 导航栏背景深蓝灰
+      });
+      wx.setTabBarStyle({
+        backgroundColor: '#1E1E2F' // 导航栏背景深蓝灰
+      });
+    } else {
+      this.setData({
+        pageBackgroundColor: '#f5f5dc', // 浅米色背景
+        textColor: '#333', // 深灰色文字
+        bubbleColor: '#DCE4C9' // 浅色气泡颜色
+      });
+      wx.setNavigationBarColor({
+        frontColor: '#000000', // 导航栏文字黑色
+        backgroundColor: '#f5f5dc' // 导航栏背景浅米色
+      });
+      wx.setTabBarStyle({
+        backgroundColor:'#f5f5dc'
+      })
+    }
+  },
   /**
    * 生命周期函数--监听页面隐藏
    */
