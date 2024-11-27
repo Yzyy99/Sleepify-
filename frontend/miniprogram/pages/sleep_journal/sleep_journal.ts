@@ -1,11 +1,18 @@
 // pages/sleep_journal/sleep_journal.ts
+const themeJournal = require('../../utils/theme.js');
 Page({
-
   /**
    * 页面的初始数据
    */
+  //TODO:和睡眠记录功能连接
   data: {
-
+    records: [
+      { date: "10.17", sleepStatus: "熬夜", note: "和同学在外聚餐" },
+      { date: "10.18", sleepStatus: "失眠", note: "心情不好" },
+      { date: "10.19", sleepStatus: "按时睡觉", note: "无" },
+      { date: "10.20", sleepStatus: "熬夜", note: "赶周末ddl" },
+      { date: "10.21", sleepStatus: "按时睡觉", note: "第二天上早八" },
+    ],
   },
 
   /**
@@ -26,7 +33,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    themeJournal.applyTheme(this);
   },
 
   /**
