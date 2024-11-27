@@ -15,7 +15,15 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad() {
-
+    const phone = wx.getStorageSync('phone_number'); // 获取登录时保存的手机号
+    if (phone) {
+      this.setData({
+        username: phone, // 将手机号设置为用户名
+        phone: phone     // 设置手机号
+      });
+    } else {
+      console.error("手机号未找到，请检查登录逻辑是否正确保存了手机号。");
+    }
   },
 
   /**
@@ -106,6 +114,9 @@ Page({
   },
 
   logout() {
-    // TODO: logout
-  }
+      wx.clearStorageSync(); // 清除本地存储
+      wx.reLaunch({
+        url: '/pages/homepage/homepage' // 跳转回登录页面
+      });
+    }
 })

@@ -11,7 +11,12 @@
   <text class="input-label">手机号</text>
   <view class="phone-input-wrapper">
     <input class="input-field phone-input" placeholder="请输入手机号" type="number" bindinput="onPhoneInput" />
-    <button class="send-code-button">发送验证码</button>
+    <button 
+  class="send-code-button" 
+  bindtap="onSendCode" 
+  disabled="{{isCodeSent}}">
+  {{isCodeSent ? countdown + '秒后重试' : '发送验证码'}}
+</button>
   </view>
 </view>
 
