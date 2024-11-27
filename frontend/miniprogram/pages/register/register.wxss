@@ -9,26 +9,10 @@
   padding: 20px;
 }
 
-/* 返回按钮样式 */
-.back-button {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-}
-
-.back-text {
-  color: #333333;  /* 返回按钮文字颜色改为深色 */
-  font-size: 16px;
-}
-
-.back-image {
-  width: 30px;
-  height: 30px;
-}
 
 /* 欢迎登录标题样式 */
 .login-header {
-  margin-top: 80px; /* 标题距离顶部的间距 */
+  margin-top: 10px; /* 标题距离顶部的间距 */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -124,15 +108,23 @@
   margin-left: 10px;
   padding: 0 15px;
   height: 40px;
-  background-color: #DCE4C9; /* 按钮背景绿色 */
-  color: #432E54; /* 按钮文字颜色白色 */
-  display: flex; /* 使用 flex 布局 */
-  align-items: center; /* 垂直居中 */
-  justify-content: center; /* 水平居中 */
+  background-color: #DCE4C9; /* 默认绿色背景 */
+  color: #432E54; /* 默认文字颜色 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 14px;
   font-weight: bold;
   border: none;
   border-radius: 20px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
   cursor: pointer;
+  transition: background-color 0.3s ease; /* 增加背景色变化过渡效果 */
+}
+
+.send-code-button:disabled {
+  background-color: #cccccc; /* 禁用时为灰色 */
+  color: #666666; /* 禁用时文字变浅 */
+  cursor: not-allowed; /* 禁用时鼠标形状改变 */
+  box-shadow: none; /* 禁用时去掉阴影 */
 }
