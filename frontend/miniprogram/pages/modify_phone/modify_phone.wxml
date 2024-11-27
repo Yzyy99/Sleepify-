@@ -1,5 +1,5 @@
 <!--pages/forget_passwd/forget_passwd.wxml-->
-<view class="container" style="background-color: {{pageBackgroundColor}}; color: {{textColor}};">
+<view class="container" style="background-color: {{pageBackgroundColor}}; color:{{textColor}};">
   <!-- 返回按钮 -->
   <div bindtap="onBack" class="back-button">
     <image src="/assets/arrow-left-s-line.png" class="back-image"></image>
@@ -26,7 +26,7 @@
             <input class="input-field" placeholder="请输入收到的验证码" type="number" bindinput="onValidationInput" />
         </view>
         <view style="flex: 0 2 auto">
-            <button class="button-valid" style="width: 235rpx; display: block; box-sizing: border-box; left: 0rpx; top: 8rpx; position: relative;">发送验证码</button>
+            <button class="button-valid" style="width: 235rpx; display: block; box-sizing: border-box; left: 0rpx; top: 8rpx; position: relative;background-color: {{buttonBackgroundColor}};">发送验证码</button>
         </view>
       </view>
   </view>
@@ -45,7 +45,7 @@
             <input class="input-field" placeholder="请输入收到的验证码" type="number" bindinput="onNewValidationInput" />
         </view>
         <view style="flex: 0 2 auto">
-            <button class="button-valid" style="width: 235rpx; display: block; box-sizing: border-box; left: 0rpx; top: 8rpx; position: relative;">发送验证码</button>
+            <button class="button-valid" style="width: 235rpx; display: block; box-sizing: border-box; left: 0rpx; top: 8rpx; position: relative; background-color: {{buttonBackgroundColor}};">发送验证码</button>
         </view>
       </view>
   </view>

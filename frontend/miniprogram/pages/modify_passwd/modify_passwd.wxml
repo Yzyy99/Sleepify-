@@ -20,11 +20,19 @@
   </view>
 </view>
 
-<!-- 验证码输入框 -->
-<view class="input-container">
-  <text class="input-label">验证码</text>
-  <input class="input-field" placeholder="请输入验证码" type="number" bindinput="onCodeInput" />
-</view>
+ <!-- 验证码输入框-->
+  <view class="input-container">
+    <text class="input-label">验证码</text>
+    
+      <view style="display:flex; flex-direction:row; height: auto; width: 100%;">
+        <view style="flex: 2 0 auto">
+            <input class="input-field" placeholder="请输入收到的验证码" type="number" bindinput="onValidationInput" />
+        </view>
+        <view style="flex: 0 2 auto">
+            <button class="button-valid" style="width: 235rpx; display: block; box-sizing: border-box; left: 0rpx; top: 8rpx; position: relative; background-color:{{buttonBackgroundColor}}">发送验证码</button>
+        </view>
+      </view>
+  </view>
 
 <!-- 密码输入框 -->
 <view class="input-container">
