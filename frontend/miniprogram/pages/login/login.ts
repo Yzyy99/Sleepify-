@@ -45,8 +45,9 @@ Page({
 
   // 登录按钮逻辑
   onLogin() {
-    const { phoneNumber, password } = this.data;
-
+    const { phoneNumber, password } = this.data
+    
+    /* for simple login
     wx.showToast({
       title: '登录成功',
       icon: 'success',
@@ -60,7 +61,8 @@ Page({
         }, 2000);
       },
     });
-    
+    */
+
     // 简单的表单验证
     if (!phoneNumber || !password) {
       wx.showToast({
