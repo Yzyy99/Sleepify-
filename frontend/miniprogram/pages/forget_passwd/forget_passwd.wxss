@@ -4,7 +4,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    background-color: #FFFFFF;  /* 背景为白色 */
     height: 100vh; /* 占满屏幕高度 */
     padding: 20px;
   }
@@ -17,7 +16,6 @@
   }
   
   .back-text {
-    color: #333333;  /* 返回按钮文字颜色改为深色 */
     font-size: 16px;
   }
   
@@ -38,13 +36,11 @@
   .welcome-text {
     font-size: 24px;
     font-weight: bold;
-    color: #333333;  /* 标题颜色改为深色 */
   }
   
   .underline {
     width: 80px;
     height: 2px;
-    background-color: #333333;  /* 下划线颜色改为深色 */
     margin-top: 8px;
     margin-bottom: 40px;
   }
@@ -59,13 +55,11 @@
   
   .input-label {
     font-size: 16px;
-    color: #333333; /* 标签颜色改为深色 */
     margin-bottom: 5px;
   }
   
   .input-field {
     border: none;
-    border-bottom: 1px solid #EDEDED;
     font-size: 16px;
     padding: 10px;
     color: #333333;  /* 输入框文字颜色改为深色 */
@@ -82,7 +76,6 @@
     width: 100%;
     height: 50px;
     background-color: #77D28E;  /* 绿色背景 */
-    color: #FFFFFF;  /* 按钮文字颜色保持为白色 */
     border-radius: 25px;
     font-size: 18px;
     font-weight: bold;
