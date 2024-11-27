@@ -48,6 +48,7 @@ Page({
     const { phoneNumber, password } = this.data;
     // for simple login
     /*
+
     wx.showToast({
       title: '登录成功',
       icon: 'success',
@@ -62,6 +63,7 @@ Page({
       },
     });
     */
+
     // 简单的表单验证
     if (!phoneNumber || !password) {
       wx.showToast({
