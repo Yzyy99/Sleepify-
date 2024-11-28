@@ -1,4 +1,4 @@
-const themewhitenoise = require('../../utils/theme_index.js');
+const themewhitenoise = require('../../utils/theme.js');
 Page({
   data: {
     imageList: [
