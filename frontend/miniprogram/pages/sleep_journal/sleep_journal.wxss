@@ -1,1 +1,44 @@
-/* pages/sleep_journal/sleep_journal.wxss */
+/* 背景样式 */
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* 确保背景不会遮挡内容 */
+}
+
+/* 通用样式 */
+.container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+/* 标题 */
+.header {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* 表格样式 */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.cell {
+  flex: 1;
+  text-align: center;
+  padding: 5px;
+}

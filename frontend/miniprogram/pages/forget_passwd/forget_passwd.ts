@@ -1,5 +1,5 @@
 // pages/forget_passwd/forget_passwd.ts
-
+const theme_forget_passwd = require('../../utils/theme.js')
 Page({
   data: {
     phoneNumber: '',
@@ -8,8 +8,12 @@ Page({
   },
 
   onShow() {
-    // 页面显示时根据全局夜间模式状态切换主题
-    themeregister.applyTheme(this);
+    // 页面显示时根据全局状态应用主题
+    const app = getApp();
+    this.setData({
+      isDarkMode: app.globalData.isDarkMode
+    });
+    theme_forget_passwd.applyTheme(this);  // 应用主题
   },
   // 获取输入的手机号
   onPhoneInput(event: any) {

@@ -1,2 +1,18 @@
-<!--pages/sleep_journal/sleep_journal.wxml-->
-<text>pages/sleep_journal/sleep_journal.wxml</text>
+<view class="background" style="background-color: {{pageBackgroundColor}};"></view>
+<view class="container">
+  <view class="header" style="color: {{textColor}};">睡眠小记</view>
+  <view class="table">
+    <view class="row header-row" style="color: {{textColor}};">
+      <view class="cell">日期</view>
+      <view class="cell">睡眠情况</view>
+      <view class="cell">小记</view>
+    </view>
+    <block wx:for="{{records}}" wx:key="date">
+      <view class="row" style="color: {{textColor}};">
+        <view class="cell">{{item.date}}</view>
+        <view class="cell">{{item.sleepStatus}}</view>
+        <view class="cell">{{item.note}}</view>
+      </view>
+    </block>
+  </view>
+</view>

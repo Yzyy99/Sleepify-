@@ -1,5 +1,9 @@
-// 引入 theme.js 工具文件
-const thememodifypassword = require('../../utils/theme.js');
+
+
+// pages/forget_passwd/forget_passwd.ts
+const themeModifyPasswd = require('../../utils/theme.js');
+
+
 Page({
   data: {
     phoneNumber: '',
@@ -13,7 +17,8 @@ Page({
 
   onShow() {
     // 页面显示时根据全局夜间模式状态切换主题
-    thememodifypassword.applyTheme(this);
+    themeModifyPasswd.applyTheme(this);
+
   },
 
   // 获取输入的手机号
