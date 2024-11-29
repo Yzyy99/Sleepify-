@@ -118,7 +118,7 @@ Page({
     }, 1000);
   },
 
-  // 注册按钮逻辑
+  // 修改按钮逻辑
   onRegister() {
     const { phoneNumber, password, confirmPassword, verificationCode, token } = this.data;
 

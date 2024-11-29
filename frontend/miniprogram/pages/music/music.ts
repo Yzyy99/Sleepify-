@@ -1,4 +1,4 @@
-const thememusic = require('../../utils/theme_index.js');
+const thememusic = require('../../utils/theme.js');
 Page({
   data: {
     recentPlayList: [
