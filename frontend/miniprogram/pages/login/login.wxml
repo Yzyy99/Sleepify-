@@ -1,8 +1,5 @@
 <view class="container" style="background-color: {{pageBackgroundColor}}; color: {{textColor}};">
-  <!-- 返回按钮 -->
-  <div bindtap="onBack" class="back-button">
-    <image src="/assets/arrow-left-s-line.png" class="back-image"></image>
-  </div>
+
 
   <!-- 欢迎登录标题 -->
   <view class="login-header">
@@ -28,5 +25,5 @@
   </navigator>
   
   <!-- 登录按钮 -->
-  <button class="login-button" bindtap="onLogin">登录</button>
+  <button class="login-button"style="background-color: {{buttonBackgroundColor}}; color: {{buttonTextColor}};" bindtap="onLogin">登录</button>
 </view>

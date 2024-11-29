@@ -1,57 +1,34 @@
 <!--pages/forget_passwd/forget_passwd.wxml-->
 <view class="container" style="background-color: {{pageBackgroundColor}}; color:{{textColor}};">
-  <!-- 返回按钮 -->
-  <div bindtap="onBack" class="back-button">
-    <image src="/assets/arrow-left-s-line.png" class="back-image"></image>
-  </div>
 
   <!-- 欢迎登录标题 -->
   <view class="login-header">
     <text class="welcome-text">修改手机号</text>
     <view class="underline"></view>
   </view>
+<!-- 手机号输入框和发送验证码按钮 -->
+<view class="input-container phone-container">
+  <text class="input-label">手机号</text>
+  <view class="phone-input-wrapper">
+    <input class="input-field phone-input" placeholder="请输入手机号" type="number" bindinput="onPhoneInput" />
+    <button 
+  class="send-code-button" 
+  style="background-color: {{buttonBackgroundColor}}; color: {{buttonTextColor}};"
+  bindtap="onSendCode" 
+  disabled="{{isCodeSent}}">
+  {{isCodeSent ? countdown + '秒后重试' : '发送验证码'}}
+</button>
+  </view>
+</view>
 
-  <!-- 手机号输入框 -->
-  <view class="input-container">
-    <text class="input-label">当前手机号</text>
-    <input class="input-field" value="{{phoneNumber}}" type="number" disabled="disabled" />
-  </view>
-
- <!-- 验证码输入框-->
-  <view class="input-container">
-    <text class="input-label">验证码</text>
-    
-      <view style="display:flex; flex-direction:row; height: auto; width: 100%;">
-        <view style="flex: 2 0 auto">
-            <input class="input-field" placeholder="请输入收到的验证码" type="number" bindinput="onValidationInput" />
-        </view>
-        <view style="flex: 0 2 auto">
-            <button class="button-valid" style="width: 235rpx; display: block; box-sizing: border-box; left: 0rpx; top: 8rpx; position: relative;background-color: {{buttonBackgroundColor}};">发送验证码</button>
-        </view>
-      </view>
-  </view>
-
-  <!-- 密码输入框 -->
-  <view class="input-container">
-    <text class="input-label">新手机号</text>
-    <input class="input-field" placeholder="请输入新密码" type="password" bindinput="onNewPhoneInput"/>
-  </view>
-  
-  <view class="input-container">
-    <text class="input-label">验证码</text>
-    
-      <view style="display:flex; flex-direction:row; height: auto; width: 100%;">
-        <view style="flex: 2 0 auto">
-            <input class="input-field" placeholder="请输入收到的验证码" type="number" bindinput="onNewValidationInput" />
-        </view>
-        <view style="flex: 0 2 auto">
-            <button class="button-valid" style="width: 235rpx; display: block; box-sizing: border-box; left: 0rpx; top: 8rpx; position: relative; background-color: {{buttonBackgroundColor}};">发送验证码</button>
-        </view>
-      </view>
-  </view>
+<!-- 验证码输入框 -->
+<view class="input-container">
+  <text class="input-label">验证码</text>
+  <input class="input-field" placeholder="请输入验证码" type="number" bindinput="onCodeInput" />
+</view>
   
   <!-- 登录按钮 -->
-  <button class="login-button" bindtap="onRegister">完成</button>
+  <button class="login-button" style="background-color: {{buttonBackgroundColor}}; color: {{buttonTextColor}};" bindtap="onSubmit">完成</button>
 
   
 </view>

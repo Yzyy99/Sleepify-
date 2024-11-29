@@ -34,8 +34,18 @@
   </view>
 
    <!-- 音乐播放器控制栏 -->
-   <view class="player-bar">
-    <text class="player-text">{{currentStatus}}</text>
-    <button bindtap="togglePlay">{{currentStatus === '播放中' ? '暂停' : '播放'}}</button>
-  </view>
+<view 
+  class="player-bar" 
+  style="background-color: {{playerBarBackgroundColor}};">
+  <text 
+    class="player-text" 
+    style="color: {{playerBarTextColor}};">
+    {{currentStatus}}
+  </text>
+  <button 
+    style="color: {{playerBarTextColor}};" 
+    bindtap="togglePlay">
+    {{currentStatus === '播放中' ? '暂停' : '播放'}}
+  </button>
+</view>
 </view>

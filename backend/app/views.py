@@ -181,11 +181,6 @@ class SendVerificationCodeWithoutCheckView(APIView):
         if not phone_number:
             return Response({'error': 'Phone number is required.'}, status=status.HTTP_400_BAD_REQUEST)
 
-        # 检查是否已有该电话号码的用户
-        #if CustomUser.objects.filter(phone_number=phone_number).exists():
-        #    return Response({'error': 'User with this phone number already exists.'},
-        #                    status=status.HTTP_409_CONFLICT)
-
         # 检查 60 秒内是否已经发送过验证码
         cached_code = cache.get(f'verify_code_{phone_number}_time')
         if cached_code:
@@ -211,3 +206,37 @@ class SendVerificationCodeWithoutCheckView(APIView):
 
         return Response({'message': 'Verification code sent successfully.', 'token': temp_token},
                         status=status.HTTP_200_OK)
+
+class VerifyCodeAndUpdatePhoneView(APIView):
+    def post(self, request):
+        code = request.data.get('code')
+        old_phone_number = request.data.get('old_phone_number')  # 直接从请求中获取旧手机号
+        new_phone_number = request.data.get('phone_number')
+
+        print(f'{old_phone_number} {new_phone_number}')
+
+        if not code or not old_phone_number or not new_phone_number:
+            return Response({'error': 'code, old phone number, and new phone number are required.'},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        # 验证缓存的验证码
+        cached_code = cache.get(f'verify_code_{old_phone_number}')
+        if not cached_code or cached_code != code:
+            return Response({'error': 'Invalid or expired verification code.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # 检查新手机号是否已被使用
+        if CustomUser.objects.filter(phone_number=new_phone_number).exists():
+            return Response({'error': 'The new phone number is already in use.'}, status=status.HTTP_409_CONFLICT)
+
+        # 更新用户的手机号
+        try:
+            user = CustomUser.objects.get(phone_number=old_phone_number)
+            user.phone_number = new_phone_number
+            user.save()
+        except CustomUser.DoesNotExist:
+            return Response({'error': 'User not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+        # 删除已使用的验证码
+        cache.delete(f'verify_code_{old_phone_number}')
+
+        return Response({'message': 'Phone number updated successfully.'}, status=status.HTTP_200_OK)
