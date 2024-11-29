@@ -13,6 +13,7 @@
     <input class="input-field phone-input" placeholder="请输入手机号" type="number" bindinput="onPhoneInput" />
     <button 
   class="send-code-button" 
+  style="background-color: {{buttonBackgroundColor}}; color: {{buttonTextColor}};"
   bindtap="onSendCode" 
   disabled="{{isCodeSent}}">
   {{isCodeSent ? countdown + '秒后重试' : '发送验证码'}}
@@ -39,6 +40,6 @@
 </view>
 
 <!-- 注册按钮 -->
-<button class="login-button" bindtap="onRegister">注册</button>
+<button class="login-button"  style="background-color: {{buttonBackgroundColor}}; color: {{buttonTextColor}};" bindtap="onRegister">注册</button>
 
 </view>
