@@ -1,4 +1,3 @@
-<view class="background" style="background-color: {{pageBackgroundColor}};"></view>
 <view class="container">
   <view class="header" style="color: {{textColor}};">睡眠小记</view>
   <view class="table">
@@ -14,5 +13,18 @@
         <view class="cell">{{item.note}}</view>
       </view>
     </block>
+  </view>
+
+  <!-- 添加表单 -->
+  <view class="form">
+    <view class="form-item">
+      <label>睡眠情况：</label>
+      <input type="text" placeholder="请输入睡眠情况" bindinput="onInputSleepStatus" />
+    </view>
+    <view class="form-item">
+      <label>小记：</label>
+      <input type="text" placeholder="请输入小记" bindinput="onInputNote" />
+    </view>
+    <button  style="background-color: {{buttonBackgroundColor}}; color: {{buttonTextColor}};" bindtap="submitRecord">提交</button>
   </view>
 </view>

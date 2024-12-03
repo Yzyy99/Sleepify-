@@ -19,7 +19,7 @@ class GetForumPosts(APIView):
             return Response({'error': 'User is not authenticated'}, status=401)
         
         last_post_id = request.data.get('last_post_id')
-        limit = 10
+        limit = 1000
 
         if last_post_id:
             posts = ForumPost.objects.filter(id__lt=last_post_id).order_by('-created_at')[:limit]
