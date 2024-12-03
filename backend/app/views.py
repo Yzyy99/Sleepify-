@@ -8,6 +8,7 @@ from django.shortcuts import render
 import random
 from django.utils import timezone
 from rest_framework_simplejwt.exceptions import TokenError
+from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken
 
 # Create your views here.
@@ -18,7 +19,8 @@ from rest_framework.response import Response
 from rest_framework import status, serializers
 from django.contrib.auth import authenticate
 
-from app.models import VerificationCode, CustomUser
+from app.models import VerificationCode, CustomUser, SleepRecord
+from rest_framework import serializers
 from utils.aliyunSMS import SMSClient
 
 class RegisterAPIView(APIView):
@@ -240,3 +242,33 @@ class VerifyCodeAndUpdatePhoneView(APIView):
         cache.delete(f'verify_code_{old_phone_number}')
 
         return Response({'message': 'Phone number updated successfully.'}, status=status.HTTP_200_OK)
+    
+class SleepRecordSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SleepRecord
+        fields = ['id', 'date', 'sleep_status', 'note', 'created_at']
+        read_only_fields = ['id', 'created_at']  # 只读字段，前端无需提供
+
+class SleepRecordAPIView(APIView):
+    permission_classes = [IsAuthenticated]  # 只有登录用户才能访问
+
+    def get(self, request):
+        """获取当前用户的睡眠记录"""
+        user = request.user
+        records = SleepRecord.objects.filter(user=user).order_by('-date')  # 获取当前用户的记录
+        serializer = SleepRecordSerializer(records, many=True)  # 序列化数据
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        """存储前端传递的睡眠记录"""
+        user = request.user  # 当前登录用户
+        data = request.data  # 前端传递的数据
+        #data['user'] = user.id  # 将当前用户的 ID 添加到数据中
+        print("Received data:", data)
+
+        serializer = SleepRecordSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save(user=user)  # 保存记录，并关联到当前用户
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        print("Serializer errors:", serializer.errors)
+        return Response({"errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
