@@ -10,32 +10,22 @@ Page({
     replynow: -1,
     comment_value: "",
     posts: [
-      // userphotosrc: "../../assets/music2.png",
-      // username: "测试测试",
-      // content: "不想写软工不想写软工",
-      // imagenum: 1,
-      // images: ["../../assets/music6.png"],
-      // time: "3分钟前",
-      // like: 100,
-      // commentnum: 2,
-      // comments: [{
-      //   username: "aaa",
-      //   content: "你也没写多少啊。。。"
-      // },
-      // {
-      //   username: "bbb",
-      //   content: "快点写😡"
-      // }
-
-    ] as Array<{ [key: string]: any }>
+    ] as Array<{ [key: string]: any }>,
+    personalizedRecommendation : false,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad() {
-    // TODO: load real posts data from backend
+    const personalizedRecommendation = wx.getStorageSync("personalizedRecommendation") || false;
+    console.log("个性化推荐开关状态:", personalizedRecommendation);
+    this.setData({ personalizedRecommendation });
+
+    // 加载帖子数据
+    this.loadPosts();
     this.setData({ phone_number: wx.getStorageSync('phone_number') })
+    /*
     wx.request({
       url: 'http://127.0.0.1:8000/api/forum/posts/',
       method: 'POST',
@@ -72,6 +62,7 @@ Page({
         console.error('Request failed:', err);
       }
     });
+    */
   },
 
   /**
@@ -85,8 +76,93 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    this.onLoad();
+    console.log("社区页面 onShow 被触发");
+    const personalizedRecommendation = wx.getStorageSync("personalizedRecommendation") || false;
+  console.log("页面显示时个性化推荐状态:", personalizedRecommendation); // 打印状态
+    this.setData({ personalizedRecommendation });
+    this.loadPosts(); 
     this.themeCommunity(); 
+  },
+
+  loadPosts() {
+    // 根据开关状态调用不同的后端接口
+    if (this.data.personalizedRecommendation) {
+      this.fetchPersonalizedPosts(); // 获取个性化推荐帖子
+    } else {
+      this.fetchDefaultPosts(); // 获取默认推荐帖子
+    }
+  },
+
+  fetchDefaultPosts() {
+    wx.request({
+      url: "http://127.0.0.1:8000/api/forum/posts/", // 默认推荐接口
+      method: "POST",
+      header: {
+        "content-type": "application/json",
+        Authorization: "Bearer " + wx.getStorageSync("access_token"),
+      },
+      success: (res) => {
+        if (res.statusCode === 200) {
+          const datan = Array.isArray(res.data) ? res.data : [];
+          this.processPosts(datan); // 处理帖子数据
+        } else {
+          console.error("Failed to load default posts:", res);
+        }
+      },
+      fail: (err) => {
+        console.error("Request failed:", err);
+      },
+    });
+  },
+
+  /**
+   * 获取个性化推荐帖子
+   */
+  fetchPersonalizedPosts() {
+    wx.request({
+      url: "http://127.0.0.1:8000/api/forum/similarity_posts/", // 个性化推荐接口
+      method: "POST",
+      header: {
+        "content-type": "application/json",
+        Authorization: "Bearer " + wx.getStorageSync("access_token"),
+      },
+      success: (res) => {
+        if (res.statusCode === 200) {
+          const datan = Array.isArray(res.data) ? res.data : [];
+          this.processPosts(datan); // 处理帖子数据
+        } else {
+          console.error("Failed to load personalized posts:", res);
+        }
+      },
+      fail: (err) => {
+        console.error("Request failed:", err);
+      },
+    });
+  },
+
+  processPosts(posts: any[]) {
+    const processedPosts = posts.map((post: any) => ({
+      id: post.id,
+      userphotosrc: "../../assets/photo_default.png",
+      username: post.username,
+      content: post.content,
+      time: new Date(post.created_at).toLocaleString(),
+      imagenum: post.picture_count,
+      images: post.picture_names
+        ? post.picture_names.map(
+            (name: string) => `http://127.0.0.1:8000/static/media/forum_pictures/${name}`
+          )
+        : [],
+      like: post.likes,
+      commentnum: post.replies,
+      comments: post.reply_content.map((reply: any) => ({
+        username: reply.username,
+        content: reply.content,
+      })),
+      isliked: post.isliked,
+    }));
+
+    this.setData({ posts: processedPosts });
   },
 
   themeCommunity() {
