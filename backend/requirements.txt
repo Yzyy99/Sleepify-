@@ -9,3 +9,5 @@ alibabacloud_tea_util
 python-dotenv
 django-redis
 pillow
+numpy
+sentence_tansformers

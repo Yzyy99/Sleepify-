@@ -9,6 +9,21 @@ Page({
     photo: "../../assets/photo_default.png",
     username: "testUsername",
     phone: "12345678901",
+    personalizedRecommendation: false,
+  },
+
+  toggleRecommendation(e:any) {
+    const isChecked = e.detail.value; // 获取开关状态
+    this.setData({ personalizedRecommendation: isChecked });
+
+    // 将状态同步到后端或本地存储
+    wx.setStorageSync('personalizedRecommendation', isChecked);
+    console.log("个性化推荐状态已保存:", isChecked);
+    wx.showToast({
+      title: isChecked ? "个性化推荐已开启" : "个性化推荐已关闭",
+      icon: "success",
+      duration: 2000,
+    });
   },
 
   /**
