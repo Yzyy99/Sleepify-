@@ -22,6 +22,14 @@
     <!-- <text class="profile_value">username</text> -->
     <text class="modify_arrow">></text>
 </view>
+<view class="profile_section">
+    <text class="profile_title">个性化推荐</text>
+    <switch 
+        class="profile_switch" 
+        checked="{{personalizedRecommendation}}" 
+        bindchange="toggleRecommendation">
+    </switch>
+</view>
 <view class="profile_section" style="border-bottom: none;" bindtap="logout">
     <text class="profile_title" style="color: #AA0000;">退出登录</text>
     <!-- <text class="profile_value">username</text> -->
