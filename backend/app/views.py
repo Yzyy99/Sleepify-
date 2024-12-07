@@ -23,6 +23,16 @@ from app.models import VerificationCode, CustomUser, SleepRecord
 from rest_framework import serializers
 from utils.aliyunSMS import SMSClient
 
+from openai import OpenAI
+from datetime import timedelta
+from django.utils.timezone import now
+from .models import SleepRecord
+
+client = OpenAI(
+    base_url='https://xiaoai.plus/v1',
+    api_key='sk-5niABBgIca92aTfWgTyLT9kpznt4NIqcZdpJyE0JgHU3rvSm'
+)
+
 class RegisterAPIView(APIView):
     def post(self, request, *args, **kwargs):
         # 获取前端传递的手机号和密码
@@ -272,3 +282,41 @@ class SleepRecordAPIView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         print("Serializer errors:", serializer.errors)
         return Response({"errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+class SleepAnalysisAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        """生成睡眠报告"""
+        user = request.user
+
+        # 从前端获取睡眠时间
+        sleep_time = request.data.get("sleep_time", None)
+
+        # 如果前端没有传递睡眠时间，返回错误提示
+        if not sleep_time:
+            return Response({"error": "请提供睡眠时间"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # 获取最近的一条睡眠记录
+        recent_record = SleepRecord.objects.filter(user=user).order_by('-date').first()
+
+        if not recent_record:
+            return Response({"error": "没有找到睡眠记录"}, status=status.HTTP_404_NOT_FOUND)
+
+        sleep_note = recent_record.note
+        #sleep_note = "熬夜"
+
+        try:
+            # 调用 GPT 模型生成报告
+            response = client.chat.completions.create(
+                model="gpt-4o",
+                messages=[
+                    {"role": "system", "content": "你是一个睡眠助手，可以分析用户的睡眠情况和睡眠日志生成个性化的专属定制睡眠报告，需要用和蔼可亲的语言，切忌格式化。"},
+                    {"role": "user", "content": f"睡眠时间：{sleep_time}小时。睡眠小记：{sleep_note}"}
+                ]
+            )
+            report = response.choices[0].message.content 
+            return Response({"report": report}, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
