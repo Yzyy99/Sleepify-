@@ -1,2 +1,51 @@
-<!--pages/report/report.wxml-->
-<text>pages/report/report.wxml</text>
+<view class="container">
+
+  <view class="section">
+  <!-- 模块标题 -->
+  <view class="title">
+    <text>声音</text>
+  </view>
+  
+  <!-- 内容部分 -->
+  <view class="sound-content">
+
+    <!-- 文本内容 -->
+    <view class="sound-text">
+      <text class="sound-description">没有捕捉到任何声音哦</text>
+      <text class="sound-link" bindtap="showSoundInfo">为什么</text>
+    </view>
+  </view>
+</view>
+
+  <view class="section">
+  <view class="title">
+    <text>翻看手机</text>
+  </view>
+  
+  <!-- 固定高度的模块容器，图片位于中间 -->
+  <view class="health-description">
+    <text>没有翻看手机记录</text>
+  </view>
+</view>
+
+<!-- 每日小贴士 -->
+<view class="section">
+  <view class="title">
+    <text>睡眠与健康</text>
+  </view>
+  <view class="health-description">
+    <text>睡前一小时放下手机，听轻柔音乐或冥想，有助于快速入睡！</text>
+  </view>
+</view>
+
+<!-- 专属推荐 -->
+<view class="section">
+  <view class="title">
+    <text>专属推荐</text>
+  </view>
+  <view class="recommendation">
+    <text>{{report}}</text>
+  </view>
+</view>
+
+</view>

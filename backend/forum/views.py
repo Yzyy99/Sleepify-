@@ -16,6 +16,29 @@ import hashlib
 import time
 from sentence_transformers import SentenceTransformer
 from forum.utils import batch_calculate_similarities
+from threading import Lock
+
+'''
+# 全局变量缓存模型
+_embedding_model = None
+_model_lock = Lock()
+
+def get_embedding_model():
+    """
+    获取嵌入模型，使用延迟加载的方式，保证只加载一次
+    """
+    global _embedding_model
+    if _embedding_model is None:
+        with _model_lock:  # 加锁防止多线程同时加载模型
+            if _embedding_model is None:  # 双重检查
+                print("Loading embedding model...")
+                _embedding_model = SentenceTransformer(
+                    'aspire/acge_text_embedding', 
+                    cache_folder=r'X:\course\software engineering\model'
+                )
+                print("Embedding model loaded successfully!")
+    return _embedding_model
+'''
 
 model = SentenceTransformer('aspire/acge_text_embedding', cache_folder=r'X:\course\software engineering\model')
 
@@ -228,6 +251,7 @@ class GetForumPostsWithSimilairity(APIView):
 
         # 如果用户有最近的睡眠小记，按相似度排序
         latest_sleep_record = SleepRecord.objects.filter(user=request.user).order_by('-created_at').first()
+        #model = get_embedding_model()
 
         if latest_sleep_record:
             # 用户最近的睡眠小记
