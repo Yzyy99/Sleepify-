@@ -1,1 +1,126 @@
-/* pages/report/report.wxss */
+/* 页面背景 */
+.container {
+  padding: 20rpx; /* 页面内边距 */
+  background-color: #b8b4b4; /* 浅灰色背景 */
+  min-height: 100vh; /* 最小高度为屏幕高度，防止内容过少 */
+  box-sizing: border-box; /* 包括内边距 */
+}
+/* 图片样式 */
+
+
+/* 模块样式 */
+/* 模块容器 */
+.section {
+  margin-bottom: 30rpx; /* 模块之间的间距 */
+  padding: 20rpx; /* 模块内边距 */
+  background-color: #ffffff; /* 模块背景色 */
+  border-radius: 10rpx; /* 圆角 */
+  box-shadow: 0rpx 2rpx 8rpx rgba(0, 0, 0, 0.1); /* 阴影 */
+  min-height: 200rpx; /* 定义模块的基础高度 */
+  min-width: 680rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* 模块标题 */
+.title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 20rpx;
+
+}
+
+/* 图片容器 */
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150rpx; /* 固定高度，用于图片居中 */
+}
+
+/* 图片样式 */
+.health-image {
+  width: 120rpx; /* 图片宽度 */
+  height: 120rpx; /* 图片高度 */
+  object-fit: contain; /* 确保图片完整显示 */
+  border-radius: 8rpx; /* 可选：图片圆角 */
+}
+
+.title text {
+  font-size: 32rpx; /* 标题字体大小 */
+  font-weight: bold; /* 标题加粗 */
+  text-align: left; /* 左对齐 */
+  color: #333; /* 标题颜色 */
+}
+
+/* 模块内容样式 */
+.recommendation {
+  font-size: 28rpx; /* 内容字体大小 */
+  color: #333; /* 内容文字颜色 */
+  line-height: 40rpx; /* 行高 */
+}
+
+.health-description {
+  font-size: 26rpx; /* 提示文字字体大小 */
+  color: #666; /* 提示文字颜色 */
+  line-height: 40rpx; /* 行高 */
+  /*text-align: center;*/
+}
+
+.subtitle {
+  font-size: 24rpx; /* 副标题字体大小 */
+  color: #999; /* 副标题颜色 */
+}
+
+.health-info {
+  display: flex; /* 横向布局 */
+  justify-content: space-around; /* 平均分布 */
+  margin-bottom: 20rpx; /* 与下方内容的间距 */
+}
+
+.risk {
+  text-align: center; /* 居中对齐 */
+}
+
+.value {
+  font-size: 28rpx; /* 数值字体大小 */
+  font-weight: bold; /* 加粗 */
+  color: #4caf50; /* 数值颜色 */
+}
+
+/* 内容布局 */
+.sound-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* 声音模块图片 */
+.sound-image {
+  width: 120rpx;
+  height: 120rpx;
+}
+
+/* 声音模块文字 */
+.sound-text {
+  flex: 1; /* 占据剩余空间 */
+  margin-left: 20rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.sound-description {
+  font-size: 26rpx;
+  color: #666666;
+  margin-bottom: 10rpx;
+}
+
+.sound-link {
+  font-size: 26rpx;
+  color: #007aff; /* 蓝色链接 */
+  text-decoration: underline; /* 下划线 */
+  cursor: pointer; /* 点击效果 */
+}
