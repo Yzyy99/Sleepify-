@@ -6,6 +6,7 @@ class ForumConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'forum'
 
+    
     def ready(self):
         # 在项目启动时加载嵌入模型
         embedding_model = SentenceTransformer(
@@ -14,3 +15,4 @@ class ForumConfig(AppConfig):
         )
         self.embedding_model = embedding_model  # 将模型存储到 AppConfig 实例中
         print("Embedding model loaded successfully!")
+    
