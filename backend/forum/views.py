@@ -40,7 +40,7 @@ def get_embedding_model():
     return _embedding_model
 '''
 
-model = SentenceTransformer('aspire/acge_text_embedding', cache_folder=r'X:\course\software engineering\model')
+model = SentenceTransformer('aspire/acge_text_embedding', cache_folder=r'/app/models/sentence_transformers')
 
 class ForumPostSerializer(serializers.ModelSerializer):
     class Meta:
