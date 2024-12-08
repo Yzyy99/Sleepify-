@@ -6,7 +6,7 @@ class ForumPostTestCase(TestCase):
     def setUp(self):
         # 在测试开始前初始化全局变量 embedding_model
         global embedding_model
-        embedding_model = SentenceTransformer('aspire/acge_text_embedding', cache_folder=r'X:\course\software engineering\model')
+        embedding_model = SentenceTransformer('aspire/acge_text_embedding', cache_folder=r'/app/models/sentence_transformers')
     
     def test_embedding_generation(self):
         # 创建帖子

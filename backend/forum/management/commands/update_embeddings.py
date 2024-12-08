@@ -3,7 +3,7 @@ from forum.models import ForumPost
 from sentence_transformers import SentenceTransformer
 
 # 加载嵌入模型
-model = SentenceTransformer('aspire/acge_text_embedding', cache_folder=r'X:\course\software engineering\model')
+model = SentenceTransformer('aspire/acge_text_embedding', cache_folder=r'/app/models/sentence_transformers')
 
 class Command(BaseCommand):
     help = "为数据库中没有嵌入向量的帖子生成并保存嵌入"
