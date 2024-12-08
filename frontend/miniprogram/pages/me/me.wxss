@@ -9,6 +9,10 @@
   padding-top: 10px;
   border-bottom: gray solid 1px;
 }
+.profile_switch {
+  margin-left: auto;
+  margin-right: 10px;
+}
 
 .profile_photo{
   width: 50px; 

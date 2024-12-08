@@ -1,10 +1,14 @@
 function applyTheme(pageInstance) {
   const app = getApp(); // 获取全局变量
   const isDarkMode = app.globalData.isDarkMode; // 判断是否为夜间模式
+
   if (isDarkMode) {
     // 设置夜间模式的导航栏颜色和页面样式
     wx.setNavigationBarColor({
       frontColor: '#ffffff', // 导航栏文字白色
+      backgroundColor: '#1E1E2F' // 导航栏背景深蓝灰
+    });
+    wx.setTabBarStyle({
       backgroundColor: '#1E1E2F' // 导航栏背景深蓝灰
     });
     pageInstance.setData({
@@ -21,6 +25,9 @@ function applyTheme(pageInstance) {
       frontColor: '#000000', // 导航栏文字黑色
       backgroundColor: '#f5f5dc' // 导航栏背景浅米色
     });
+    wx.setTabBarStyle({
+      backgroundColor:'#f5f5dc'
+    })
     pageInstance.setData({
       pageBackgroundColor: '#f5f5dc', // 页面背景浅米色
       textColor: '#333', // 页面文字深灰色

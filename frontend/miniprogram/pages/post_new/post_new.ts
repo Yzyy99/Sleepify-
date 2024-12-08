@@ -1,13 +1,14 @@
 // pages/post_new/post_new.ts
+const app3=getApp();
 Page({
-
   /**
    * 页面的初始数据
    */
   data: {
     chooseImgs: [] as string[],
     image_full: false,
-    content: ''
+    content: '',
+    isDarkMode: app3.globalData.isDarkMode // 是否夜间模式
   },
 
   /**
@@ -28,9 +29,41 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    this.themePostNew(); 
   },
 
+  // 应用主题
+  themePostNew() {
+    const isDarkMode = this.data.isDarkMode;
+
+    if (isDarkMode) {
+      this.setData({
+        pageBackgroundColor: '#1E1E2F', // 深蓝灰背景
+        textColor: '#F4F4F9', // 柔和白色文字
+        bubbleColor: '#28293E' // 深色气泡颜色
+      });
+      wx.setNavigationBarColor({
+        frontColor: '#ffffff', // 导航栏文字白色
+        backgroundColor: '#1E1E2F' // 导航栏背景深蓝灰
+      });
+      wx.setTabBarStyle({
+        backgroundColor: '#1E1E2F' // 导航栏背景深蓝灰
+      });
+    } else {
+      this.setData({
+        pageBackgroundColor: '#f5f5dc', // 浅米色背景
+        textColor: '#333', // 深灰色文字
+        bubbleColor: '#DCE4C9' // 浅色气泡颜色
+      });
+      wx.setNavigationBarColor({
+        frontColor: '#000000', // 导航栏文字黑色
+        backgroundColor: '#f5f5dc' // 导航栏背景浅米色
+      });
+      wx.setTabBarStyle({
+        backgroundColor:'#f5f5dc'
+      })
+    }
+  },
   /**
    * 生命周期函数--监听页面隐藏
    */

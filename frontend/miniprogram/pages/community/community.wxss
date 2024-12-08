@@ -6,7 +6,6 @@
   min-height: 100vh; /* 占满整个屏幕高度 */
   padding: 20px;
   padding-top: 5px;
-  background-color: #F5F5DC;
 }
 
 .post_head{

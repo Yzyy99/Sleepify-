@@ -45,7 +45,24 @@ Page({
 
   // 登录按钮逻辑
   onLogin() {
+    
     const { phoneNumber, password } = this.data;
+    // for simple login
+    /*
+    wx.showToast({
+      title: '登录成功',
+      icon: 'success',
+      duration: 2000,
+      success: () => {
+        // 延时跳转到主页
+        setTimeout(() => {
+          wx.switchTab({
+            url: '/pages/index/index',
+          });
+        }, 2000);
+      },
+    });
+    */
 
     // 简单的表单验证
     if (!phoneNumber || !password) {
@@ -110,22 +127,7 @@ Page({
         });
       },
     });
-    /*
-    // 模拟登录成功后的跳转
-    wx.showToast({
-      title: '登录成功',
-      icon: 'success',
-      duration: 2000,
-      success: () => {
-        // 延时跳转到主页
-        setTimeout(() => {
-          wx.switchTab({
-            url: '/pages/index/index'  // 跳转到主页
-          });
-        }, 2000);  // 延迟2秒后跳转
-      }
-    });
-    */
+   
 
 
   },

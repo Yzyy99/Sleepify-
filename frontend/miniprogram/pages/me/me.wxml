@@ -1,7 +1,7 @@
 <!--pages/me/me.wxml-->
 
-<view style="font-size: 28px; padding: 20px; background-color: #eac3da;">账户设置</view>
-<view style="background-color: #eac3da; height: 100vh; padding: 50px; padding-top:10px">
+<view style="font-size: 28px; padding: 20px; background-color: {{pageBackgroundColor}};color: {{textColor}};">账户设置</view>
+<view style="background-color: {{pageBackgroundColor}};color: {{textColor}}; height: 100vh; padding: 50px; padding-top:10px">
 <view class="profile_section" bindtap="modify_photo">
     <text class="profile_title">头像</text>
     <image class="profile_photo" src="{{photo}}" style="object-fit: cover;"></image>
@@ -9,18 +9,26 @@
 </view>
 <view class="profile_section">
     <text class="profile_title">用户名</text>
-    <input class="profile_value" value="{{username}}" bindchange="modify_username"/>
+    <input class="profile_value" style="color:{{textColor}}" value="{{username}}" bindchange="modify_username"/>
     <text class="modify_arrow">></text>
 </view>
 <view class="profile_section" bindtap="modify_phone">
     <text class="profile_title">手机号</text>
-    <text class="profile_value">{{phone}}</text>
+    <text class="profile_value"style="color:{{textColor}}">{{phone}}</text>
     <text class="modify_arrow">></text>
 </view>
 <view class="profile_section" bindtap="modify_passwd">
     <text class="profile_title">修改密码</text>
     <!-- <text class="profile_value">username</text> -->
     <text class="modify_arrow">></text>
+</view>
+<view class="profile_section">
+    <text class="profile_title">个性化推荐</text>
+    <switch 
+        class="profile_switch" 
+        checked="{{personalizedRecommendation}}" 
+        bindchange="toggleRecommendation">
+    </switch>
 </view>
 <view class="profile_section" style="border-bottom: none;" bindtap="logout">
     <text class="profile_title" style="color: #AA0000;">退出登录</text>

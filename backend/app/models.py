@@ -1,6 +1,7 @@
 from django.contrib.auth.models import BaseUserManager
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.conf import settings
 # Create your models here.
 class CustomUserManager(BaseUserManager):
     def create_user(self, phone_number, password=None, **extra_fields):
@@ -41,3 +42,13 @@ class VerificationCode(models.Model):
 
     def __str__(self):
         return f'{self.phone_number} - {self.code}'
+
+class SleepRecord(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="sleep_records")
+    date = models.DateField()  # 睡眠记录的日期
+    sleep_status = models.CharField(max_length=50)  # 睡眠状态
+    note = models.TextField(blank=True, null=True)  # 备注（允许为空）
+    created_at = models.DateTimeField(auto_now_add=True)  # 记录创建时间
+
+    def __str__(self):
+        return f"{self.user.phone_number} - {self.date} - {self.sleep_status}"

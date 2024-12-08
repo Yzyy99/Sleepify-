@@ -1,17 +1,51 @@
 import base64
 import json
+import numpy as np
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from .models import ForumPost, ForumPicture
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
+from app.models import SleepRecord
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework import serializers
 import hashlib
 import time
+from sentence_transformers import SentenceTransformer
+from forum.utils import batch_calculate_similarities
+from threading import Lock
 
+'''
+# 全局变量缓存模型
+_embedding_model = None
+_model_lock = Lock()
+
+def get_embedding_model():
+    """
+    获取嵌入模型，使用延迟加载的方式，保证只加载一次
+    """
+    global _embedding_model
+    if _embedding_model is None:
+        with _model_lock:  # 加锁防止多线程同时加载模型
+            if _embedding_model is None:  # 双重检查
+                print("Loading embedding model...")
+                _embedding_model = SentenceTransformer(
+                    'aspire/acge_text_embedding', 
+                    cache_folder=r'X:\course\software engineering\model'
+                )
+                print("Embedding model loaded successfully!")
+    return _embedding_model
+'''
+
+model = SentenceTransformer('aspire/acge_text_embedding', cache_folder=r'X:\course\software engineering\model')
+
+class ForumPostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ForumPost
+        fields = ['id', 'username', 'content', 'created_at']  
 
 class GetForumPosts(APIView):
     def post(self, request):
@@ -19,7 +53,7 @@ class GetForumPosts(APIView):
             return Response({'error': 'User is not authenticated'}, status=401)
         
         last_post_id = request.data.get('last_post_id')
-        limit = 10
+        limit = 1000
 
         if last_post_id:
             posts = ForumPost.objects.filter(id__lt=last_post_id).order_by('-created_at')[:limit]
@@ -89,7 +123,14 @@ class CreateForumPost(APIView):
             picture_count = 0
         # if not picture_names:
         #     picture_names = []
-        post = ForumPost.objects.create(username=username, content=content, picture_count=str(picture_count), picture_names=picture_names)
+        # post = ForumPost.objects.create(username=username, content=content, picture_count=str(picture_count), picture_names=picture_names)
+        post = ForumPost(
+            username=username,
+            content=content,
+            picture_count=picture_count,
+            picture_names=picture_names
+        )
+        post.save()  # 调用 save 方法，触发嵌入向量计算逻辑
         return Response({'postid': post.postid, 'created_at': post.created_at}, status=201)
 
 class DeleteForumPost(APIView):
@@ -188,4 +229,92 @@ class ReplyForumPost(APIView):
         })
         post.save()
         return Response({'replies': post.replies, "reply_content": post.reply_content}, status=200)
+    
+class GetForumPostsWithSimilairity(APIView):
+    """
+    获取并返回社区帖子，可根据用户的最新睡眠小记按相似度排序
+    """
+    def post(self, request):
+        # 用户认证检查
+        if not request.user.is_authenticated:
+            return Response({'error': 'User is not authenticated'}, status=401)
+
+        # 获取分页参数
+        last_post_id = request.data.get('last_post_id')  # 分页的起始帖子 ID
+        limit = 10  # 限制返回的帖子数量
+
+        # 获取社区帖子
+        if last_post_id:
+            posts = ForumPost.objects.filter(id__lt=last_post_id).order_by('-created_at')[:limit]
+        else:
+            posts = ForumPost.objects.all().order_by('-created_at')[:limit]
+
+        # 如果用户有最近的睡眠小记，按相似度排序
+        latest_sleep_record = SleepRecord.objects.filter(user=request.user).order_by('-created_at').first()
+        #model = get_embedding_model()
+
+        if latest_sleep_record:
+            # 用户最近的睡眠小记
+            note = latest_sleep_record.note or ""  # 获取 note
+            sleep_status = latest_sleep_record.sleep_status or ""  # 获取 sleep_status
+
+            # 合并 note 和 sleep_status
+            combined_input = f"{note},{sleep_status}"
+            print(f"Combined input: {combined_input}")
+
+            # 编码用户的睡眠记录嵌入向量
+            user_embedding = model.encode(combined_input, normalize_embeddings=True)
+
+            # 获取帖子嵌入向量并批量计算相似度
+            post_embeddings = []
+            post_objects = []
+
+            for post in posts:
+                if post.embedding:  # 如果帖子已存储嵌入向量
+                    post_embeddings.append(post.embedding)
+                else:  # 动态生成嵌入向量
+                    embedding = model.encode(post.content, normalize_embeddings=True)
+                    post_embeddings.append(embedding)
+
+                    # 动态生成后保存到数据库，避免下次重复计算
+                    post.embedding = embedding.tolist()
+                    post.save()
+                post_objects.append(post)
+
+            # 批量计算相似度
+            similarities = batch_calculate_similarities(user_embedding, post_embeddings)
+
+            # 帖子与相似度配对并排序
+            posts_with_similarity = sorted(
+                zip(post_objects, similarities), key=lambda x: x[1], reverse=True
+            )
+
+            print("Sorted posts with similarities:")
+            for post, similarity in posts_with_similarity:
+                print(f"Post ID: {post.postid}, Similarity: {similarity:.4f}, Content: {post.content[:50]}")  # 只打印前50字符的内容
+
+            # 排序后提取帖子对象
+            sorted_posts = [post for post, _ in posts_with_similarity]
+        else:
+            # 如果没有睡眠小记，按创建时间排序
+            print("No sleep record found, sorting by created time")
+            sorted_posts = posts
+
+        # 构建响应数据
+        response_data = []
+        for post in sorted_posts:
+            response_data.append({
+                'id': post.postid,
+                'username': post.username,
+                'content': post.content,
+                'created_at': post.created_at,
+                'picture_count': post.picture_count,
+                'picture_names': post.picture_names,
+                'likes': post.likes,
+                'replies': post.replies,
+                'reply_content': post.reply_content,
+                'isliked': request.user.phone_number in post.like_user
+            })
+
+        return Response(response_data, status=200)
 

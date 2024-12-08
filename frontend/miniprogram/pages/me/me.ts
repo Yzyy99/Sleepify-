@@ -1,4 +1,5 @@
 // pages/me/me.ts
+const thememe = require('../../utils/theme.js');
 Page({
 
   /**
@@ -8,13 +9,36 @@ Page({
     photo: "../../assets/photo_default.png",
     username: "testUsername",
     phone: "12345678901",
+    personalizedRecommendation: false,
+  },
+
+  toggleRecommendation(e:any) {
+    const isChecked = e.detail.value; // 获取开关状态
+    this.setData({ personalizedRecommendation: isChecked });
+
+    // 将状态同步到后端或本地存储
+    wx.setStorageSync('personalizedRecommendation', isChecked);
+    console.log("个性化推荐状态已保存:", isChecked);
+    wx.showToast({
+      title: isChecked ? "个性化推荐已开启" : "个性化推荐已关闭",
+      icon: "success",
+      duration: 2000,
+    });
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad() {
-
+    const phone = wx.getStorageSync('phone_number'); // 获取登录时保存的手机号
+    if (phone) {
+      this.setData({
+        username: phone, // 将手机号设置为用户名
+        phone: phone     // 设置手机号
+      });
+    } else {
+      console.error("手机号未找到，请检查登录逻辑是否正确保存了手机号。");
+    }
   },
 
   /**
@@ -28,7 +52,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    thememe.applyTheme(this);
   },
 
   /**
@@ -105,6 +129,9 @@ Page({
   },
 
   logout() {
-    // TODO: logout
-  }
+      wx.clearStorageSync(); // 清除本地存储
+      wx.reLaunch({
+        url: '/pages/homepage/homepage' // 跳转回登录页面
+      });
+    }
 })

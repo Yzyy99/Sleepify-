@@ -1,4 +1,4 @@
-const themewhitenoise = require('../../utils/theme_index.js');
+const themewhitenoise = require('../../utils/theme.js');
 Page({
   data: {
     imageList: [
@@ -23,7 +23,7 @@ Page({
     themewhitenoise.applyTheme(this);
   },
   // 点击图片事件处理：开始播放
-  onImageTap(e) {
+  onImageTap(e:any) {
     const index = e.currentTarget.dataset.index; // 获取点击图片的索引
     const selectedMusicUrl = this.data.imageList[index].musicUrl; // 获取对应的音乐 URL
 
