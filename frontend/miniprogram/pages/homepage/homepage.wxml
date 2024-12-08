@@ -7,10 +7,10 @@
   <text class="title">Sleepify睡眠助手</text>
 
   <!-- 登录按钮 -->
-  <button class="button" bindtap="onLogin">登录</button>
+<button class="button" style="background-color: {{buttonBackgroundColor}}; color: {{buttonTextColor}};" bindtap="onLogin">登录</button>
 
-  <!-- 注册按钮 -->
-  <button class="button" bindtap="onRegister">注册</button>
+<!-- 注册按钮 -->
+<button class="button" style="background-color: {{buttonBackgroundColor}}; color: {{buttonTextColor}};" bindtap="onRegister">注册</button>
 
   <switch class="mode-switch" color="#4a4a4a" bindchange="onToggleDarkMode" checked="{{isDarkMode}}" >夜间模式</switch>
 </view>

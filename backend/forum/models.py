@@ -1,4 +1,5 @@
 from django.db import models
+from django.apps import apps
 
 # Create your models here.
 
@@ -14,7 +15,20 @@ class ForumPost(models.Model):
     like_user = models.JSONField(default=list)
     replies  = models.IntegerField(default=0)
     reply_content = models.JSONField(default=list)
-    
+    embedding = models.JSONField(null=True, blank=True)  # 存储嵌入向量
+
+    def save(self, *args, **kwargs):
+        # 动态获取 AppConfig 中的 embedding_model
+        embedding_model = apps.get_app_config('forum').embedding_model
+        if not embedding_model:
+            print("Embedding model is not initialized")
+        else:
+            print("Embedding model is initialized")
+        if self.content:  # 确保内容不为空
+            self.embedding = embedding_model.encode(self.content).tolist()  # 生成嵌入并存储为列表
+        super().save(*args, **kwargs)  # 调用父类的保存方法
+
+
 class ForumPicture(models.Model):
     url = models.ImageField(upload_to='forum_pictures/')
     

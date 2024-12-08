@@ -781,6 +781,121 @@
 }
 ```
 
+### 13. Get Sleep Records
+| **Field**      | **Type**   | **Description**                  | **Required** |
+| -------------- | ---------- | -------------------------------- | ------------ |
+| `Authorization`| `string`   | Access token for authentication. | Yes          |
+
+**Request Example**:
+```http
+GET /api/sleep-records/
+Authorization: Bearer <access_token>
+```
+
+**Request Example(200 OK)**:
+| **Field**        | **Type**   | **Description**                             |
+| ----------------- | ---------- | ------------------------------------------- |
+| `id`             | `integer`  | Unique ID of the sleep record.              |
+| `date`           | `string`   | Date of the sleep record (YYYY-MM-DD).      |
+| `sleep_status`   | `string`   | Sleep status (e.g., "按时睡觉").            |
+| `note`           | `string`   | Notes related to the sleep record.          |
+| `created_at`     | `string`   | Timestamp when the record was created.      |
+```json
+[
+    {
+        "id": 1,
+        "date": "2024-10-19",
+        "sleep_status": "按时睡觉",
+        "note": "无",
+        "created_at": "2024-10-19T22:00:00Z"
+    },
+    {
+        "id": 2,
+        "date": "2024-10-20",
+        "sleep_status": "熬夜",
+        "note": "赶周末ddl",
+        "created_at": "2024-10-20T22:00:00Z"
+    }
+]
+```
+
+**Error Response (401 Unauthorized)**:
+
+| **Field** | **Type** | **Description** |
+| --------- | -------- | --------------- |
+| `error`   | `string` | Error message.  |
+
+```json
+{
+    "error": "User is not authenticated"
+}
+```
+
+### 14. Create Sleep Record
+| **Field**        | **Type**   | **Description**                       | **Required** |
+| ----------------- | ---------- | ------------------------------------- | ------------ |
+| `Authorization`   | `string`   | Access token for authentication.      | Yes          |
+| `date`            | `string`   | Date of the sleep record (YYYY-MM-DD).| Yes          |
+| `sleep_status`    | `string`   | Sleep status (e.g., "按时睡觉").       | Yes          |
+| `note`            | `string`   | Notes related to the sleep record.    | Yes          |
+
+**Request Examlpe:**
+```http
+POST /api/sleep-records/
+Authorization: Bearer <access_token>
+
+{
+    "date": "2024-12-03",
+    "sleep_status": "按时睡觉",
+    "note": "感觉很好"
+}
+```
+
+**Request Examlpe (201 Created):**
+| **Field**        | **Type**   | **Description**                             |
+| ----------------- | ---------- | ------------------------------------------- |
+| `id`             | `integer`  | Unique ID of the created record.            |
+| `date`           | `string`   | Date of the sleep record.                   |
+| `sleep_status`   | `string`   | Sleep status.                               |
+| `note`           | `string`   | Notes related to the sleep record.          |
+| `created_at`     | `string`   | Timestamp when the record was created.      |
+
+```json
+{
+    "id": 3,
+    "date": "2024-12-03",
+    "sleep_status": "按时睡觉",
+    "note": "感觉很好",
+    "created_at": "2024-12-03T22:00:00Z"
+}
+```
+**Error Response (400 Bad Request)**:
+
+| **Field** | **Type** | **Description** |
+| --------- | -------- | --------------- |
+| `error`   | `object` | Validation error details.  |
+
+```json
+{
+    "errors": {
+        "date": ["This field is required."],
+        "sleep_status": ["This field is required."]
+    }
+}
+```
+
+**Error Response (401 Unauthorized)**:
+
+| **Field** | **Type** | **Description** |
+| --------- | -------- | --------------- |
+| `error`   | `string` | Error message.  |
+
+```json
+{
+    "error": "User is not authenticated"
+}
+```
+
 ---
 
 ## Status Codes

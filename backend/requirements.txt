@@ -9,3 +9,8 @@ alibabacloud_tea_util
 python-dotenv
 django-redis
 pillow
+numpy
+sentence-transformers
+urllib3==1.26.13
+httpx==0.27.2
+openai==1.7.0

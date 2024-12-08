@@ -82,25 +82,26 @@
   left: 0;
   width: 100%;
   padding: 20rpx;
-  background-color: #fff;
+  background-color: #fff; /* 默认背景白色 */
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start; /* 子元素顶部对齐 */
   border-radius: 10rpx 10rpx 0 0;
   box-shadow: 0 -10rpx 20rpx rgba(0, 0, 0, 0.1);
 }
 
+/* 播放器文字 */
 .player-text {
+  margin-top: -22rpx;
   font-size: 32rpx;
-  color: #333;
+  color: #333; /* 默认文字深灰色 */
 }
 
+/* 按钮样式 */
 button {
-  font-size: 32rpx;
-  color: #000;
-  padding: 10rpx 20rpx;
-  background-color: #fff;
+  font-size: 28rpx;
   border: none;
-  border-radius: 10rpx;
+  background: none;
   cursor: pointer;
 }
+

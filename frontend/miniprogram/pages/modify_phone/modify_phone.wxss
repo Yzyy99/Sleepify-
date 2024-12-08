@@ -1,93 +1,124 @@
 /* 背景为白色 */
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    background-color: #FFFFFF;  /* 背景为白色 */
-    height: 100vh; /* 占满屏幕高度 */
-    padding: 20px;
-  }
-  
-  /* 返回按钮样式 */
-  .back-button {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-  }
-  
-  .back-text {
-    color: #333333;  /* 返回按钮文字颜色改为深色 */
-    font-size: 16px;
-  }
-  
-  .back-image {
-    width: 30px;
-    height: 30px;
-  }
-  
-  /* 欢迎登录标题样式 */
-  .login-header {
-    margin-top: 80px; /* 标题距离顶部的间距 */
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
-  }
-  
-  .welcome-text {
-    font-size: 24px;
-    font-weight: bold;
-    color: #333333;  /* 标题颜色改为深色 */
-  }
-  
-  .underline {
-    width: 80px;
-    height: 2px;
-    background-color: #333333;  /* 下划线颜色改为深色 */
-    margin-top: 8px;
-    margin-bottom: 40px;
-  }
-  
-  /* 输入框容器样式 */
-  .input-container {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    margin-bottom: 30px;
-  }
-  
-  .input-label {
-    font-size: 16px;
-    color: #333333; /* 标签颜色改为深色 */
-    margin-bottom: 5px;
-  }
-  
-  .input-field {
-    border: none;
-    border-bottom: 1px solid #EDEDED;
-    font-size: 16px;
-    padding: 10px;
-    color: #333333;  /* 输入框文字颜色改为深色 */
-    background-color: transparent;
-  }
-  
-  .button-valid{
-    width: 100%;
-    font-size: 13px;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: #FFFFFF;  /* 背景为白色 */
+  height: 100vh; /* 占满屏幕高度 */
+  padding: 20px;
+}
 
-  /* 登录按钮样式 */
-  .login-button {
-    width: 100%;
-    height: 50px;
-    background-color: #77D28E;  /* 绿色背景 */
-    color: #FFFFFF;  /* 按钮文字颜色保持为白色 */
-    border-radius: 25px;
-    font-size: 18px;
-    font-weight: bold;
-    text-align: center;
-    line-height: 35px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    margin-top: 20px;
-  }
+
+/* 欢迎登录标题样式 */
+.login-header {
+  margin-top: 10px; /* 标题距离顶部的间距 */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.welcome-text {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.underline {
+  width: 80px;
+  height: 2px;
+  margin-top: 8px;
+  margin-bottom: 40px;
+}
+
+/* 输入框容器样式 */
+.input-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.input-label {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.input-field {
+  border: none;
+  border-bottom: 1px solid #EDEDED;
+  font-size: 16px;
+  padding: 10px;
+  background-color: transparent;
+}
+
+/* 登录按钮样式 */
+.login-button {
+  width: 100%;
+  height: 50px;
+  background-color: #DCE4C9	;  /* 绿色背景 */
+  color: #432E54;  /* 按钮文字颜色保持为白色 */
+  border-radius: 25px;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 35px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  margin-top: 20px;
+}
+
+/* 忘记密码样式 */
+.forgot-password {
+  margin-top: 20px;
+  font-size: 14px;
+  text-align: right;
+  width: 100%;
+}
+
+/* 手机号输入框和验证码按钮的容器 */
+.phone-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.phone-input-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.phone-input {
+  flex: 1; /* 输入框占据剩余空间 */
+  border: none;
+  border-bottom: 1px solid #EDEDED;
+  font-size: 16px;
+  padding: 10px;
+  background-color: transparent;
+}
+
+.send-code-button {
+  margin-left: 10px;
+  padding: 0 15px;
+  height: 40px;
+  background-color: #DCE4C9; /* 默认绿色背景 */
+  color: #432E54; /* 默认文字颜色 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* 增加背景色变化过渡效果 */
+}
+
+.send-code-button:disabled {
+  background-color: #cccccc; /* 禁用时为灰色 */
+  color: #666666; /* 禁用时文字变浅 */
+  cursor: not-allowed; /* 禁用时鼠标形状改变 */
+  box-shadow: none; /* 禁用时去掉阴影 */
+}
