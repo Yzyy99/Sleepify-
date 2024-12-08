@@ -18,6 +18,7 @@ services:
     volumes:
       - .:/app
       - static_volume:/app/staticfiles
+      - model_volume:/app/models
     command: >
       sh -c " python manage.py makemigrations &&
              python manage.py migrate && 
@@ -44,6 +45,7 @@ services:
 
 volumes:
   postgres_data:
+  model_volume:
   static_volume:
 
 networks:
