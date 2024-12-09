@@ -22,13 +22,12 @@
 .welcome-text {
   font-size: 24px;
   font-weight: bold;
-  color: #333333;  /* 标题颜色改为深色 */
 }
 
 .underline {
   width: 80px;
   height: 2px;
-  background-color: #333333;  /* 下划线颜色改为深色 */
+  background-color: #fff;  /* 下划线颜色改为深色 */
   margin-top: 8px;
   margin-bottom: 40px;
 }
@@ -43,7 +42,6 @@
 
 .input-label {
   font-size: 16px;
-  color: #333333; /* 标签颜色改为深色 */
   margin-bottom: 5px;
 }
 
@@ -52,7 +50,6 @@
   border-bottom: 1px solid #EDEDED;
   font-size: 16px;
   padding: 10px;
-  color: #333333;  /* 输入框文字颜色改为深色 */
   background-color: transparent;
 }
 
