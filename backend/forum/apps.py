@@ -8,6 +8,10 @@ class ForumConfig(AppConfig):
 
     
     def ready(self):
+        import os
+        if os.environ.get('DISABLE_MODEL_LOADING') == 'true':
+            print("Model loading is disabled.")
+            return
         # 在项目启动时加载嵌入模型
         embedding_model = SentenceTransformer(
             'aspire/acge_text_embedding', 

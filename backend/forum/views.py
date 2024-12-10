@@ -17,6 +17,7 @@ import time
 from sentence_transformers import SentenceTransformer
 from forum.utils import batch_calculate_similarities
 from threading import Lock
+import os
 
 '''
 # 全局变量缓存模型
@@ -40,7 +41,8 @@ def get_embedding_model():
     return _embedding_model
 '''
 
-model = SentenceTransformer('aspire/acge_text_embedding', cache_folder=r'/app/models/sentence_transformers')
+if os.environ.get('DISABLE_MODEL_LOADING') != 'true':
+    model = SentenceTransformer('aspire/acge_text_embedding', cache_folder=r'/app/models/sentence_transformers')
 
 class ForumPostSerializer(serializers.ModelSerializer):
     class Meta:
@@ -235,6 +237,8 @@ class GetForumPostsWithSimilairity(APIView):
     获取并返回社区帖子，可根据用户的最新睡眠小记按相似度排序
     """
     def post(self, request):
+        if os.environ.get('DISABLE_MODEL_LOADING') == 'true':
+            return Response({'error': 'Similarity model is disabled'}, status=500)
         # 用户认证检查
         if not request.user.is_authenticated:
             return Response({'error': 'User is not authenticated'}, status=401)
