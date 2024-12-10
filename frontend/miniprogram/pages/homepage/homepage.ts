@@ -55,7 +55,7 @@ Page({
 
   toTest() {
     wx.navigateTo({
-      url: '/pages/test/test'
+      url: '/pages/sleeping/sleeping'
     });
   },
 });

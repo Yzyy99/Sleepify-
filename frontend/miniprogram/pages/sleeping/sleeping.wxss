@@ -55,3 +55,12 @@
   border-radius: 25px;
   margin-top: 30px;
 }
+
+
+.record-btn {
+  max-width: 20%;
+  padding: 12px 0px;
+  border-radius: 25px;
+  margin-top: 30px;
+  font-size: 14px;
+}

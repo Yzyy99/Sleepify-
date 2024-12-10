@@ -9,8 +9,8 @@ Page({
     count: 0,
     recordmode: false,
     recordoption: 0,
-    currentTime: 0,
-    totalTime: -1,
+    currentNoiseTime: 0,
+    totalNoiseTime: -1,
     recorder_message: "噪声记录未启用",
     currentDbValue: 0,
     avgDbValue: 0,
@@ -121,7 +121,7 @@ Page({
               })
               const timeList = [-1, 30, 60, 120, 180, 360]
               this.setData({
-                totalTime: timeList[res.tapIndex]
+                totalNoiseTime: timeList[res.tapIndex]
               })
 
               var recorder = wx.getRecorderManager()
@@ -178,9 +178,9 @@ Page({
               recorder.onStop((res) => {
                 recorder.stop()
                 this.setData({
-                  currentTime: this.data.currentTime + 1
+                  currentNoiseTime: this.data.currentNoiseTime + 1
                 })
-                if (this.data.totalTime != -1 && this.data.currentTime >= this.data.totalTime) {
+                if (this.data.totalNoiseTime != -1 && this.data.currentNoiseTime >= this.data.totalNoiseTime) {
                   this.setData({
                     recordmode: false,
                     recorder_message: "噪声记录结束"
