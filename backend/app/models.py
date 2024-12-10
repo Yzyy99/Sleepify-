@@ -45,7 +45,12 @@ class VerificationCode(models.Model):
 
 class SleepRecord(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="sleep_records")
-    date = models.DateField()  # 睡眠记录的日期
+    date = models.DateField(auto_now_add=True)  # 睡眠记录的日期
+    sleep_time = models.CharField(max_length=10, default='00:00')  # 入睡时间
+    wake_time = models.CharField(max_length=10, default="00:00")  # 起床时间
+    screen_on = models.IntegerField(default=-1)  # 亮屏次数
+    noise_max = models.IntegerField(default=-1)  # 最大噪音值
+    noise_avg = models.IntegerField(default=-1)  # 平均噪音值
     sleep_status = models.CharField(max_length=50)  # 睡眠状态
     note = models.TextField(blank=True, null=True)  # 备注（允许为空）
     created_at = models.DateTimeField(auto_now_add=True)  # 记录创建时间

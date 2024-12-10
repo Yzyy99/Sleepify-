@@ -46,6 +46,7 @@
     <text>专属推荐</text>
   </view>
   <view class="recommendation">
+    <button style="font-size: 14px; color: #444444; background-color: {{buttonBackgroundColor}}; display: {{report == '' ? 'block' : 'none'}};" bindtap="fetchSleepReport">生成我的专属推荐</button>
     <text>{{report}}</text>
   </view>
 </view>
