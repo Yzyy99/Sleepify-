@@ -351,3 +351,43 @@ class SleepAnalysisAPIView(APIView):
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+class SleepInformationAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        """获取睡眠信息"""
+        user = request.user
+
+        # 获取最近的一条睡眠记录
+        recent_record = SleepRecord.objects.filter(user=user).order_by('-date').first()
+
+        if not recent_record:
+            return Response({"error": "没有找到睡眠记录"}, status=status.HTTP_404_NOT_FOUND)
+
+        date = recent_record.date
+        sleep_time = recent_record.sleep_time
+        wake_time = recent_record.wake_time
+        # time is in format "hh:mm", get the period of sleep
+        sleep_time_obj = datetime.datetime.strptime(sleep_time, "%H:%M")
+        wake_time_obj = datetime.datetime.strptime(wake_time, "%H:%M")
+        sleep_duration_obj = wake_time_obj - sleep_time_obj
+        if sleep_duration_obj < timedelta(0):
+            sleep_duration_obj += timedelta(days=1)
+        sleep_duration = sleep_duration_obj.total_seconds() / 3600
+        screen_on = recent_record.screen_on
+        noise_max = recent_record.noise_max
+        noise_avg = recent_record.noise_avg
+        sleep_status = recent_record.sleep_status
+        sleep_note = recent_record.note
+
+        return Response({
+            "date": date,
+            "sleep_time": sleep_time,
+            "wake_time": wake_time,
+            "sleep_duration": sleep_duration,
+            "screen_on": screen_on,
+            "noise_max": noise_max,
+            "noise_avg": noise_avg,
+            "sleep_status": sleep_status,
+            "sleep_note": sleep_note
+        }, status=status.HTTP_200_OK)

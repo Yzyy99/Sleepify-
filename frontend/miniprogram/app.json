@@ -18,8 +18,7 @@
     "pages/sleep_reminder/sleep_reminder",
     "pages/modify_passwd/modify_passwd",
     "pages/modify_phone/modify_phone",
-    "pages/sleeping/sleeping",
-    "pages/test/test"
+    "pages/sleeping/sleeping"
   ],
   "window": {
     "navigationBarTextStyle": "black",
