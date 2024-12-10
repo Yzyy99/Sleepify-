@@ -10,6 +10,7 @@ python-dotenv
 django-redis
 pillow
 numpy
-sentence_tansformers
+sentence-transformers
 urllib3==1.26.13
+httpx==0.27.2
 openai==1.7.0

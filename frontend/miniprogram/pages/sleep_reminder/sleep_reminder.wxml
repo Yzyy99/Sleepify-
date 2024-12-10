@@ -1,3 +1,4 @@
+
 <view class="container" style="background-color: {{pageBackgroundColor}}; color: {{textColor}};">
   <view class="header">
     <text class="title">睡眠记录</text>
@@ -54,3 +55,7 @@
     </view>
   </view>
 </view>
+=======
+<!--pages/sleep_reminder/sleep_reminder.wxml-->
+<text>pages/sleep_reminder/sleep_reminder.wxml</text>
+

@@ -1,3 +1,5 @@
+
+<view class="background" style="background-color: {{pageBackgroundColor}}; position: absolute; width: 100%; height: 100%;"></view>
 <view class="container">
   <view class="header" style="color: {{textColor}};">睡眠小记</view>
   <view class="table">

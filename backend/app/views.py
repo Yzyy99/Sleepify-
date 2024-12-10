@@ -32,7 +32,6 @@ import os
 
 client = OpenAI(
     base_url='https://xiaoai.plus/v1',
-    #api_key='sk-5niABBgIca92aTfWgTyLT9kpznt4NIqcZdpJyE0JgHU3rvSm'
     api_key=os.getenv('OPENAI_API_KEY')
 )
 
@@ -323,3 +322,4 @@ class SleepAnalysisAPIView(APIView):
 
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
