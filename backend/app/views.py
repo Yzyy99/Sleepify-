@@ -28,9 +28,12 @@ from datetime import timedelta
 from django.utils.timezone import now
 from .models import SleepRecord
 
+import os
+
 client = OpenAI(
     base_url='https://xiaoai.plus/v1',
-    api_key='sk-5niABBgIca92aTfWgTyLT9kpznt4NIqcZdpJyE0JgHU3rvSm'
+    #api_key='sk-5niABBgIca92aTfWgTyLT9kpznt4NIqcZdpJyE0JgHU3rvSm'
+    api_key=os.getenv('OPENAI_API_KEY')
 )
 
 class RegisterAPIView(APIView):
