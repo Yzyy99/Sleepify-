@@ -37,6 +37,12 @@
 </view>
     </view>
 
+<view class="screen-item" style="padding-left: 20px; padding-bottom: 30px;">
+  <text class="label" style="font-size: 14px;">亮屏次数：{{onscreen}}</text>
+  <text class="label" style="font-size: 14px; display: {{avgNoise == 0 ? 'none' : 'inline'}};">平均噪音：{{avgNoise}}dB   最大噪音：{{maxNoise}}dB</text>
+  <text class="label" style="font-size: 14px; display: {{avgNoise == 0 ? 'inline' : 'none'}};">没有录制噪音情况</text>
+</view>
+
     <view class="form">
       <view class="form-item">
         <label>睡眠情况：</label>

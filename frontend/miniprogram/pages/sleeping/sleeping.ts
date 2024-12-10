@@ -92,9 +92,15 @@ Page({
   },
 
   stopRecord() {
-    wx.navigateTo({
-      url: `/pages/sleep_reminder/sleep_reminder?startTime=${this.data.startTime}`
-    });
+    if (this.data.avgDbValue == 0) {
+      wx.navigateTo({
+        url: `/pages/sleep_reminder/sleep_reminder?startTime=${this.data.startTime}&onscreen=${this.data.screenonCount}`,
+      })
+    } else {
+      wx.navigateTo({
+        url: `/pages/sleep_reminder/sleep_reminder?startTime=${this.data.startTime}&onscreen=${this.data.screenonCount}&avgNoise=${this.data.avgDbValue}&maxNoise=${this.data.maxDbValue}`,
+      });
+    }
   },
 
   enableRecorder() {
@@ -132,7 +138,7 @@ Page({
       // const max = Math.max(...arrayBuffer)
 
       const decibels = Math.round(10 * Math.log10(rms))
-      if (decibels > 0 && decibels < 200){
+      if (decibels > 0 && decibels < 200) {
         console.log('Current decibels: ', decibels)
         this.setData({
           currentDbValue: decibels,
