@@ -7,4 +7,7 @@
 
 <text>你进行了{{count}}次亮屏/切换</text>
 <button bindtap="toRecord">记录</button>
+<text>分贝：{{currentDbValue}}</text>
+<text>平均分贝：{{avgDbValue}}</text>
+<text>最大分贝：{{maxDbValue}}</text>
 </view>
