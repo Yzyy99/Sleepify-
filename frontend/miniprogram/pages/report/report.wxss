@@ -28,6 +28,7 @@
   font-size: 32rpx;
   font-weight: bold;
   color: #333333;
+  margin-top: 10px;
   margin-bottom: 20rpx;
 
 }
@@ -123,4 +124,56 @@
   color: #007aff; /* 蓝色链接 */
   text-decoration: underline; /* 下划线 */
   cursor: pointer; /* 点击效果 */
+}
+
+.sleep-item{
+  /* width: 40%; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;  
+}
+
+.sleep-item .label{
+  font-size: 30rpx;
+  color: #666666;
+}
+
+.sleep-item .value{
+  font-size: 30rpx;
+  color: #333333;
+}
+
+.circle-container {
+  width: 50%;
+  /* display: flex;
+  flex-direction: column; */
+  align-content: center;
+  align-items: center;
+  text-align: center;
+  /* height: 150rpx; */
+  margin-bottom: 15px;
+}
+
+.circle {
+  left: 50%;
+  padding: 30px;
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  border: #228822 5px solid;
+  /* background-color: #f5f5f5; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* 添加阴影特效 */
+  font-size: 10px;
+}
+
+.circle-label {
+  color: #888888;
+  width: 120rpx;
+  align-content: center;
+  text-align: center;
+  font-size: 12px;
 }
