@@ -1,0 +1,26 @@
+<!--pages/sleeping/sleeping.wxml-->
+<view class="container" style="background-color: {{pageBackgroundColor}}; color: {{textColor}};">
+  <view class="sleep-content">
+    <text class="title">Good night</text>
+    
+    <view class="moon-icon">
+      <image src="/assets/moon.png" mode="aspectFit"></image>
+    </view>
+    
+    <view class="current-time">
+      {{currentTime}}
+    </view>
+    
+    <view class="sleep-duration">
+      <text>睡眠时间</text>
+      <view class="duration-time">{{durationTime}}</view>
+    </view>
+    
+    <button 
+      class="stop-btn" 
+      style="background-color: {{buttonBackgroundColor}}; color: {{buttonTextColor}};"
+      bindtap="stopRecord">
+      停止记录
+    </button>
+  </view>
+</view>
