@@ -303,18 +303,29 @@ class SleepAnalysisAPIView(APIView):
         recent_record = SleepRecord.objects.filter(user=user).order_by('-date').first()
 
         if not recent_record:
-            return Response({"error": "没有找到睡眠记录"}, status=status.HTTP_404_NOT_FOUND)
-
-        sleep_note = recent_record.note
+            sleep_note = ""
+        else:
+            sleep_note = recent_record.note
         #sleep_note = "熬夜"
+
+        screen_on = request.data.get("screen_on", "NaN")
+
+        noise_max = request.data.get("noise_max", "NaN")
+        noise_avg = request.data.get("noise_avg", "NaN")
+
 
         try:
             # 调用 GPT 模型生成报告
+            SYS_PROMPT = '''\
+你是一名睡眠分析师，接下来，你需要分析一名用户手机中健康程序所收集的睡眠信息，包括他的睡眠时间、睡眠小记、期间手机亮屏次数、环境噪音等等。忽略其中缺失的信息。
+请根据这些信息生成一份睡眠报告，内容应当个性化，包括用户的睡眠质量、睡眠建议等。使用和蔼可亲的语言，切忌格式化。不要使用 Markdown 语法。
+'''
             response = client.chat.completions.create(
                 model="gpt-4o",
                 messages=[
-                    {"role": "system", "content": "你是一个睡眠助手，可以分析用户的睡眠情况和睡眠日志生成个性化的专属定制睡眠报告，需要用和蔼可亲的语言，切忌格式化。"},
-                    {"role": "user", "content": f"睡眠时间：{sleep_time}小时。睡眠小记：{sleep_note}"}
+                    {"role": "system", "content": SYS_PROMPT},
+                    {"role": "user", 
+                     "content": f"睡眠时间：{sleep_time}小时\n睡眠小记：{sleep_note}\n手机亮屏次数：{screen_on}次\n环境噪音：最大值 {noise_max} 分贝，平均值 {noise_avg} 分贝"}
                 ]
             )
             report = response.choices[0].message.content 

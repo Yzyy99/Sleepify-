@@ -16,7 +16,7 @@ Page({
     });
   },
 
-  
+
   onShow() {
     themereport.applyTheme(this);
 
@@ -33,6 +33,9 @@ Page({
       method: "POST",
       data: {
         sleep_time: sleepTime, // 向后端传递睡眠时间
+        screen_on: 3,
+        noise_max: 70,
+        noise_avg: 30,
       },
       header: {
         "Content-Type": "application/json",
@@ -59,5 +62,5 @@ Page({
       },
     });
   },
-  
+
 });
