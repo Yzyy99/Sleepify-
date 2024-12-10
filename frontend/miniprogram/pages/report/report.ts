@@ -1,3 +1,4 @@
+
 const themereport = require('../../utils/theme.js');
 Page({
   data: {
@@ -18,6 +19,7 @@ Page({
   
   onShow() {
     themereport.applyTheme(this);
+
     this.fetchSleepReport();
   },
 

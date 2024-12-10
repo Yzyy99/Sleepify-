@@ -28,6 +28,9 @@ Page({
       icon: 'success',
       duration: 2000
     });
+    wx.navigateTo({
+      url: '/pages/sleeping/sleeping'
+    });
   },
 
   // 跳转到白噪音页面

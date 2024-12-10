@@ -1,4 +1,6 @@
+
 <view class="container" style="background-color: {{pageBackgroundColor}}; color: {{textColor}};">
+
 
   <view class="section">
   <!-- 模块标题 -->

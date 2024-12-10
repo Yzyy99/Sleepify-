@@ -1,0 +1,57 @@
+/* pages/sleeping/sleeping.wxss */
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.sleep-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.title {
+  font-size: 24px;
+  margin-bottom: 30px;
+}
+
+.moon-icon {
+  margin: 20px 0;
+}
+
+.moon-icon image {
+  width: 60px;
+  height: 60px;
+}
+
+.current-time {
+  font-size: 40px;
+  font-weight: bold;
+  margin: 20px 0;
+}
+
+.sleep-duration {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 30px 0;
+}
+
+.duration-time {
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 5px 15px;
+  border-radius: 15px;
+  margin-top: 10px;
+}
+
+.stop-btn {
+  width: 80%;
+  padding: 12px 0;
+  border-radius: 25px;
+  margin-top: 30px;
+}
