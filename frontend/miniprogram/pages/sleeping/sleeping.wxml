@@ -15,6 +15,33 @@
       <text>睡眠时间</text>
       <view class="duration-time">{{durationTime}}</view>
     </view>
+
+    <view class="screenonCount" style="color: #555555;">
+      <text>{{screenonCount ? 
+      '你已经亮屏或切屏' + screenonCount + '次，早点休息哦' : 
+      '关闭屏幕，早点休息吧！'}}</text>
+    </view>
+
+
+    <view class="noiseMsg" style="padding: 10px; display: {{recordmode ? 'block' : 'none'}} ;">
+    <view><text>当前噪音：{{currentDbValue}}dB</text></view>
+    <view><text>平均噪音：{{avgDbValue}}dB</text></view>
+    <view><text>最大噪音：{{maxDbValue}}dB</text></view>
+    </view>
+
+    <button 
+      class="noise-btn" 
+      style="background-color: {{buttonBackgroundColor}}; margin-top: 20px; color: {{buttonTextColor}};display: {{recordmode ? 'none' : 'block'}};"
+      bindtap="startRecordNoise">
+      噪音检测
+    </button>
+
+    <button 
+      class="noise-btn" 
+      style="background-color: {{buttonBackgroundColor}}; margin-top: 20px; color: {{buttonTextColor}};display: {{recordmode ? 'block' : 'none'}};"
+      bindtap="stopRecordNoise">
+      停止检测
+    </button>
     
     <button 
       class="stop-btn" 

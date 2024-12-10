@@ -4,7 +4,7 @@ Page({
   data: {
     isDarkMode: false  // 初始为日间模式
   },
-  
+
   onShow() {
     // 页面显示时根据全局状态应用主题
     const app = getApp();
@@ -14,7 +14,7 @@ Page({
     theme.applyTheme(this);  // 应用主题
   },
 
-  onToggleDarkMode(e:any) {
+  onToggleDarkMode(e: any) {
     const isDarkMode = e.detail.value;  // 获取开关状态
     const app = getApp();  // 获取全局小程序实例
 
@@ -36,7 +36,7 @@ Page({
     // 切换当前页面主题
     theme.applyTheme(this);
   },
-  
+
   onLogin() {
     // 登录按钮点击事件处理
     console.log("登录按钮被点击");
@@ -51,5 +51,11 @@ Page({
     wx.navigateTo({
       url: '/pages/register/register' // 跳转到注册页面
     });
-  }
+  },
+
+  toTest() {
+    wx.navigateTo({
+      url: '/pages/sleeping/sleeping'
+    });
+  },
 });

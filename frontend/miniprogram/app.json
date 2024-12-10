@@ -18,7 +18,8 @@
     "pages/sleep_reminder/sleep_reminder",
     "pages/modify_passwd/modify_passwd",
     "pages/modify_phone/modify_phone",
-    "pages/sleeping/sleeping"
+    "pages/sleeping/sleeping",
+    "pages/test/test"
   ],
   "window": {
     "navigationBarTextStyle": "black",
@@ -27,7 +28,7 @@
   },
   "tabBar": {
     "color": "#a9b7b7",
-    "backgroundColor":"f5f5dc",
+    "backgroundColor": "f5f5dc",
     "selectedColor": "#11cd6e",
     "borderStyle": "white",
     "list": [
