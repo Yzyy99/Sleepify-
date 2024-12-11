@@ -1,3 +1,5 @@
+import unittest
+
 from django.test import TestCase, Client
 from forum.models import ForumPost, ForumPicture
 from sentence_transformers import SentenceTransformer
@@ -185,3 +187,6 @@ class ForumPostTestCase(TestCase):
         """清理测试数据"""
         User.objects.all().delete()
         ForumPost.objects.all().delete()
+
+if __name__ == '__main__':
+    unittest.main()

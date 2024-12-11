@@ -30,10 +30,10 @@ from .models import SleepRecord
 
 import os
 
-client = OpenAI(
-    base_url='https://xiaoai.plus/v1',
-    api_key=os.getenv('OPENAI_API_KEY')
-)
+# client = OpenAI(
+#     base_url='https://xiaoai.plus/v1',
+#     api_key=os.getenv('OPENAI_API_KEY')
+# )
 
 class RegisterAPIView(APIView):
     def post(self, request, *args, **kwargs):
