@@ -51,8 +51,6 @@ class ForumPostSerializer(serializers.ModelSerializer):
 
 class GetForumPosts(APIView):
     def post(self, request):
-        if not request.user.is_authenticated:
-            return Response({'error': 'User is not authenticated'}, status=401)
         
         last_post_id = request.data.get('last_post_id')
         limit = 1000
@@ -82,8 +80,6 @@ class GetForumPosts(APIView):
 
 class GetForumPicture(APIView):
     def post(self, request):
-        if not request.user.is_authenticated:
-            return Response({'error': 'User is not authenticated'}, status=401)
         picture_name = request.data.get('picture_name')
         if picture_name is None:
             return JsonResponse({'error': 'Picture not found'})
@@ -98,8 +94,6 @@ class GetForumPicture(APIView):
 
 class CreateForumPost(APIView):
     def post(self, request):
-        if not request.user.is_authenticated:
-            return Response({'error': 'User is not authenticated'}, status=401)
         username = request.user.phone_number
         content = request.data.get('content')
         picture_count = request.data.get('picture_count')
@@ -137,8 +131,6 @@ class CreateForumPost(APIView):
 
 class DeleteForumPost(APIView):
     def post(self, request):
-        if not request.user.is_authenticated:
-            return Response({'error': 'User is not authenticated'}, status=401)
         postid = request.data.get('postid')
         if not postid:
             return Response({'error': 'Postid is required'}, status=400)
@@ -154,8 +146,6 @@ class DeleteForumPost(APIView):
 
 class CreateForumPicture(APIView):
     def post(self, request):
-        if not request.user.is_authenticated:
-            return Response({'error': 'User is not authenticated'}, status=401)
         
         image_type = request.data.get('image_type')
         if not image_type:
@@ -191,8 +181,6 @@ class CreateForumPicture(APIView):
 
 class LikeForumPost(APIView):
     def post(self, request):
-        if not request.user.is_authenticated:
-            return Response({'error': 'User is not authenticated'}, status=401)
         postid = request.data.get('postid')
         if not postid:
             return Response({'error': 'Postid is required'}, status=400)
@@ -211,9 +199,6 @@ class LikeForumPost(APIView):
 
 class ReplyForumPost(APIView):
     def post(self, request):
-        access_token = request.headers.get('Authorization')
-        if not access_token:
-            return Response({'error': 'Access token is required'}, status=401)
         postid = request.data.get('postid')
         if not postid:
             return Response({'error': 'Postid is required'}, status=400)
@@ -239,9 +224,6 @@ class GetForumPostsWithSimilairity(APIView):
     def post(self, request):
         if os.environ.get('DISABLE_MODEL_LOADING') == 'true':
             return Response({'error': 'Similarity model is disabled'}, status=500)
-        # 用户认证检查
-        if not request.user.is_authenticated:
-            return Response({'error': 'User is not authenticated'}, status=401)
 
         # 获取分页参数
         last_post_id = request.data.get('last_post_id')  # 分页的起始帖子 ID

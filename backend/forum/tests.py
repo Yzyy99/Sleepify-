@@ -180,6 +180,8 @@ class ForumPostTestCase(TestCase):
         self.assertEqual(response.status_code, 401)
         response = self.client.post(reverse('delete_forum_post'))
         self.assertEqual(response.status_code, 401)
+        response = self.client.post(reverse('get_similarity_posts'))
+        self.assertEqual(response.status_code, 401)
 
     def test_invalid_post_data(self):
         """测试无效的帖子数据"""
