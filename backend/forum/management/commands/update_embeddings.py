@@ -1,14 +1,19 @@
 from django.core.management.base import BaseCommand
 from forum.models import ForumPost
 from sentence_transformers import SentenceTransformer
+import os
 
 # 加载嵌入模型
-model = SentenceTransformer('aspire/acge_text_embedding', cache_folder=r'X:\course\software engineering\model')
+if os.environ.get('DISABLE_MODEL_LOADING') != 'true':
+    model = SentenceTransformer('aspire/acge_text_embedding', cache_folder=r'/app/models/sentence_transformers')
 
 class Command(BaseCommand):
     help = "为数据库中没有嵌入向量的帖子生成并保存嵌入"
 
     def handle(self, *args, **kwargs):
+        if os.environ.get('DISABLE_MODEL_LOADING') == 'true':
+            self.stdout.write(self.style.WARNING("Model loading is disabled."))
+            return
         # 查询所有没有嵌入向量的帖子
         posts_without_embedding = ForumPost.objects.filter(embedding__isnull=True)
 

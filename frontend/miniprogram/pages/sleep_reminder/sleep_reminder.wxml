@@ -1,2 +1,63 @@
-<!--pages/sleep_reminder/sleep_reminder.wxml-->
-<text>pages/sleep_reminder/sleep_reminder.wxml</text>
+
+<view class="container" style="background-color: {{pageBackgroundColor}}; color: {{textColor}};">
+  <view class="header">
+    <text class="title">睡眠记录</text>
+    <view class="abandon-btn" bindtap="abandonRecord">放弃记录</view>
+  </view>
+
+  <view class="sleep-info">
+    <view class="time-record">
+      <view class="time-item">
+  <text class="label">入睡时间：</text>
+  <picker mode="multiSelector" 
+          bindchange="onSleepTimeChange" 
+          bindcolumnchange="onSleepTimeColumnChange"
+          value="{{sleepTimeIndex}}" 
+          range="{{timeArray}}">
+    <view class="picker-view">
+      <text class="time">{{sleepStartTime}}</text>
+      <text class="date">{{sleepStartDate}}</text>
+    </view>
+  </picker>
+</view>
+
+<!-- 清醒时间选择器 -->
+<view class="time-item">
+  <text class="label">清醒时间：</text>
+  <picker mode="multiSelector" 
+          bindchange="onWakeTimeChange" 
+          bindcolumnchange="onWakeTimeColumnChange"
+          value="{{wakeTimeIndex}}" 
+          range="{{timeArray}}">
+    <view class="picker-view">
+      <text class="time">{{wakeUpTime}}</text>
+      <text class="date">{{wakeUpDate}}</text>
+    </view>
+  </picker>
+</view>
+    </view>
+
+<view class="screen-item" style="padding-left: 20px; padding-bottom: 30px;">
+  <text class="label" style="font-size: 14px;">亮屏次数：{{onscreen}}</text>
+  <text class="label" style="font-size: 14px; display: {{avgNoise == 0 ? 'none' : 'inline'}};">平均噪音：{{avgNoise}}dB   最大噪音：{{maxNoise}}dB</text>
+  <text class="label" style="font-size: 14px; display: {{avgNoise == 0 ? 'inline' : 'none'}};">没有录制噪音情况</text>
+</view>
+
+    <view class="form">
+      <view class="form-item">
+        <label>睡眠情况：</label>
+        <input type="text" placeholder="请输入睡眠情况" bindinput="onInputSleepStatus" />
+      </view>
+      <view class="form-item">
+        <label>小记：</label>
+        <input type="text" placeholder="请输入小记" bindinput="onInputNote" />
+      </view>
+    </view>
+
+    <view class="button-group">
+      <button class="save-btn" 
+              style="background-color: {{buttonBackgroundColor}}; color: {{buttonTextColor}};"
+              bindtap="submitRecord">保存睡眠</button>
+    </view>
+  </view>
+</view>

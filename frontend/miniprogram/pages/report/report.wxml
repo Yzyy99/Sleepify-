@@ -1,6 +1,62 @@
+
 <view class="container" style="background-color: {{pageBackgroundColor}}; color: {{textColor}};">
 
+  <view class="section" style="background-color: {{pageBackgroundColor}}; box-shadow:0px; flex-direction: row; margin-top: 10px">
+  
+  <!-- 固定高度的模块容器，图片位于中间 -->
+  <view style="width: 40%; margin-right: 40px">
+  <view class="circle-container" style="width: 100%">
+        <view class="circle" style="border:{{sleepGrade < 90 ? 'orange' : '#228822'}} 5px solid" >
+          <text class="circle-text" style="font-size: 30px">{{sleepGrade}}</text><text class="circle-text">分</text>
+        </view>
+      </view>
+  </view>
+  <view style="width: 40%; margin-top: 20px">
+  <view class="sleep-summary">
+    <view class="sleep-item">
+      <text class="label">入睡时间：</text>
+      <text class="value">{{sleepTime}}</text>
+    </view>
+    <view class="sleep-item">
+      <text class="label">醒来时间：</text>
+      <text class="value">{{wakeTime}}</text>
+    </view>
+    <view class="sleep-item">
+      <text class="label">睡眠时长：</text>
+      <text class="value">{{sleepDuration}}小时</text>
+    </view>
+    <!-- <view class="sleep-item">
+      <text class="label">睡眠状态：</text>
+      <text class="value">{{sleepStatus}}</text>
+    </view>
+    <view class="sleep-item">
+      <text class="label">睡眠小记：</text>
+      <text class="value">{{sleepNote}}</text>
+    </view> -->
+  </view>
+  </view>
+</view>
+
   <view class="section">
+  <view class="title">
+    <text>翻看手机</text>
+  </view>
+  
+  <!-- 固定高度的模块容器，图片位于中间 -->
+  <view>
+    <text class="health-description" style="display:{{screenon == -1 ? 'block': 'none'}};">没有翻看手机记录</text>
+    <!-- <text class="health-description" style="display:{{screenon == -1 ? 'none': 'block'}}">睡眠期间亮屏或切屏{{screenon}}次</text> -->
+    
+    <view class="circle-container" style="display:{{screenon == -1 ? 'none': 'block'}}; width: 100%">
+      <view class="circle" style="position: relative; left: 236rpx; top: 0rpx; border: {{screenon > 3 ? 'orange' : '#228822'}} 5px solid">
+        <text class="circle-text" style="font-size: 30px">{{screenon}}</text><text class="circle-text">次</text>
+      </view>
+      <text class="circle-label">睡眠期间亮屏或切屏</text>
+    </view>
+  </view>
+</view>
+
+<view class="section">
   <!-- 模块标题 -->
   <view class="title">
     <text>声音</text>
@@ -11,20 +67,25 @@
 
     <!-- 文本内容 -->
     <view class="sound-text">
-      <text class="sound-description">没有捕捉到任何声音哦</text>
-      <text class="sound-link" bindtap="showSoundInfo">为什么</text>
+      <text class="sound-description" style="display: {{noiseAvg == -1 ? 'block' : 'none'}};">没有捕捉到任何声音哦</text>
+      <text class="sound-link" bindtap="showSoundInfo" style="display: {{noiseAvg == -1 ? 'block' : 'none'}};">为什么</text>
+      <!-- <text class="sound-description"  style="display: {{noiseAvg == -1 ? 'none' : 'block'}};">平均噪声：{{noiseAvg}}dB  最大噪声：{{noiseMax}}dB</text> -->
+      <view class="noise-circles" style="display: {{noiseAvg == -1 ? 'none' : 'flex'}};">
+        <view class="circle-container">
+          <view class="circle" style="position: relative; left: 59rpx; top: 0rpx; border: {{noiseAvg > 30 ? 'orange' : '#228822'}} 5px solid">
+            <text class="circle-text" style="font-size: 30px">{{noiseAvg}}</text><text class="circle-text">dB</text>
+          </view>
+          <text class="circle-label">平均噪声</text>
+        </view>
+        <view class="circle-container">
+          <view class="circle" style="position: relative; left: 59rpx; top: 0rpx; border: {{noiseMax > 50 ? 'orange' : '#228822'}} 5px solid">
+            <text class="circle-text" style="font-size: 30px">{{noiseMax}}</text><text class="circle-text">dB</text>
+          </view>
+          <text class="circle-label">最大噪声</text>
+        </view>
+      </view>
+      
     </view>
-  </view>
-</view>
-
-  <view class="section">
-  <view class="title">
-    <text>翻看手机</text>
-  </view>
-  
-  <!-- 固定高度的模块容器，图片位于中间 -->
-  <view class="health-description">
-    <text>没有翻看手机记录</text>
   </view>
 </view>
 
@@ -41,9 +102,10 @@
 <!-- 专属推荐 -->
 <view class="section">
   <view class="title">
-    <text>专属推荐</text>
+    <text>专属睡眠报告</text>
   </view>
   <view class="recommendation">
+    <button style="font-size: 14px; color: #444444; background-color: {{buttonBackgroundColor}}; display: {{report == '' ? 'block' : 'none'}};" bindtap="fetchSleepReport">{{generatingReport ? "正在生成中..." : "查看我的专属报告"}}</button>
     <text>{{report}}</text>
   </view>
 </view>
