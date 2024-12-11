@@ -45,9 +45,9 @@
 
 .picker-button {
   width: 300rpx;
-  height: 200rpx;
+  height: 100rpx;
   text-align: center;
-  line-height: 180rpx;
+  line-height: 100rpx;
   border-radius: 20rpx;
   font-size: 32rpx;
   font-weight: bold;
@@ -58,14 +58,14 @@
 .breathing-options {
   display: flex;
   justify-content: space-around;
-  margin-top: 20rpx;
+  margin-bottom: 20%;
 }
 
 .option-button {
   width: 300rpx;
-  height: 200rpx;
+  height: 100rpx;
   text-align: center;
-  line-height: 180rpx;
+  line-height: 100rpx;
   border-radius: 20rpx;
   font-size: 32rpx;
   font-weight: bold;
@@ -80,16 +80,25 @@
 
 /* 开始训练按钮 */
 .start-button {
-  width: 300rpx;
-  height: 200rpx; /* 放大按钮 */
-  text-align: center;
-  line-height: 180rpx; /* 调整文字位置偏下 */
-  border-radius: 20rpx; /* 方形按钮，轻微圆角 */
-  font-size: 36rpx; /* 调整字体大小 */
-  font-weight: bold;
-  box-shadow: 0px 4rpx 12rpx rgba(0, 0, 0, 0.5); /* 增加立体感 */
+  width: 300rpx;  /* 设置按钮宽度 */
+  height: 300rpx; /* 设置按钮高度为与宽度相等，保证按钮为圆形 */
+  text-align: center;  /* 让文本居中 */
+  line-height: 300rpx; /* 调整文字位置，使其垂直居中 */
+  border-radius: 50%; /* 设置圆形按钮 */
+  font-size: 36rpx;  /* 设置字体大小 */
+  font-weight: bold;  /* 设置字体加粗 */
+  box-shadow: 0px 4rpx 12rpx rgba(0, 0, 0, 0.5); /* 增加阴影，打造立体感 */
+  margin-top: -200px;
 }
+
 
 .start-button:hover {
   background-color: #394260; /* 鼠标悬停时稍微变亮 */
+}
+/* 描述文本 */
+.method-description {
+  font-size: 28rpx; /* 调整描述文字大小 */
+  margin-top: 10rpx; /* 增加与按钮的间距 */
+  text-align: center; /* 文本居中 */
+  line-height: 40rpx; /* 调整行高，保证文本可读性 */
 }
