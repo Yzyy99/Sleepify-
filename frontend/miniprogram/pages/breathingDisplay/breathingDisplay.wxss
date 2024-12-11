@@ -9,14 +9,14 @@
 
 /* 倒计时样式 */
 .countdown {
-  font-size: 48rpx;
+  font-size: 96rpx;
   margin-bottom: 400rpx;
 }
 
 /* 呼吸气泡样式 */
 .breathing-bubble {
-  width: 300rpx;
-  height: 300rpx;
+  width: 400rpx;
+  height: 400rpx;
   border-radius: 50%;
   display: flex;
   justify-content: center;
