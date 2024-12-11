@@ -74,12 +74,12 @@ class APITestCase(TestCase):
                                      content_type='application/json')
         self.assertIn(response1.status_code, [200, 409, 429])
         """
-            使用不存在的账号进行注册，检查返回值为失败
+            使用已经存在的账户注册，请求失败
         """
         response2 = self.client.post(reverse('send_verification_code'),
                                      data={'phone_number': 'testcase'},
                                      content_type='application/json')
-        self.assertEqual(response2.status_code, 400)
+        self.assertEqual(response2.status_code, 409)
         """
             不带账号注册，检查返回值为失败
         """
