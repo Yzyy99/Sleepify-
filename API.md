@@ -787,12 +787,14 @@
 | `Authorization`| `string`   | Access token for authentication. | Yes          |
 
 **Request Example**:
+
 ```http
 GET /api/sleep-records/
 Authorization: Bearer <access_token>
 ```
 
-**Request Example(200 OK)**:
+**Response Example(200 OK)**:
+
 | **Field**        | **Type**   | **Description**                             |
 | ----------------- | ---------- | ------------------------------------------- |
 | `id`             | `integer`  | Unique ID of the sleep record.              |
@@ -851,7 +853,8 @@ Authorization: Bearer <access_token>
 }
 ```
 
-**Request Examlpe (201 Created):**
+**Response Examlpe (201 Created):**
+
 | **Field**        | **Type**   | **Description**                             |
 | ----------------- | ---------- | ------------------------------------------- |
 | `id`             | `integer`  | Unique ID of the created record.            |
@@ -897,14 +900,68 @@ Authorization: Bearer <access_token>
 ```
 
 ---
+### 15. Delete Sleep Record
+| **Field**        | **Type**   | **Description**                       | **Required** |
+| ----------------- | ---------- | ------------------------------------- | ------------ |
+| `Authorization`   | `string`   | Access token for authentication.      | Yes          |
+| `id`            | `int`   | Id of Sleep Record| Yes          |
+
+**Request Examlpe:**
+```http
+DELETE /api/sleep-records/
+Authorization: Bearer <access_token>
+
+{
+    "id": <id>
+}
+```
+
+**Response Examlpe (200 OK):**
+
+| **Field**        | **Type**   | **Description**                             |
+| ----------------- | ---------- | ------------------------------------------- |
+| `message`             | `string`  | Message meaning record deleted            |
+
+```json
+{
+    "message": "Record deleted successfully."
+}
+```
+**Error Response (400 Bad Request)**:
+
+| **Field** | **Type** | **Description** |
+| --------- | -------- | --------------- |
+| `error`   | `object` | Validation error details.  |
+
+```json
+{
+    "error": "id is required."
+}
+```
+
+**Error Response (404 Not found)**:
+
+| **Field** | **Type** | **Description** |
+| --------- | -------- | --------------- |
+| `error`   | `string` | Error message.  |
+
+```json
+{
+    "error": "Record does not exist."
+}
+```
+
+---
 
 ## Status Codes
 
 | **Status Code** | **Description**                                     |
 | --------------- | --------------------------------------------------- |
 | `200`           | OK                                                  |
+| `201`           | Created                                                  |
 | `400`           | Bad request                               |
 | `401`           | Unauthorized - Invalid credentials or expired token |
+| `404`           | Not found |
 | `405`           | Method not allowed                               |
 | `409`           | Conflict                               |
 | `429`           | Too many requests                               |

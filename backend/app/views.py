@@ -298,6 +298,18 @@ class SleepRecordAPIView(APIView):
         print("Serializer errors:", serializer.errors)
         return Response({"errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
+    def delete(self, request):
+        user = request.user
+        id = request.data.get('id')
+        if not id:
+            return Response({'error': 'id is required.'}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            record = SleepRecord.objects.get(id=id, user=user)
+            record.delete()
+            return Response({'message': 'Record deleted successfully.'}, status=status.HTTP_200_OK)
+        except SleepRecord.DoesNotExist:
+            return Response({'error': 'Record does not exist.'}, status=status.HTTP_404_NOT_FOUND)
+
 class SleepAnalysisAPIView(APIView):
     permission_classes = [IsAuthenticated]
 

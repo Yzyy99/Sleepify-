@@ -96,5 +96,34 @@ class APITestCase(TestCase):
                                      content_type='application/json')
         self.assertEqual(response4.status_code, 400)
 
+    def test_sleep_record(self):
+        response1 = self.client.post(reverse('login'),
+                                     content_type='application/json',
+                                     data={'username': 'testcase',
+                                           'password': str('password')}
+                                     )
+        token = response1.json().get('access')
+        response2 = self.client.post(reverse('sleep_records'),
+                                     content_type='application/json',
+                                     headers={'Authorization': f'Bearer {token}'},
+                                     data={'date': '2024-12-03',
+                                           'sleep_status': '1',
+                                           'note': 'good'})
+        self.assertEqual(response2.status_code, 201)
+        response3 = self.client.get(reverse('sleep_records'),
+                                    content_type='application/json',
+                                    headers={'Authorization': f'Bearer {token}'})
+        self.assertEqual(response3.status_code, 200)
+        id = response3.json()[0].get('id')
+        response4 = self.client.delete(reverse('sleep_records'),
+                                       content_type='application/json',
+                                       headers={'Authorization': f'Bearer {token}'},
+                                       data={'id': id})
+        self.assertEqual(response4.status_code, 200)
+        response5 = self.client.get(reverse('sleep_records'),
+                                    content_type='application/json',
+                                    headers={'Authorization': f'Bearer {token}'})
+        self.assertEqual(response5.json(), [])
+
 if __name__ == '__main__':
     unittest.main()
