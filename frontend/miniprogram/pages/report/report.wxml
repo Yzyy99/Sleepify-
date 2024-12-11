@@ -1,7 +1,7 @@
 
 <view class="container" style="background-color: {{pageBackgroundColor}}; color: {{textColor}};">
 
-  <view class="section" style="background-color: {{pageBackgroundColor}}; box-shadow:0px; flex-direction: row; margin-top: 10px">
+  <view class="section" style="background-color: {{buttonBackgroundColor}}; box-shadow:0px; flex-direction: row; margin-top: 10px">
   
   <!-- 固定高度的模块容器，图片位于中间 -->
   <view style="width: 40%; margin-right: 40px">
@@ -37,7 +37,7 @@
   </view>
 </view>
 
-  <view class="section">
+  <view class="section" style="background-color: {{buttonBackgroundColor}}">
   <view class="title">
     <text>翻看手机</text>
   </view>
@@ -56,7 +56,7 @@
   </view>
 </view>
 
-<view class="section">
+<view class="section"style="background-color: {{buttonBackgroundColor}}">
   <!-- 模块标题 -->
   <view class="title">
     <text>声音</text>
@@ -90,7 +90,7 @@
 </view>
 
 <!-- 每日小贴士 -->
-<view class="section">
+<view class="section"style="background-color: {{buttonBackgroundColor}}">
   <view class="title">
     <text>睡眠与健康</text>
   </view>
@@ -100,12 +100,12 @@
 </view>
 
 <!-- 专属推荐 -->
-<view class="section">
+<view class="section"style="background-color: {{buttonBackgroundColor}}">
   <view class="title">
     <text>专属睡眠报告</text>
   </view>
   <view class="recommendation">
-    <button style="font-size: 14px; color: #444444; background-color: {{buttonBackgroundColor}}; display: {{report == '' ? 'block' : 'none'}};" bindtap="fetchSleepReport">{{generatingReport ? "正在生成中..." : "查看我的专属报告"}}</button>
+    <button style="font-size: 14px; color: #444444; background-color: {{highlightColor}}; display: {{report == '' ? 'block' : 'none'}};" bindtap="fetchSleepReport">{{generatingReport ? "正在生成中..." : "查看我的专属报告"}}</button>
     <text>{{report}}</text>
   </view>
 </view>
