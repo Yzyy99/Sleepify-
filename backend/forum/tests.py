@@ -1,5 +1,10 @@
+import unittest
+
 from django.test import TestCase, Client
+
+from app.models import CustomUser
 from forum.models import ForumPost, ForumPicture
+from django.urls import reverse
 from sentence_transformers import SentenceTransformer
 from django.contrib.auth import get_user_model
 import base64
@@ -10,6 +15,14 @@ User = get_user_model()
 
 class ForumPostTestCase(TestCase):
     def setUp(self):
+
+        user = CustomUser.objects.create_user(phone_number='13800138000')
+        user.set_password('password')
+        user.save()
+        self.user = user
+
+        # 创建测试客户端
+        self.client = Client()
         # 在测试开始前初始化全局变量 embedding_model
         import os
         if os.environ.get('DISABLE_MODEL_LOADING') == 'true':
@@ -18,17 +31,8 @@ class ForumPostTestCase(TestCase):
         global embedding_model
         embedding_model = SentenceTransformer('aspire/acge_text_embedding', cache_folder=r'/app/models/sentence_transformers')
         
-        # 创建测试用户
-        self.user = User.objects.create_user(
-            phone_number='13800138000',
-            password='testpass123'
-        )
-        
-        # 创建测试客户端
-        self.client = Client()
-        
-        # 登录用户
-        self.client.login(phone_number='13800138000', password='testpass123')
+        # # 登录用户
+        # self.client.login(phone_number='13800138000', password='testpass123')
         
         # 创建测试帖子
         self.test_post = ForumPost.objects.create(
@@ -37,7 +41,14 @@ class ForumPostTestCase(TestCase):
             picture_count=0,
             picture_names=[]
         )
-    
+
+    def login(self):
+        response = self.client.post(reverse('login'),
+                                    data={'username': '13800138000',
+                                          'password': str('password')},
+                                    content_type='application/json')
+        self.access_token = response.json().get('access')
+
     def test_embedding_generation(self):
         import os
         if os.environ.get('DISABLE_MODEL_LOADING') == 'true':
@@ -65,11 +76,12 @@ class ForumPostTestCase(TestCase):
             'picture_count': 0,
             'picture_names': json.dumps([])
         }
-        
+        self.login()
         response = self.client.post(
-            '/api/forum/create-post/',
+            reverse('create_forum_post'),
             data=post_data,
-            content_type='application/json'
+            content_type='application/json',
+            headers= {'Authorization': 'Bearer ' + self.access_token}
         )
         
         self.assertEqual(response.status_code, 201)
@@ -77,7 +89,9 @@ class ForumPostTestCase(TestCase):
 
     def test_get_forum_posts(self):
         """测试获取帖子列表"""
-        response = self.client.post('/api/forum/get-posts/')
+        self.login()
+        response = self.client.post(reverse('get_forum_posts'),
+                                    headers={'Authorization': 'Bearer ' + self.access_token})
         
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.content)
@@ -86,10 +100,12 @@ class ForumPostTestCase(TestCase):
 
     def test_like_forum_post(self):
         """测试点赞功能"""
+        self.login()
         response = self.client.post(
-            '/api/forum/like-post/',
+            reverse('like_forum_post'),
             data={'postid': self.test_post.postid},
-            content_type='application/json'
+            content_type='application/json',
+            headers= {'Authorization': 'Bearer ' + self.access_token}
         )
         
         self.assertEqual(response.status_code, 200)
@@ -99,14 +115,15 @@ class ForumPostTestCase(TestCase):
 
     def test_reply_forum_post(self):
         """测试回复功能"""
+        self.login()
         response = self.client.post(
-            '/api/forum/reply-post/',
+            reverse('reply_forum_post'),
             data={
                 'postid': self.test_post.postid,
                 'reply_content': '这是一条测试回复'
             },
             content_type='application/json',
-            HTTP_AUTHORIZATION='Bearer testtoken'
+            headers= {'Authorization': 'Bearer ' + self.access_token}
         )
         
         self.assertEqual(response.status_code, 200)
@@ -117,10 +134,12 @@ class ForumPostTestCase(TestCase):
 
     def test_delete_forum_post(self):
         """测试删除帖子"""
+        self.login()
         response = self.client.post(
-            '/api/forum/delete-post/',
+            reverse('delete_forum_post'),
             data={'postid': self.test_post.postid},
-            content_type='application/json'
+            content_type='application/json',
+            headers= {'Authorization': 'Bearer ' + self.access_token}
         )
         
         self.assertEqual(response.status_code, 200)
@@ -130,14 +149,15 @@ class ForumPostTestCase(TestCase):
         """测试上传图片"""
         # 创建一个简单的测试图片
         test_image = base64.b64encode(b'fake image data').decode('utf-8')
-        
+        self.login()
         response = self.client.post(
-            '/api/forum/create-picture/',
+            reverse('create_forum_picture'),
             data={
                 'image_type': 'png',
                 'image_data': test_image
             },
-            content_type='application/json'
+            content_type='application/json',
+            headers={'Authorization': 'Bearer ' + self.access_token}
         )
         
         self.assertEqual(response.status_code, 201)
@@ -145,10 +165,22 @@ class ForumPostTestCase(TestCase):
 
     def test_unauthorized_access(self):
         """测试未授权访问"""
-        # 创建新的未登录客户端
-        client = Client()
         
-        response = client.post('/api/forum/get-posts/')
+        response = self.client.post(reverse('get_forum_posts'))
+        self.assertEqual(response.status_code, 401)
+        response = self.client.post(reverse('get_forum_picture'))
+        self.assertEqual(response.status_code, 401)
+        response = self.client.post(reverse('create_forum_post'))
+        self.assertEqual(response.status_code, 401)
+        response = self.client.post(reverse('create_forum_picture'))
+        self.assertEqual(response.status_code, 401)
+        response = self.client.post(reverse('like_forum_post'))
+        self.assertEqual(response.status_code, 401)
+        response = self.client.post(reverse('reply_forum_post'))
+        self.assertEqual(response.status_code, 401)
+        response = self.client.post(reverse('delete_forum_post'))
+        self.assertEqual(response.status_code, 401)
+        response = self.client.post(reverse('get_similarity_posts'))
         self.assertEqual(response.status_code, 401)
 
     def test_invalid_post_data(self):
@@ -185,3 +217,6 @@ class ForumPostTestCase(TestCase):
         """清理测试数据"""
         User.objects.all().delete()
         ForumPost.objects.all().delete()
+
+if __name__ == '__main__':
+    unittest.main()

@@ -1,0 +1,17 @@
+[run]
+branch = True
+source =
+    .
+omit =
+    */migrations/*
+    */tests/*
+    */__init__.py
+    manage.py
+    docker-compose.yml
+    Dockerfile
+    *.ini
+    *.md
+    *.txt
+
+[report]
+show_missing = True

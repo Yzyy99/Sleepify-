@@ -85,14 +85,7 @@ class LoginAPIView(APIView):
 
 class LogoutAPIView(APIView):
     def post(self, request, *args, **kwargs):
-        token = request.data.get('refresh')
-        if not token:
-            return Response({'error': 'Refresh token is required.'}, status=status.HTTP_400_BAD_REQUEST)
-        try:
-            token = RefreshToken(token)
-            return Response({'message': 'Successfully logged out.'}, status=status.HTTP_200_OK)
-        except TokenError:
-            return Response({'error': 'Invalid token.'}, status=status.HTTP_401_UNAUTHORIZED)
+        return Response({'message': 'Successfully logged out.'}, status=status.HTTP_200_OK)
 
 class SendVerificationCodeView(APIView):
     def post(self, request):
@@ -262,7 +255,6 @@ class SleepRecordSerializer(serializers.ModelSerializer):
         read_only_fields = ['id', 'created_at']  # 只读字段，前端无需提供
 
 class SleepRecordAPIView(APIView):
-    permission_classes = [IsAuthenticated]  # 只有登录用户才能访问
 
     def get(self, request):
         """获取当前用户的睡眠记录"""
@@ -298,8 +290,19 @@ class SleepRecordAPIView(APIView):
         print("Serializer errors:", serializer.errors)
         return Response({"errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
+    def delete(self, request):
+        user = request.user
+        id = request.data.get('id')
+        if not id:
+            return Response({'error': 'id is required.'}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            record = SleepRecord.objects.get(id=id, user=user)
+            record.delete()
+            return Response({'message': 'Record deleted successfully.'}, status=status.HTTP_200_OK)
+        except SleepRecord.DoesNotExist:
+            return Response({'error': 'Record does not exist.'}, status=status.HTTP_404_NOT_FOUND)
+
 class SleepAnalysisAPIView(APIView):
-    permission_classes = [IsAuthenticated]
 
     def post(self, request):
         """生成睡眠报告"""
@@ -365,7 +368,6 @@ class SleepAnalysisAPIView(APIView):
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class SleepInformationAPIView(APIView):
-    permission_classes = [IsAuthenticated]
 
     def post(self, request):
         """获取睡眠信息"""
