@@ -267,7 +267,7 @@ class SleepRecordAPIView(APIView):
     def get(self, request):
         """获取当前用户的睡眠记录"""
         user = request.user
-        records = SleepRecord.objects.filter(user=user).order_by('-date')  # 获取当前用户的记录
+        records = SleepRecord.objects.filter(user=user).order_by('-created_at')  # 获取当前用户的记录
         serializer = SleepRecordSerializer(records, many=True)  # 序列化数据
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -277,6 +277,19 @@ class SleepRecordAPIView(APIView):
         data = request.data  # 前端传递的数据
         #data['user'] = user.id  # 将当前用户的 ID 添加到数据中
         print("Received data:", data)
+
+        latest_record = SleepRecord.objects.filter(user=user).order_by('-created_at').first()
+    
+    # 如果存在最近记录，且当前请求只包含基本字段，则填充其他字段
+        if latest_record and all(key in ['date', 'sleep_status', 'note'] for key in data.keys()):
+        # 从最近记录中复制缺失的字段
+            data['sleep_time'] = latest_record.sleep_time
+            data['wake_time'] = latest_record.wake_time
+            data['screen_on'] = latest_record.screen_on
+            data['noise_max'] = latest_record.noise_max
+            data['noise_avg'] = latest_record.noise_avg
+    
+        print("Processed data:", data)
 
         serializer = SleepRecordSerializer(data=data)
         if serializer.is_valid():
@@ -300,7 +313,7 @@ class SleepAnalysisAPIView(APIView):
         #     return Response({"error": "请提供睡眠时间"}, status=status.HTTP_400_BAD_REQUEST)
 
         # 获取最近的一条睡眠记录
-        recent_record = SleepRecord.objects.filter(user=user).order_by('-date').first()
+        recent_record = SleepRecord.objects.filter(user=user).order_by('-created_at').first()
 
         if not recent_record:
             return Response({"error": "没有找到睡眠记录"}, status=status.HTTP_404_NOT_FOUND)
@@ -359,7 +372,9 @@ class SleepInformationAPIView(APIView):
         user = request.user
 
         # 获取最近的一条睡眠记录
-        recent_record = SleepRecord.objects.filter(user=user).order_by('-date').first()
+        recent_record = SleepRecord.objects.filter(user=user).order_by('-created_at').first()
+
+        print(recent_record)
 
         if not recent_record:
             return Response({"error": "没有找到睡眠记录"}, status=status.HTTP_404_NOT_FOUND)
