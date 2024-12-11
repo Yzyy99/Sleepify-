@@ -100,13 +100,18 @@
 </view>
 
 <!-- 专属推荐 -->
-<view class="section"style="background-color: {{buttonBackgroundColor}}">
+<view class="section" style="background-color: {{buttonBackgroundColor}}">
   <view class="title">
     <text>专属睡眠报告</text>
   </view>
   <view class="recommendation">
-    <button style="font-size: 14px; color: #444444; background-color: {{highlightColor}}; display: {{report == '' ? 'block' : 'none'}};" bindtap="fetchSleepReport">{{generatingReport ? "正在生成中..." : "查看我的专属报告"}}</button>
-    <text>{{report}}</text>
+    <text wx:if="{{report}}" class="report-text">{{report}}</text>
+    <button 
+      class="report-button"
+      style="font-size: 14px; color: #444444; background-color: {{highlightColor}}; margin-top: 20px;" 
+      bindtap="fetchSleepReport">
+      {{generatingReport ? "正在生成中..." : (report ? "重新生成报告" : "查看我的专属报告")}}
+    </button>
   </view>
 </view>
 
