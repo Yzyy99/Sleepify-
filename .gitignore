@@ -107,3 +107,5 @@ build
 
 /fronted/node_modules/
 .coverage
+.conda
+db.sqlite3-journal
