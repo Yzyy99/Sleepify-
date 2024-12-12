@@ -145,7 +145,6 @@ class ForumPostTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertFalse(ForumPost.objects.filter(postid=self.test_post.postid).exists())
 
-    '''
     def test_create_forum_picture(self):
         """测试上传图片"""
         # 创建一个简单的测试图片
@@ -160,11 +159,10 @@ class ForumPostTestCase(TestCase):
             content_type='application/json',
             headers={'Authorization': 'Bearer ' + self.access_token}
         )
-        
+
         self.assertEqual(response.status_code, 201)
         self.assertIn('filename', response.json())
-    
-    '''
+
 
     def test_unauthorized_access(self):
         """测试未授权访问"""

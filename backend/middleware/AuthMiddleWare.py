@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from rest_framework_simplejwt.tokens import AccessToken
+from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
 
 blocks = [
     '/api/logout/',

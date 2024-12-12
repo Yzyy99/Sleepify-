@@ -97,23 +97,19 @@ class APITestCase(TestCase):
         self.assertEqual(response1.status_code, 400)
 
     def test_logout(self):
-        response1 = self.client.post(reverse('login'),
-                                     data={'username': 'testcase',
-                                           'password': str('password')},
-                                     content_type='application/json')
-        refresh = response1.json().get('refresh')
+        self.login_for_test()
         """
             使用正确的refresh_token退出，检查返回值为成功
         """
         response2 = self.client.post(reverse('logout'),
-                                     headers={'Authorization': 'Bearer ' + refresh},
+                                     headers={'Authorization': 'Bearer ' + self.access_token},
                                      content_type='application/json')
         self.assertEqual(response2.status_code, 200)
         """
             使用错误的refresh_token退出，检查返回值为失败
         """
         response3 = self.client.post(reverse('logout'),
-                                     headers={'Authorization': 'Bearer ' + refresh + "1"},
+                                     headers={'Authorization': 'Bearer ' + self.access_token + '1'},
                                      content_type='application/json')
         self.assertEqual(response3.status_code, 401)
         """
