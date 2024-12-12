@@ -1,0 +1,44 @@
+{
+  "build": "h2466b09_1",
+  "build_number": 1,
+  "channel": "https://conda.anaconda.org/conda-forge/win-64",
+  "constrains": [],
+  "depends": [
+    "ucrt >=10.0.20348.0",
+    "vc >=14.2,<15",
+    "vc14_runtime >=14.29.30139"
+  ],
+  "extracted_package_dir": "X:\\Anaconda\\pkgs\\liblzma-5.6.3-h2466b09_1",
+  "files": [
+    "Library/bin/liblzma.dll",
+    ".nonadmin"
+  ],
+  "fn": "liblzma-5.6.3-h2466b09_1.conda",
+  "license": "0BSD",
+  "link": {
+    "source": "X:\\Anaconda\\pkgs\\liblzma-5.6.3-h2466b09_1",
+    "type": 1
+  },
+  "md5": "015b9c0bd1eef60729ab577a38aaf0b5",
+  "name": "liblzma",
+  "package_tarball_full_path": "X:\\Anaconda\\pkgs\\liblzma-5.6.3-h2466b09_1.conda",
+  "paths_data": {
+    "paths": [
+      {
+        "_path": "Library/bin/liblzma.dll",
+        "path_type": "hardlink",
+        "sha256": "f98d7543da68f1b405cb63a5bf53ff60271612c5207d78d3daa5325537a6b0cc",
+        "sha256_in_prefix": "f98d7543da68f1b405cb63a5bf53ff60271612c5207d78d3daa5325537a6b0cc",
+        "size_in_bytes": 186368
+      }
+    ],
+    "paths_version": 1
+  },
+  "requested_spec": "None",
+  "sha256": "24d04bd55adfa44c421c99ce169df38cb1ad2bba5f43151bc847fc802496a1fa",
+  "size": 104332,
+  "subdir": "win-64",
+  "timestamp": 1733407872000,
+  "url": "https://conda.anaconda.org/conda-forge/win-64/liblzma-5.6.3-h2466b09_1.conda",
+  "version": "5.6.3"
+}
