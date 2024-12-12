@@ -106,14 +106,14 @@ class APITestCase(TestCase):
             使用正确的refresh_token退出，检查返回值为成功
         """
         response2 = self.client.post(reverse('logout'),
-                                     data={'refresh': refresh},
+                                     headers={'Authorization': 'Bearer ' + refresh},
                                      content_type='application/json')
         self.assertEqual(response2.status_code, 200)
         """
             使用错误的refresh_token退出，检查返回值为失败
         """
         response3 = self.client.post(reverse('logout'),
-                                     data={'refresh': refresh + '1'},
+                                     headers={'Authorization': 'Bearer ' + refresh + "1"},
                                      content_type='application/json')
         self.assertEqual(response3.status_code, 401)
         """
@@ -121,7 +121,7 @@ class APITestCase(TestCase):
         """
         response4 = self.client.post(reverse('logout'),
                                      content_type='application/json')
-        self.assertEqual(response4.status_code, 400)
+        self.assertEqual(response4.status_code, 401)
 
     def test_get_sleep_records(self):
         """测试获取睡眠记录"""

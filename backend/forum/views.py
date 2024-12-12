@@ -227,13 +227,13 @@ class GetForumPostsWithSimilairity(APIView):
 
         # 获取分页参数
         last_post_id = request.data.get('last_post_id')  # 分页的起始帖子 ID
-        limit = 10  # 限制返回的帖子数量
+        limit = 100  # 限制返回的帖子数量
 
         # 获取社区帖子
         if last_post_id:
-            posts = ForumPost.objects.filter(id__lt=last_post_id).order_by('-created_at')[:limit]
+            posts = ForumPost.objects.filter(id__lt=last_post_id).distinct().order_by('-created_at')[:limit]
         else:
-            posts = ForumPost.objects.all().order_by('-created_at')[:limit]
+            posts = ForumPost.objects.all().distinct().order_by('-created_at')[:limit]
 
         # 如果用户有最近的睡眠小记，按相似度排序
         latest_sleep_record = SleepRecord.objects.filter(user=request.user).order_by('-created_at').first()
