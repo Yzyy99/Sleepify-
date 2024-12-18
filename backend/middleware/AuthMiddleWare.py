@@ -13,7 +13,8 @@ blocks = [
     '/api/forum/like_post/',
     '/api/forum/reply_post/',
     '/api/forum/delete_post/',
-    '/api/forum/similarity_posts/'
+    '/api/forum/similarity_posts/',
+    '/api/user/'
 ]
 
 class AuthenticationMiddleware:

@@ -44,7 +44,7 @@ class ForumPostTestCase(TestCase):
 
     def login(self):
         response = self.client.post(reverse('login'),
-                                    data={'username': '13800138000',
+                                    data={'phone_number': '13800138000',
                                           'password': str('password')},
                                     content_type='application/json')
         self.access_token = response.json().get('access')
