@@ -13,6 +13,7 @@ Page({
   // 声明 interval 变量
   interval: null as any, // 将 interval 明确声明为 any 类型
 
+
   onLoad(options:any) {
     const time = parseInt(options.time); // 接收时间
     const method = options.method; // 接收呼吸方式
@@ -38,6 +39,7 @@ Page({
     }
   },
 
+
   // 获取呼吸训练方法的中文名称
   getMethodName(method:any) {
     switch(method) {
@@ -49,6 +51,7 @@ Page({
         return '呼吸训练';
     }
   },
+
 
   // 应用主题
   themeBreathingDisplay() {
@@ -108,6 +111,7 @@ Page({
       const seconds = remainingSeconds % 60;
       this.setData({
         countdownText: `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`,
+
       });
 
       // 更新呼吸提示和气泡大小

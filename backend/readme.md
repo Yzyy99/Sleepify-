@@ -38,7 +38,7 @@ sudo systemctl status redis (to check if it is running)
 
 
 ```bash
-python manage.py makemigrations app
+python manage.py makemigrations app forum
 python manage.py migrate
 python manage.py runserver
 ```
