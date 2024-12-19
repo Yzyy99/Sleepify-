@@ -30,6 +30,7 @@ from django.utils.timezone import now
 from .models import SleepRecord
 
 import os
+import base64
 
 from .utils import CustomUserSerializer
 
@@ -53,7 +54,7 @@ class RegisterAPIView(APIView):
             return Response({'error': 'Phone number is already registered.'}, status=status.HTTP_400_BAD_REQUEST)
 
         # 创建用户
-        user = CustomUser.objects.create_user(phone_number=phone_number, password=password)
+        user = CustomUser.objects.create_user(username=phone_number, phone_number=phone_number, password=password)
 
         # 注册成功，返回成功信息
         return Response({'message': 'Registration successful.'}, status=status.HTTP_201_CREATED)
@@ -424,12 +425,14 @@ class UserProfileView(APIView):
         user = request.user
         avatar = request.data.get('avatar')
         username = request.data.get('username')
+        print(f"Received data: {request.data}")
         if avatar:
             if avatar.startswith('data:image/'):
                 avatar = avatar.split(',', 1)[1]
             try:
                 avatar_bytes = base64.b64decode(avatar)
             except Exception as e:
+                print(f"Error decoding base64 data: {e}")
                 return Response({'error': 'Invalid base64 data'}, status=400)
             if len(avatar_bytes) > 256 * 1024:
                 return Response({'error': 'Image size exceeds 256KB'}, status=400)
@@ -441,6 +444,7 @@ class UserProfileView(APIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
+        print(f"Serializer errors: {serializer.errors}")
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request):
