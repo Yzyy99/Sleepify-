@@ -69,15 +69,15 @@
 
 ### 2. User Login
 
-| **Field**  | **Type** | **Description**                                   | **Required** |
-| ---------- | -------- | ------------------------------------------------- | ------------ |
-| `username` | `string` | The user's username.(actually it is phone number) | Yes          |
-| `password` | `string` | The user's password.                              | Yes          |
+| **Field**      | **Type** | **Description**          | **Required** |
+| -------------- | -------- | ------------------------ | ------------ |
+| `phone_number` | `string` | The user's phone number. | Yes          |
+| `password`     | `string` | The user's password.     | Yes          |
 
 **Request Example**:
 ```json
 {
-    "username": "example_user",
+    "phone_number": "example_number",
     "password": "example_password"
 }
 ```
