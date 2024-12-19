@@ -7,18 +7,25 @@ Page({
     bubbleTransitionDuration: 2, // 气泡变化时间
     isTraining: false, // 是否正在训练
     isDarkMode: app2.globalData.isDarkMode, // 是否夜间模式
+    methodName: '', // 当前呼吸训练方法名称
+    pageBackgroundColor: '#ffffff', // 默认背景色
+    textColor: '#000000', // 默认文字颜色
+    bubbleColor: '#DCE4C9', // 默认气泡颜色
   },
 
   // 声明 interval 变量
   interval: null as any, // 将 interval 明确声明为 any 类型
 
-  onLoad(options: any) {
+  onLoad(options:any) {
     const time = parseInt(options.time); // 接收时间
     const method = options.method; // 接收呼吸方式
 
     console.log('时间：', time, '呼吸方式：', method);
 
-    this.setData({ isTraining: true });
+    this.setData({ 
+      isTraining: true,
+      methodName: this.getMethodName(method), // 设置呼吸训练方法名称
+    });
 
     // 动态设置页面主题
     this.themeBreathingDisplay();
@@ -31,6 +38,18 @@ Page({
   onUnload() {
     if (this.interval) {
       clearInterval(this.interval);
+    }
+  },
+
+  // 获取呼吸训练方法的中文名称
+  getMethodName(method:any) {
+    switch(method) {
+      case 'even':
+        return '均匀呼吸法';
+      case '478':
+        return '4-7-8 呼吸法';
+      default:
+        return '呼吸训练';
     }
   },
 
@@ -67,7 +86,7 @@ Page({
   },
 
   // 呼吸训练计时器
-  startTimer(totalSeconds: number, method: string) {
+  startTimer(totalSeconds:any, method:any) {
     let remainingSeconds = totalSeconds;
 
     // 保存 setInterval 的引用
@@ -91,7 +110,7 @@ Page({
       const minutes = Math.floor(remainingSeconds / 60);
       const seconds = remainingSeconds % 60;
       this.setData({
-        countdownText: `${minutes}:${seconds}`,
+        countdownText: `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`,
       });
 
       // 更新呼吸提示和气泡大小
@@ -103,7 +122,7 @@ Page({
         scale = remainingSeconds % 4 < 2 ? 1.5 : 0.8; // 吸气放大，呼气缩小
         transitionDuration = 2; // 均匀呼吸，固定 2 秒
       } else if (method === '478') {
-        const cycle = 19 - remainingSeconds % 19; // 4-7-8 总周期
+        const cycle = 19 - (remainingSeconds % 19); // 4-7-8 总周期
 
         if (cycle < 4) {
           text = '吸气';

@@ -4,28 +4,66 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
+}
 
+/* 呼吸训练方法显示样式 */
+.method-display {
+  position: absolute;
+  top: 50rpx;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.method-text {
+  font-size: 48rpx;
+  font-weight: bold;
 }
 
 /* 倒计时样式 */
 .countdown {
-  font-size: 96rpx;
-  margin-bottom: 400rpx;
+  font-size: 48rpx;
+  margin-top: 400rpx;
+}
+/* 倒计时按钮样式 */
+.countdown-button {
+  font-size: 20px;
+  margin-top: 300rpx; /* 调整与气泡的间距 */
+  padding: 20rpx 40rpx; /* 内边距 */
+  border-radius: 50rpx; /* 圆角 */
+  box-shadow: 
+    0 4rpx 8rpx rgba(0, 0, 0, 0.2), /* 外部阴影 */
+    inset 0 -2rpx 4rpx rgba(255, 255, 255, 0.2); /* 内部高光 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.5s ease; /* 背景色过渡效果 */
 }
 
 /* 呼吸气泡样式 */
 .breathing-bubble {
-  width: 400rpx;
-  height: 400rpx;
+  width: 300rpx;
+  height: 300rpx;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: transform ease-in-out; /* 气泡大小平滑变化 */
+  margin-top: 100px;
+  transition: transform ease-in-out, box-shadow ease-in-out, background 0.5s;
+  
+  /* 添加渐变背景模拟高光 */
+  background: linear-gradient(145deg, var(--bubbleColor) 0%, var(--bubbleColor) 70%, var(--bubbleColor) 100%);
+  
+  /* 添加外部阴影 */
+  box-shadow: 
+    0 10rpx 20rpx rgba(0, 0, 0, 0.2), /* 主阴影 */
+    inset 0 5rpx 10rpx rgba(255, 255, 255, 0.3); /* 内部高光阴影 */
 }
 
 /* 呼吸文字样式 */
 .breathing-text {
   font-size: 48rpx;
   font-weight: bold;
+  color: inherit; /* 确保文字颜色继承自父元素 */
 }
