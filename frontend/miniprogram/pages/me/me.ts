@@ -18,7 +18,7 @@ Page({
 
     // 将状态同步到后端或本地存储
     wx.setStorageSync('personalizedRecommendation', isChecked);
-    console.log("个性化推荐状态已保存:", isChecked);
+    console.log("个性化推荐状态已保存:", isChecked);  
     wx.showToast({
       title: isChecked ? "个性化推荐已开启" : "个性化推荐已关闭",
       icon: "success",
@@ -52,15 +52,30 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad() {
-    const phone = wx.getStorageSync('phone_number'); // 获取登录时保存的手机号
-    if (phone) {
-      this.setData({
-        username: phone, // 将手机号设置为用户名
-        phone: phone     // 设置手机号
-      });
-    } else {
-      console.error("手机号未找到，请检查登录逻辑是否正确保存了手机号。");
-    }
+    // 获取用户信息
+    wx.request({
+      url: 'http://127.0.0.1:8000/api/user/', // 替换为你的后端接口地址
+      method: 'GET',
+      header: {
+        Authorization: "Bearer " + wx.getStorageSync("access_token"), // 携带用户登录时保存的 token
+      },
+      success: (res:any) => {
+        const { username, avatar, phone_number } = res.data; // 假设返回的数据格式是 { username, avatar, phone_number }
+        this.setData({
+          username: username || '默认用户名', // 设置用户名
+          photo: avatar || '../../assets/breathing.png', // 设置头像
+          phone: phone_number || '未绑定手机号' // 设置手机号
+        });
+      },
+      fail: (err) => {
+        console.error('获取用户信息失败', err);
+        wx.showToast({
+          title: '加载用户信息失败',
+          icon: 'error',
+          duration: 2000
+        });
+      }
+    });
   },
 
   /**
@@ -112,6 +127,7 @@ Page({
 
   },
 
+  /*
   modify_photo() {
     wx.chooseImage({
       count: 1,
@@ -125,7 +141,67 @@ Page({
       }
     })
   },
+  */
+ modify_photo() {
+  wx.chooseImage({
+    count: 1,
+    sizeType: ['compressed'],
+    sourceType: ['album', 'camera'],
+    success: (res) => {
+      const tempFilePath = res.tempFilePaths[0];
 
+      // 将图片转为 base64
+      wx.getFileSystemManager().readFile({
+        filePath: tempFilePath,
+        encoding: 'base64',
+        success: (fileRes) => {
+          const base64Image = `data:image/png;base64,${fileRes.data}`;
+
+          // 调用后端接口上传头像
+          wx.request({
+            url: 'http://127.0.0.1:8000/api/user/', // 替换为你的后端接口地址
+            method: 'PUT',
+            header: {
+              Authorization: "Bearer " + wx.getStorageSync("access_token"), // 携带用户登录时保存的 token
+              'Content-Type': 'application/json'
+            },
+            data: {
+              avatar: base64Image
+            },
+            success: (res:any) => {
+              this.setData({
+                photo: tempFilePath // 更新页面显示的头像
+              });
+              wx.showToast({
+                title: '头像修改成功',
+                icon: 'success',
+                duration: 2000
+              });
+            },
+            fail: (err) => {
+              console.error('修改头像失败', err);
+              wx.showToast({
+                title: '修改头像失败',
+                icon: 'error',
+                duration: 2000
+              });
+            }
+          });
+        },
+        fail: (err) => {
+          console.error('读取图片失败', err);
+          wx.showToast({
+            title: '图片读取失败',
+            icon: 'error',
+            duration: 2000
+          });
+        }
+      });
+    }
+  });
+},
+
+/*
   modify_username() {
     // TODO: update to backend
     wx.showToast({
@@ -133,6 +209,50 @@ Page({
       icon: 'success',
     })
   },
+  */
+ modify_username() {
+  wx.showModal({
+    title: '修改用户名',
+    editable: true, // 允许用户输入
+    placeholderText: '请输入新的用户名',
+    success: (res) => {
+      if (res.confirm && res.content) {
+        const newUsername = res.content;
+
+        // 调用后端接口更新用户名
+        wx.request({
+          url: 'http://127.0.0.1:8000/api/user/', // 替换为你的后端接口地址
+          method: 'PUT',
+          header: {
+            Authorization: "Bearer " + wx.getStorageSync("access_token"), // 携带用户登录时保存的 token
+            'Content-Type': 'application/json'
+          },
+          data: {
+            username: newUsername
+          },
+          success: (res:any) => {
+            this.setData({
+              username: newUsername // 更新页面显示的用户名
+            });
+            wx.showToast({
+              title: '用户名修改成功',
+              icon: 'success',
+              duration: 2000
+            });
+          },
+          fail: (err) => {
+            console.error('修改用户名失败', err);
+            wx.showToast({
+              title: '修改用户名失败',
+              icon: 'error',
+              duration: 2000
+            });
+          }
+        });
+      }
+    }
+  });
+},
 
   modify_phone() {
     wx.navigateTo({
@@ -155,5 +275,68 @@ Page({
       wx.reLaunch({
         url: '/pages/homepage/homepage' // 跳转回登录页面
       });
+    },
+    
+    delete() {
+      const token = wx.getStorageSync('token'); // 从本地存储中获取用户的 Token
+      if (!token) {
+        wx.showToast({
+          title: '用户未登录',
+          icon: 'error',
+          duration: 2000,
+        });
+        return;
+      }
+    
+      // 弹窗确认注销操作
+      wx.showModal({
+        title: '确认注销',
+        content: '注销后您的账户将被永久删除，是否继续？',
+        success: (res) => {
+          if (res.confirm) {
+            // 用户确认后调用后端接口
+            wx.request({
+              url: 'http://127.0.0.1:8000/api/user/', // 替换为你的后端接口地址
+              method: 'DELETE',
+              header: {
+                Authorization: "Bearer " + wx.getStorageSync("access_token"), // 将 Token 添加到请求头中
+              },
+              success: (res:any) => {
+                if (res.statusCode === 200) {
+                  wx.showToast({
+                    title: '注销成功',
+                    icon: 'success',
+                    duration: 2000,
+                  });
+    
+                  // 清除用户的本地缓存（如 Token）
+                  wx.clearStorageSync();
+    
+                  // 跳转到登录页面或首页
+                  wx.reLaunch({
+                    url: '/pages/homepage/homepage', // 替换为你的登录或首页路径
+                  });
+                } else {
+                  wx.showToast({
+                    title: res.data.error || '注销失败',
+                    icon: 'error',
+                    duration: 2000,
+                  });
+                }
+              },
+              fail: (err) => {
+                console.error('注销失败:', err);
+                wx.showToast({
+                  title: '网络错误',
+                  icon: 'error',
+                  duration: 2000,
+                });
+              },
+            });
+          }
+        },
+      });
     }
 })
+
+  
