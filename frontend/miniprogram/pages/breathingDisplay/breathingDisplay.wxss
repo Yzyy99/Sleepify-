@@ -39,12 +39,13 @@
   justify-content: center;
   align-items: center;
   transition: background-color 0.5s ease; /* 背景色过渡效果 */
+
 }
 
 /* 呼吸气泡样式 */
 .breathing-bubble {
-  width: 300rpx;
-  height: 300rpx;
+  width: 400rpx;
+  height: 400rpx;
   border-radius: 50%;
   display: flex;
   justify-content: center;

@@ -8,13 +8,11 @@ Page({
     isTraining: false, // 是否正在训练
     isDarkMode: app2.globalData.isDarkMode, // 是否夜间模式
     methodName: '', // 当前呼吸训练方法名称
-    pageBackgroundColor: '#ffffff', // 默认背景色
-    textColor: '#000000', // 默认文字颜色
-    bubbleColor: '#DCE4C9', // 默认气泡颜色
   },
 
   // 声明 interval 变量
   interval: null as any, // 将 interval 明确声明为 any 类型
+
 
   onLoad(options:any) {
     const time = parseInt(options.time); // 接收时间
@@ -41,6 +39,7 @@ Page({
     }
   },
 
+
   // 获取呼吸训练方法的中文名称
   getMethodName(method:any) {
     switch(method) {
@@ -52,6 +51,7 @@ Page({
         return '呼吸训练';
     }
   },
+
 
   // 应用主题
   themeBreathingDisplay() {
@@ -111,6 +111,7 @@ Page({
       const seconds = remainingSeconds % 60;
       this.setData({
         countdownText: `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`,
+
       });
 
       // 更新呼吸提示和气泡大小
