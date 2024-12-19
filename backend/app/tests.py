@@ -34,7 +34,7 @@ class APITestCase(TestCase):
     def login_for_test(self):
         """辅助方法：用于需要登录的测试"""
         response = self.client.post(reverse('login'),
-                                    data={'username': 'testcase',
+                                    data={'phone_number': 'testcase',
                                           'password': 'password'},
                                     content_type='application/json')
         self.access_token = response.json().get('access')
@@ -44,7 +44,7 @@ class APITestCase(TestCase):
         使用错误的信息进行登录，检查返回值为失败
         """
         response1 = self.client.post(reverse('login'),
-                                     data={'username': 'testcase',
+                                     data={'phone_number': 'testcase',
                                            'password': str('nopassword')},
                                      content_type='application/json')
         self.assertEqual(response1.status_code, 401)
@@ -52,7 +52,7 @@ class APITestCase(TestCase):
         使用正确的信息进行登录，检查返回值为成功
         """
         response2 = self.client.post(reverse('login'),
-                                     data={'username': 'testcase',
+                                     data={'phone_number': 'testcase',
                                            'password': str('password')},
                                      content_type='application/json')
         self.assertEqual(response2.status_code, 200)
@@ -60,7 +60,7 @@ class APITestCase(TestCase):
         使用错误的方法进行登录，检查返回值为失败
         """
         response3 = self.client.get(reverse('login'),
-                                    data={'username': 'testcase',
+                                    data={'phone_number': 'testcase',
                                           'password': str('password')},
                                     content_type='application/json')
         self.assertEqual(response3.status_code, 405)
@@ -97,23 +97,19 @@ class APITestCase(TestCase):
         self.assertEqual(response1.status_code, 400)
 
     def test_logout(self):
-        response1 = self.client.post(reverse('login'),
-                                     data={'username': 'testcase',
-                                           'password': str('password')},
-                                     content_type='application/json')
-        refresh = response1.json().get('refresh')
+        self.login_for_test()
         """
             使用正确的refresh_token退出，检查返回值为成功
         """
         response2 = self.client.post(reverse('logout'),
-                                     headers={'Authorization': 'Bearer ' + refresh},
+                                     headers={'Authorization': 'Bearer ' + self.access_token},
                                      content_type='application/json')
         self.assertEqual(response2.status_code, 200)
         """
             使用错误的refresh_token退出，检查返回值为失败
         """
         response3 = self.client.post(reverse('logout'),
-                                     headers={'Authorization': 'Bearer ' + refresh + "1"},
+                                     headers={'Authorization': 'Bearer ' + self.access_token + '1'},
                                      content_type='application/json')
         self.assertEqual(response3.status_code, 401)
         """
@@ -231,7 +227,7 @@ class APITestCase(TestCase):
     def test_delete_sleep_record(self):
         response1 = self.client.post(reverse('login'),
                                      content_type='application/json',
-                                     data={'username': 'testcase',
+                                     data={'phone_number': 'testcase',
                                            'password': str('password')}
                                      )
         token = response1.json().get('access')
@@ -266,6 +262,54 @@ class APITestCase(TestCase):
                                        headers={'Authorization': f'Bearer {token}'},
                                        data={'id': id1})
         self.assertEqual(response6.status_code, 404)
+
+    def test_user_profile(self):
+        response1 = self.client.get(reverse('user_profile'))
+        self.assertEqual(response1.status_code, 401)
+        self.login_for_test()
+        response2 = self.client.get(reverse('user_profile'),
+                                    headers={'Authorization': 'Bearer ' + self.access_token})
+        self.assertIn("id", response2.json())
+        self.assertIn("phone_number", response2.json())
+        self.assertEqual(response2.status_code, 200)
+        response3 = self.client.put(reverse('user_profile'),
+                                    content_type='application/json',
+                                    data={'phone_number': '0123456789'},
+                                    headers={'Authorization': 'Bearer ' + self.access_token})
+        self.assertEqual(response3.status_code, 400)
+        response4 = self.client.put(reverse('user_profile'),
+                                    data={'username': '0123456789'},
+                                    content_type='application/json',
+                                    headers={'Authorization': 'Bearer ' + self.access_token})
+        self.assertEqual(response4.status_code, 200)
+        response5 = self.client.get(reverse('user_profile'),
+                                    headers={'Authorization': 'Bearer ' + self.access_token})
+        self.assertIn("id", response5.json())
+        self.assertIn("username", response5.json())
+        self.assertIn("phone_number", response5.json())
+        self.assertEqual(response5.status_code, 200)
+
+        new_user = CustomUser.objects.create_user(phone_number='test_delete')
+        new_user.set_password('password')
+        new_user.save()
+        response = self.client.post(reverse('login'),
+                                     content_type='application/json',
+                                     data={'phone_number': 'test_delete',
+                                           'password': str('password')}
+                                     )
+        token = response.json().get('access')
+        response6 = self.client.delete(reverse('user_profile'),
+                                       content_type='application/json',
+                                       headers={'Authorization': f'Bearer {token}'})
+        self.assertEqual(response6.status_code, 200)
+        response = self.client.post(reverse('login'),
+                                    content_type='application/json',
+                                    data={'phone_number': 'test_delete',
+                                          'password': str('password')}
+                                    )
+        self.assertEqual(response.status_code, 401)
+        self.assertEqual(CustomUser.objects.all().count(), 1)
+
 
 
 if __name__ == '__main__':
