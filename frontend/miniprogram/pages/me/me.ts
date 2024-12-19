@@ -25,7 +25,29 @@ Page({
       duration: 2000,
     });
   },
+  
+  toggleDarkMode(e: any) {
+    const isDarkMode = e.detail.value;  // 获取开关状态
+    const app = getApp();  // 获取全局小程序实例
 
+    // 更新全局状态
+    app.globalData.isDarkMode = isDarkMode;
+
+    // 更新本地状态
+    this.setData({
+      isDarkMode: isDarkMode
+    });
+
+    // 提示用户夜间模式切换
+    wx.showToast({
+      title: isDarkMode ? '夜间模式已开启' : '夜间模式已关闭',
+      icon: 'none',
+      duration: 2000
+    });
+
+    // 切换当前页面主题
+    thememe.applyTheme(this);
+  },
   /**
    * 生命周期函数--监听页面加载
    */

@@ -30,6 +30,14 @@
         bindchange="toggleRecommendation">
     </switch>
 </view>
+<view class="profile_section">
+    <text class="profile_title">夜间模式</text>
+    <switch 
+        class="profile_switch" 
+        checked="{{isDarkMode}}" 
+        bindchange="toggleDarkMode">
+    </switch>
+</view>
 <view class="profile_section" style="border-bottom: none;" bindtap="logout">
     <text class="profile_title" style="color: #AA0000;">退出登录</text>
     <!-- <text class="profile_value">username</text> -->

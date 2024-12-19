@@ -8,9 +8,6 @@ Page({
     isTraining: false, // 是否正在训练
     isDarkMode: app2.globalData.isDarkMode, // 是否夜间模式
     methodName: '', // 当前呼吸训练方法名称
-    pageBackgroundColor: '#ffffff', // 默认背景色
-    textColor: '#000000', // 默认文字颜色
-    bubbleColor: '#DCE4C9', // 默认气泡颜色
   },
 
   // 声明 interval 变量
