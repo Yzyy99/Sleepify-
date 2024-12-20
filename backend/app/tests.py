@@ -264,6 +264,7 @@ class APITestCase(TestCase):
         self.assertEqual(response6.status_code, 404)
 
     def test_user_profile(self):
+        init_user_num = CustomUser.objects.all().count()
         response1 = self.client.get(reverse('user_profile'))
         self.assertEqual(response1.status_code, 401)
         self.login_for_test()
@@ -308,7 +309,7 @@ class APITestCase(TestCase):
                                           'password': str('password')}
                                     )
         self.assertEqual(response.status_code, 401)
-        self.assertEqual(CustomUser.objects.all().count(), 1)
+        self.assertEqual(CustomUser.objects.all().count(), init_user_num)
 
 
 

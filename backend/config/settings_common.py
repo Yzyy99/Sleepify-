@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'app',
     'forum',
+    'music',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -116,7 +117,7 @@ USE_TZ = True
 
 # 静态文件配置
 STATIC_URL = '/static/'
-STATIC_ROOT = '/app/static/'  # 容器内的静态文件路径
+STATIC_ROOT = '/app/staticfiles/'  # 容器内的静态文件路径
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -144,3 +145,5 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(hours=6),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
 }
+
+MEDIA_ROOT = os.path.join(BASE_DIR, '/app/staticfiles/media')

@@ -18,6 +18,7 @@
 | `/api/forum/reply_post/`     | POST   | Reply to a forum post.                          |
 | `/api/forum/delete_post/`    | POST | Delete a forum post.                            |
 | `/api/user/`    | PUT/GET/DELETE | User Profile.                            |
+| `/api/music/`    | PUT/GET/DELETE | Music.                            |
 
 ---
 
@@ -1124,6 +1125,256 @@ content_type: 'application/json'
 ```
 
 ---
+
+### 19. Upload Music File (Only SuperUser)
+| **Field**        | **Type**   | **Description**                       | **Required** |
+| ----------------- | ---------- | ------------------------------------- | ------------ |
+| `file` | `FILE` | Music file. | Yes      |
+| `name` | `string` | Name of Music file. | Yes      |
+
+**Request Example:**
+
+```http
+PUT /api/music/
+Authorization: Bearer <access_token>
+content_type: 'multipart/form-data'
+{
+    "file": <MUSIC_FILE>
+    "name": <MUSIC_NAME>
+}
+```
+
+```javascript
+const url = '.../api/music';
+const token = `Bearer {$Accesstoken}`; //this token must belong to a superuser
+
+const formData = new FormData();
+formData.append('file', <file>);
+                formData.append('name', <filename>)
+
+try {
+    const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+            'Authorization': token,
+            'Content-Type': 'multipart/form-data',
+        },
+        body: formData, 
+    });
+
+    if (response.ok) {
+        const result = await response.json();
+        //...
+    } else {
+        const error = await response.json();
+        //...
+    }
+} catch (err) {
+    //...
+}
+```
+
+**Response Example (200 OK):**
+
+| **Field**        | **Type**   | **Description**                             |
+| ----------------- | ---------- | ------------------------------------------- |
+| `message`  | `string`  | Success Message |
+
+```json
+{
+    'message': 'File with name <name> has been saved'
+}
+```
+**Error Response (400 Bad Request)**:
+
+| **Field** | **Type** | **Description** |
+| --------- | -------- | --------------- |
+| `error`   | `string` | Not Supported |
+
+```json
+{
+    'error': 'No file provided'
+}
+
+{
+    'error': 'File with name <name> already exists'
+}
+```
+
+**Error Response (401 Unauthorized)**:
+
+| **Field** | **Type** | **Description** |
+| --------- | -------- | --------------- |
+| `error`   | `string` | Unauthorized.   |
+
+```json
+{
+    'error': 'Unauthorized'
+}
+
+{
+    'error': 'Non-staff'
+}
+```
+
+---
+
+### 20. Get Music File (Stream)
+| **Field**        | **Type**   | **Description**                       | **Required** |
+| ----------------- | ---------- | ------------------------------------- | ------------ |
+| `name` | `string` | Name of music file. | Yes      |
+
+**Request Example:**
+
+```http
+GET /api/music/
+Authorization: Bearer <access_token>
+content_type: 'application/json'
+{
+    "name": <MUSIC_FILE_NAME>
+}
+```
+```javascript
+url = url + `?name=${filename}` ;
+const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+            'Authorization': token,
+            'Content-Type': 'application/json',
+        },
+    });
+```
+
+**Response Example (200 OK):**
+
+| **Field**        | **Type**   | **Description**                             |
+| ----------------- | ---------- | ------------------------------------------- |
+| `response` | `stream` | stream file |
+
+```json
+A Streaming Product, should convert to blob
+```
+
+```javascript
+function fetchMusic() {
+            fetch(`/api/music/?name=${musicName}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Error: ${response.statusText}`);
+                    }
+                    return response.blob();
+                })
+                .then(blob => {
+                    const audioURL = URL.createObjectURL(blob);
+                    const audioPlayer = document.getElementById("audioPlayer");
+                    audioPlayer.src = audioURL;
+                    audioPlayer.play();
+                })
+                .catch(error => {
+                    console.error("Failed to fetch the music:", error);
+                    alert("Error fetching the music. Please try again.");
+                });
+        }
+```
+**Error Response (400 Bad Request)**:
+
+| **Field** | **Type** | **Description** |
+| --------- | -------- | --------------- |
+| `error`   | `string` | Not Supported |
+
+```json
+{
+    'error': 'No name provided'
+}
+
+{
+    'error': 'File with name <name> does not exist'
+}
+```
+
+**Error Response (401 Unauthorized)**:
+
+| **Field** | **Type** | **Description** |
+| --------- | -------- | --------------- |
+| `error`   | `string` | Unauthorized.   |
+
+```json
+{
+    'error': 'Unauthorized'
+}
+```
+
+**Error Response (404 NotFound)**:
+
+| **Field** | **Type** | **Description** |
+| --------- | -------- | --------------- |
+| `error`   | `string` | NotFound.   |
+
+```json
+{
+    'error': 'File with name <name> exist in history, but cannot found'
+}
+```
+---
+### 21. Delete Music (Only SuperUser)
+
+**Request Example:**
+
+```http
+DELETE /api/music/
+Authorization: Bearer <access_token>
+content_type: 'application/json'
+{
+    "name": <MUSIC_FILE_NAME>
+}
+```
+
+**Response Example (200 OK):**
+
+| **Field**        | **Type**   | **Description**                             |
+| ----------------- | ---------- | ------------------------------------------- |
+| `message`        | `string`  | Music Deleted |
+
+```json
+{
+    'message': 'File with name <name> deleted'
+}
+```
+
+**Error Response (400 BadRequest)**:
+
+| **Field** | **Type** | **Description** |
+| --------- | -------- | --------------- |
+| `error`   | `string` | Music Not found |
+
+```json
+{
+    'error': 'File with name <name> does not exist'
+}
+
+{
+    'error': 'No name provided'
+}
+```
+
+**Error Response (401 Unauthorized)**:
+
+| **Field** | **Type** | **Description** |
+| --------- | -------- | --------------- |
+| `error`   | `string` | Unauthorized.   |
+
+```json
+{
+    'error': 'Unauthorized'
+}
+
+{
+    'error': 'Non-staff'
+}
+```
+
+---
+
 
 ## Status Codes
 
