@@ -1135,7 +1135,7 @@ content_type: 'application/json'
 **Request Example:**
 
 ```http
-PUT /api/music/
+POST /api/music/
 Authorization: Bearer <access_token>
 content_type: 'multipart/form-data'
 {
@@ -1150,11 +1150,11 @@ const token = `Bearer {$Accesstoken}`; //this token must belong to a superuser
 
 const formData = new FormData();
 formData.append('file', <file>);
-                formData.append('name', <filename>)
+formData.append('name', <filename>)
 
 try {
     const response = await fetch(url, {
-        method: 'PUT',
+        method: 'POST',
         headers: {
             'Authorization': token,
             'Content-Type': 'multipart/form-data',
@@ -1233,16 +1233,6 @@ content_type: 'application/json'
 {
     "name": <MUSIC_FILE_NAME>
 }
-```
-```javascript
-url = url + `?name=${filename}` ;
-const response = await fetch(url, {
-        method: 'PUT',
-        headers: {
-            'Authorization': token,
-            'Content-Type': 'application/json',
-        },
-    });
 ```
 
 **Response Example (200 OK):**
