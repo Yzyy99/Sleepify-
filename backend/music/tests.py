@@ -14,6 +14,7 @@ from datetime import date
 from app.models import CustomUser
 from config import settings
 from music.models import Music
+from pydub.generators import Sine
 
 class MusicTestCase(TestCase):
     def setUp(self):
@@ -28,6 +29,20 @@ class MusicTestCase(TestCase):
         self.superuser = superuser
 
         self.client = Client()
+        mp3_data = b'ID3\x04\x00\x00\x00\x00\x00\x21\x00TIT2\x00\x00\x00\x15\x00\x00\x03Fake Title\x00TPE1\x00\x00\x00\x15\x00\x00\x03Fake Artist'
+
+        sine_wave = Sine(440).to_audio_segment(duration=1000)
+        audio_buffer = BytesIO()
+        sine_wave.export(audio_buffer, format="mp3")
+        audio_buffer.seek(0)
+
+        audio_data = audio_buffer.read()[10:]
+
+        final_mp3_data = mp3_data + audio_data
+
+        mp3_file = SimpleUploadedFile('test.mp3', final_mp3_data, content_type='audio/mpeg')
+        self.mp3file = mp3_file
+        self.mp3data = final_mp3_data
 
 
     def login_for_test(self):
@@ -55,12 +70,10 @@ class MusicTestCase(TestCase):
                                    content_type='multipart/form-data',
                                    headers={'Authorization': 'Bearer ' + self.naccess_token})
         self.assertEqual(response.status_code, 401)
-        mp3_data = b'ID3\x04\x00\x00\x00\x00\x00\x21\x00TIT2\x00\x00\x00\x15\x00\x00\x03Fake Title\x00TPE1\x00\x00\x00\x15\x00\x00\x03Fake Artist'
-        mp3_file = SimpleUploadedFile('test.mp3', mp3_data, content_type='audio/mpeg')
         response = self.client.post(reverse('music'),
                                    format='multipart',
                                    data={
-                                       'file': mp3_file,
+                                       'file': self.mp3file,
                                        'name': 'test.mp3'
                                    },
                                    headers={'Authorization': 'Bearer ' + self.saccess_token})
@@ -74,7 +87,7 @@ class MusicTestCase(TestCase):
         self.assertEqual(response.get('Content-Type'), 'audio/mpeg')
         self.assertEqual(response.get('Content-Disposition'), 'inline; filename="test.mp3"')
         data = b''.join(list(response.streaming_content))
-        self.assertEqual(data, mp3_data)
+        self.assertEqual(data, self.mp3data)
 
 
         response = self.client.delete(reverse('music'),
@@ -89,3 +102,29 @@ class MusicTestCase(TestCase):
                                       headers={'Authorization': 'Bearer ' + self.saccess_token})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(Music.objects.count(), 0)
+
+    def test_music_list(self):
+        response = self.client.get(reverse('musiclist'))
+        self.assertEqual(response.status_code, 401)
+        self.login_for_test()
+        response = self.client.get(reverse('musiclist'),
+                                   headers={'Authorization': 'Bearer ' + self.naccess_token})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json().get('music_list'), [])
+        self.client.post(reverse('music'),
+                                    format='multipart',
+                                    data={
+                                        'file': self.mp3file,
+                                        'name': 'test.mp3'
+                                    },
+                                    headers={'Authorization': 'Bearer ' + self.saccess_token})
+        self.assertEqual(response.status_code, 200)
+        response = self.client.get(reverse('musiclist'),
+                                   headers={'Authorization': 'Bearer ' + self.saccess_token})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.json().get('music_list')), 1)
+        self.assertEqual(len(response.json().get('music_list')[0]), 2)
+        self.client.delete(reverse('music'),
+                           headers={'Authorization': 'Bearer ' + self.naccess_token},
+                           content_type='application/json',
+                           data={'name': 'test.mp3'})
