@@ -16,12 +16,14 @@ blocks = [
     '/api/forum/similarity_posts/',
     '/api/user/',
     '/api/music/',
+    '/api/musiclist/'
 ]
 
 admin_auth = [
     ('/api/music/', 'POST'),
     ('/api/music/', 'DELETE'),
 ]
+
 class AuthenticationMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
