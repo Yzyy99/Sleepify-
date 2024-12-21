@@ -11,3 +11,4 @@ DATABASES = {
 
 # 开发环境的静态文件配置
 STATIC_URL = '/static/'
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'testserver']

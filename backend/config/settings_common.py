@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+from datetime import timedelta
 from pathlib import Path
 import os
 
@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'app',
     'forum',
+    'music',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -53,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'middleware.AuthMiddleWare.AuthenticationMiddleware'
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -115,7 +117,7 @@ USE_TZ = True
 
 # 静态文件配置
 STATIC_URL = '/static/'
-STATIC_ROOT = '/app/static/'  # 容器内的静态文件路径
+STATIC_ROOT = '/app/staticfiles/'  # 容器内的静态文件路径
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -139,3 +141,9 @@ CACHES = {
     }
 }
 
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=6),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+}
+
+MEDIA_ROOT = os.path.join(BASE_DIR, '/app/staticfiles/media')

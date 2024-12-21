@@ -132,6 +132,7 @@ Page({
         if (res.statusCode === 200) {
           this.setData({
             report: res.data.report, // 更新报告内容
+            generatingReport: false
           });
         } else {
           wx.showToast({

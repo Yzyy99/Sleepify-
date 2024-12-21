@@ -24,4 +24,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('app.urls')),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('api/forum/', include('forum.urls')),]
+    path('api/forum/', include('forum.urls')),
+    path('api/', include('music.urls'))
+]

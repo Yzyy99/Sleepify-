@@ -1,13 +1,20 @@
 <view class="container" style="background-color: {{pageBackgroundColor}}; color: {{textColor}};">
-  <!-- 倒计时 -->
-  <view class="countdown">
-    <text class="countdown-text" style="color: {{textColor}};">{{countdownText}}</text>
+  
+  <!-- 呼吸训练方法显示 -->
+  <view class="method-display">
+    <text class="method-text">{{methodName}}</text>
   </view>
 
   <!-- 呼吸气泡 -->
   <view
-  class="breathing-bubble"
-  style="transform: scale({{bubbleScale}}); transition-duration: {{bubbleTransitionDuration}}s;background: {{bubbleColor}};">
-  <text class="breathing-text">{{breathingText}}</text>
-</view>
+    class="breathing-bubble"
+    style="transform: scale({{bubbleScale}}); transition-duration: {{bubbleTransitionDuration}}s; background: {{bubbleColor}};">
+    <text class="breathing-text">{{breathingText}}</text>
+  </view>
+  
+  <!-- 倒计时 -->
+ <view class="countdown-button" style="background-color: {{buttonTextColor}};">
+    <text class="countdown-text" style="color: {{buttonTextTextColor}};">剩余时间：{{countdownText}}</text>
+  </view>
+
 </view>

@@ -19,7 +19,8 @@ function applyTheme(pageInstance) {
       highlightColor: '#D35450', // 高亮色深橙红
       shadowColor: 'rgba(0, 0, 0, 0.5)', // 阴影深色
       playerBarBackgroundColor: '#28293E', // 播放器背景深蓝灰
-      playerBarTextColor: '#F4F4F9' // 播放器文字白色
+      playerBarTextColor: '#F4F4F9', // 播放器文字白色
+      exegesisColor:'#B0B0B0'
     });
   } else {
     // 设置浅色模式的导航栏颜色和页面样式
@@ -38,7 +39,8 @@ function applyTheme(pageInstance) {
       highlightColor: '#e07b39', // 高亮色温暖橙
       shadowColor: 'rgba(0, 0, 0, 0.2)' ,// 阴影浅色
       playerBarBackgroundColor: '#FFFFFF', // 播放器背景白色
-      playerBarTextColor: '#333' // 播放器文字深灰色
+      playerBarTextColor: '#333', // 播放器文字深灰色
+      exegesisColor:'#7D7D7D'
     });
   }
 }

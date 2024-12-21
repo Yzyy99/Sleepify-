@@ -9,8 +9,11 @@ alibabacloud_tea_util
 python-dotenv
 django-redis
 pillow
-numpy
+numpy<2
 sentence-transformers
 urllib3==1.26.13
 httpx==0.27.2
 openai==1.7.0
+pytest
+pytest-cov
+coverage

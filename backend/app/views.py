@@ -7,6 +7,7 @@ from django.core.cache import cache
 from django.shortcuts import render
 import random
 from django.utils import timezone
+from django.utils.baseconv import base64
 from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken
@@ -29,6 +30,9 @@ from django.utils.timezone import now
 from .models import SleepRecord
 
 import os
+import base64
+
+from .utils import CustomUserSerializer
 
 client = OpenAI(
     base_url='https://xiaoai.plus/v1',
@@ -50,14 +54,14 @@ class RegisterAPIView(APIView):
             return Response({'error': 'Phone number is already registered.'}, status=status.HTTP_400_BAD_REQUEST)
 
         # 创建用户
-        user = CustomUser.objects.create_user(phone_number=phone_number, password=password)
+        user = CustomUser.objects.create_user(username=phone_number, phone_number=phone_number, password=password)
 
         # 注册成功，返回成功信息
         return Response({'message': 'Registration successful.'}, status=status.HTTP_201_CREATED)
 
 class LoginAPIView(APIView):
     def post(self, request, *args, **kwargs):
-        phone_number = request.data.get('username')
+        phone_number = request.data.get('phone_number')
         password = request.data.get('password')
         print(f'{phone_number} {password}')
 
@@ -85,14 +89,7 @@ class LoginAPIView(APIView):
 
 class LogoutAPIView(APIView):
     def post(self, request, *args, **kwargs):
-        token = request.data.get('refresh')
-        if not token:
-            return Response({'error': 'Refresh token is required.'}, status=status.HTTP_400_BAD_REQUEST)
-        try:
-            token = RefreshToken(token)
-            return Response({'message': 'Successfully logged out.'}, status=status.HTTP_200_OK)
-        except TokenError:
-            return Response({'error': 'Invalid token.'}, status=status.HTTP_401_UNAUTHORIZED)
+        return Response({'message': 'Successfully logged out.'}, status=status.HTTP_200_OK)
 
 class SendVerificationCodeView(APIView):
     def post(self, request):
@@ -262,12 +259,11 @@ class SleepRecordSerializer(serializers.ModelSerializer):
         read_only_fields = ['id', 'created_at']  # 只读字段，前端无需提供
 
 class SleepRecordAPIView(APIView):
-    permission_classes = [IsAuthenticated]  # 只有登录用户才能访问
 
     def get(self, request):
         """获取当前用户的睡眠记录"""
         user = request.user
-        records = SleepRecord.objects.filter(user=user).order_by('-date')  # 获取当前用户的记录
+        records = SleepRecord.objects.filter(user=user).order_by('-created_at')  # 获取当前用户的记录
         serializer = SleepRecordSerializer(records, many=True)  # 序列化数据
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -278,6 +274,19 @@ class SleepRecordAPIView(APIView):
         #data['user'] = user.id  # 将当前用户的 ID 添加到数据中
         print("Received data:", data)
 
+        latest_record = SleepRecord.objects.filter(user=user).order_by('-created_at').first()
+    
+    # 如果存在最近记录，且当前请求只包含基本字段，则填充其他字段
+        if latest_record and all(key in ['date', 'sleep_status', 'note'] for key in data.keys()):
+        # 从最近记录中复制缺失的字段
+            data['sleep_time'] = latest_record.sleep_time
+            data['wake_time'] = latest_record.wake_time
+            data['screen_on'] = latest_record.screen_on
+            data['noise_max'] = latest_record.noise_max
+            data['noise_avg'] = latest_record.noise_avg
+    
+        print("Processed data:", data)
+
         serializer = SleepRecordSerializer(data=data)
         if serializer.is_valid():
             serializer.save(user=user)  # 保存记录，并关联到当前用户
@@ -285,8 +294,19 @@ class SleepRecordAPIView(APIView):
         print("Serializer errors:", serializer.errors)
         return Response({"errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
+    def delete(self, request):
+        user = request.user
+        id = request.data.get('id')
+        if not id:
+            return Response({'error': 'id is required.'}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            record = SleepRecord.objects.get(id=id, user=user)
+            record.delete()
+            return Response({'message': 'Record deleted successfully.'}, status=status.HTTP_200_OK)
+        except SleepRecord.DoesNotExist:
+            return Response({'error': 'Record does not exist.'}, status=status.HTTP_404_NOT_FOUND)
+
 class SleepAnalysisAPIView(APIView):
-    permission_classes = [IsAuthenticated]
 
     def post(self, request):
         """生成睡眠报告"""
@@ -300,7 +320,7 @@ class SleepAnalysisAPIView(APIView):
         #     return Response({"error": "请提供睡眠时间"}, status=status.HTTP_400_BAD_REQUEST)
 
         # 获取最近的一条睡眠记录
-        recent_record = SleepRecord.objects.filter(user=user).order_by('-date').first()
+        recent_record = SleepRecord.objects.filter(user=user).order_by('-created_at').first()
 
         if not recent_record:
             return Response({"error": "没有找到睡眠记录"}, status=status.HTTP_404_NOT_FOUND)
@@ -352,14 +372,15 @@ class SleepAnalysisAPIView(APIView):
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class SleepInformationAPIView(APIView):
-    permission_classes = [IsAuthenticated]
 
     def post(self, request):
         """获取睡眠信息"""
         user = request.user
 
         # 获取最近的一条睡眠记录
-        recent_record = SleepRecord.objects.filter(user=user).order_by('-date').first()
+        recent_record = SleepRecord.objects.filter(user=user).order_by('-created_at').first()
+
+        print(recent_record)
 
         if not recent_record:
             return Response({"error": "没有找到睡眠记录"}, status=status.HTTP_404_NOT_FOUND)
@@ -391,3 +412,45 @@ class SleepInformationAPIView(APIView):
             "sleep_status": sleep_status,
             "sleep_note": sleep_note
         }, status=status.HTTP_200_OK)
+
+
+class UserProfileView(APIView):
+
+    def get(self, request):
+        user = request.user
+        serializer = CustomUserSerializer(user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def put(self, request):
+        user = request.user
+        avatar = request.data.get('avatar')
+        username = request.data.get('username')
+        print(f"Received data: {request.data}")
+        if avatar:
+            if avatar.startswith('data:image/'):
+                avatar = avatar.split(',', 1)[1]
+            try:
+                avatar_bytes = base64.b64decode(avatar)
+            except Exception as e:
+                print(f"Error decoding base64 data: {e}")
+                return Response({'error': 'Invalid base64 data'}, status=400)
+            if len(avatar_bytes) > 256 * 1024:
+                return Response({'error': 'Image size exceeds 256KB'}, status=400)
+        if username and len(username) > 20:
+            return Response({'error': 'Username too long'}, status=400)
+        serializer = CustomUserSerializer(user, data=request.data, partial=True)
+        if 'id' in request.data or 'phone_number' in request.data:
+            return Response({'error': 'Cannot put ReadOnly fields'}, status=400)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        print(f"Serializer errors: {serializer.errors}")
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request):
+        try:
+            user = request.user
+            user.delete()
+            return Response({'message': 'User deleted successfully'}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)

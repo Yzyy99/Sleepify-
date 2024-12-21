@@ -106,3 +106,7 @@ build
 .vscode/
 
 /fronted/node_modules/
+.coverage
+.conda
+db.sqlite3-journal
+.pytest_cache

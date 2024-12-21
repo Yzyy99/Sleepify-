@@ -3,14 +3,14 @@ Page({
   data: {
     imageList: [
       { src: '/assets/wn_1.png', musicUrl: '/assets/wn1.mp3' },
-      { src: '/assets/wn_2.png', musicUrl: '/assets/wn2.mp3' },
-      { src: '/assets/wn_3.png', musicUrl: '/assets/wn3.mp3' },
-      { src: '/assets/wn_4.png', musicUrl: '/assets/wn4.mp3' },
-      { src: '/assets/wn_5.png', musicUrl: '/assets/wn5.mp3' },
-      { src: '/assets/wn_6.png', musicUrl: '/assets/wn6.mp3' },
-      { src: '/assets/wn_7.png', musicUrl: '/assets/wn7.mp3' },
-      { src: '/assets/wn_8.png', musicUrl: '/assets/wn8.mp3' },
-      { src: '/assets/wn_9.png', musicUrl: '/assets/wn8.mp3' },
+      { src: '/assets/wn_2.png', musicUrl: '/assets/wn1.mp3' },
+      { src: '/assets/wn_3.png', musicUrl: '/assets/wn1.mp3' },
+      { src: '/assets/wn_4.png', musicUrl: '/assets/wn1.mp3' },
+      { src: '/assets/wn_5.png', musicUrl: '/assets/wn1.mp3' },
+      { src: '/assets/wn_6.png', musicUrl: '/assets/wn1.mp3' },
+      { src: '/assets/wn_7.png', musicUrl: '/assets/wn1.mp3' },
+      { src: '/assets/wn_8.png', musicUrl: '/assets/wn1.mp3' },
+      { src: '/assets/wn_9.png', musicUrl: '/assets/wn1.mp3' },
     ],
     isPlaying: false, // 是否正在播放
     isPaused: false,  // 是否已暂停

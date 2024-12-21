@@ -1,6 +1,7 @@
 # app/urls.py
 from django.urls import path
-from .views import LoginAPIView, SendVerificationCodeView, VerifyCodeView, LogoutAPIView, RegisterAPIView, SendVerificationCodeWithoutCheckView
+from .views import LoginAPIView, SendVerificationCodeView, VerifyCodeView, LogoutAPIView, RegisterAPIView, \
+    SendVerificationCodeWithoutCheckView, UserProfileView
 from .views import VerifyCodeAndUpdatePhoneView, SleepRecordAPIView, SleepAnalysisAPIView, SleepInformationAPIView
 
 urlpatterns = [
@@ -14,4 +15,5 @@ urlpatterns = [
     path('sleep-records/', SleepRecordAPIView.as_view(), name='sleep_records'), 
     path('sleep-analysis/', SleepAnalysisAPIView.as_view(), name='sleep_analysis'),
     path('sleep-data/', SleepInformationAPIView.as_view(), name='sleep_data'),
+    path('user/', UserProfileView.as_view(), name='user_profile'),
 ]
