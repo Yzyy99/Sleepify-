@@ -20,6 +20,7 @@ Page({
     healthImage: "../../assets/dog_sleeping.png",
     suggest: "睡前一小时放下手机，听轻柔音乐或冥想，有助于快速入睡！",
 
+    titleColor: "#333333",
 
     generatingReport: false
   },
@@ -38,6 +39,21 @@ Page({
     themereport.applyTheme(this);
     this.fetchSleepData();
     this.calculateSleepGrade();
+
+    // fix title color
+    const app = getApp();  // 获取全局小程序实例
+    this.setData({
+      isDarkMode: app.globalData.isDarkMode
+    })
+    if(app.globalData.isDarkMode){
+      this.setData({
+        titleColor: "#BBBBBB",
+      })
+    }else{
+      this.setData({
+        titleColor: "#333333"
+      })
+    }
   },
 
   fetchSleepData() {

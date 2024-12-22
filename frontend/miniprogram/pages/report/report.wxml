@@ -15,15 +15,15 @@
   <view class="sleep-summary">
     <view class="sleep-item">
       <text class="label">入睡时间：</text>
-      <text class="value">{{sleepTime}}</text>
+      <text class="value" style="color: {{titleColor}}">{{sleepTime}}</text>
     </view>
     <view class="sleep-item">
       <text class="label">醒来时间：</text>
-      <text class="value">{{wakeTime}}</text>
+      <text class="value" style="color: {{titleColor}}">{{wakeTime}}</text>
     </view>
     <view class="sleep-item">
       <text class="label">睡眠时长：</text>
-      <text class="value">{{sleepDuration}}小时</text>
+      <text class="value" style="color: {{titleColor}}">{{sleepDuration}}小时</text>
     </view>
     <!-- <view class="sleep-item">
       <text class="label">睡眠状态：</text>
@@ -40,7 +40,7 @@
 <!-- 每日小贴士 -->
 <view class="section"style="background-color: {{buttonBackgroundColor}}">
   <view class="title">
-    <text>睡眠与健康</text>
+    <text style="color: {{titleColor}}">睡眠与健康</text>
   </view>
   <view style="display: flex; flex-direction: row; justify-content: space-between;">
     <image src="{{healthImage}}" class="status-image"/>
@@ -67,7 +67,7 @@
 
   <view class="section" style="background-color: {{buttonBackgroundColor}}">
   <view class="title">
-    <text>翻看手机</text>
+    <text style="color: {{titleColor}}">翻看手机</text>
   </view>
   
   <!-- 固定高度的模块容器，图片位于中间 -->
@@ -87,7 +87,7 @@
 <view class="section"style="background-color: {{buttonBackgroundColor}}">
   <!-- 模块标题 -->
   <view class="title">
-    <text>声音</text>
+    <text style="color: {{titleColor}}">声音</text>
   </view>
   
   <!-- 内容部分 -->
@@ -120,7 +120,7 @@
 <!-- 专属推荐 -->
 <view class="section" style="background-color: {{buttonBackgroundColor}}">
   <view class="title">
-    <text>专属睡眠报告</text>
+    <text style="color: {{titleColor}}">专属睡眠报告</text>
   </view>
   <view class="recommendation">
     <text wx:if="{{report}}" class="report-text">{{report}}</text>
