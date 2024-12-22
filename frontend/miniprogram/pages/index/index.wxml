@@ -17,19 +17,19 @@
   <!-- 功能按钮区 -->
   <view class="feature-buttons">
     <view class="feature-item" style="color: {{textColor}}" bindtap="onWhiteNoise">
-      <image src="/assets/whitenoise.png" mode="aspectFit"/>
+      <image src="{{isDarkMode ? '/assets/whitenoise_night.png': '/assets/whitenoise.png'}}" mode="aspectFit"/>
       <text>白噪音</text>
     </view>
     <view class="feature-item"style="color: {{textColor}}"  bindtap="onMusic">
-      <image src="/assets/music.png" mode="aspectFit"/>
+      <image src="{{isDarkMode ? '/assets/music_night.png': '/assets/music.png'}}" mode="aspectFit"/>
       <text>音乐</text>
     </view>
     <view class="feature-item"style="color: {{textColor}}"  bindtap="onBreathing">
-      <image src="/assets/breathing.png" mode="aspectFit"/>
+      <image src="{{isDarkMode ? '/assets/breathing_night.png': '/assets/breathing.png'}}" mode="aspectFit"/>
       <text>呼吸训练</text>
     </view>
     <view class="feature-item"style="color: {{textColor}}"  bindtap="onSleepJournal">
-      <image src="/assets/sleepjournal.png" mode="aspectFit"/>
+      <image src="{{isDarkMode ? '/assets/sleepjournal_night.png': '/assets/sleepjournal.png'}}" mode="aspectFit"/>
       <text>睡眠小记</text>
     </view>
   </view>
