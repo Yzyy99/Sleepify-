@@ -15,7 +15,7 @@ from rest_framework.parsers import MultiPartParser, JSONParser
 
 from .models import Music
 import os
-
+from mutagen import File
 class MusicView(APIView):
 
     def get(self, request, *args, **kwargs):
@@ -70,7 +70,21 @@ class MusicView(APIView):
             with open(filepath, 'wb+') as f:
                 for item in file.chunks():
                     f.write(item)
-            Music.objects.create(name=name)
+            audio = File(filepath)
+            if audio is None or not hasattr(audio, 'info'):
+                return Response({'error': 'Unable to read audio file duration'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            duration = audio.info.length
+            duration = int(duration)
+            Music.objects.create(name=name,duration=duration)
             return Response({'message': 'File with name {} has been saved'.format(name)}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class MusicListView(APIView):
+    def get(self, request, *args, **kwargs):
+        musics = Music.objects.all()
+        music_list = []
+        for music in musics:
+            m = [music.name, music.duration]
+            music_list.append(m)
+        return Response({'music_list': music_list}, status=status.HTTP_200_OK)

@@ -18,7 +18,8 @@
 | `/api/forum/reply_post/`     | POST   | Reply to a forum post.                          |
 | `/api/forum/delete_post/`    | POST | Delete a forum post.                            |
 | `/api/user/`    | PUT/GET/DELETE | User Profile.                            |
-| `/api/music/`    | PUT/GET/DELETE | Music.                            |
+| `/api/music/`    | POST/GET/DELETE | Music.                            |
+| `/api/musiclist/`    | GET | MusicList.                            |
 
 ---
 
@@ -1365,6 +1366,44 @@ content_type: 'application/json'
 
 ---
 
+### 22. Get Music List
+
+**Request Example:**
+
+```http
+GET /api/musiclist/
+Authorization: Bearer <access_token>
+```
+
+**Response Example (200 OK):**
+
+| **Field**        | **Type**   | **Description**                             |
+| ----------------- | ---------- | ------------------------------------------- |
+| `music_list` | `list` | The list of muic [name, duration(seconds)] |
+
+```json
+{
+    'music_list': [['test.mp3', 1]]
+}
+// it always be a list
+// such as []
+// or [['test.mp3', 1]]
+// or [['test.mp3', 1], ['test2.mp3', 50], ...]
+```
+
+**Error Response (401 Unauthorized)**:
+
+| **Field** | **Type** | **Description** |
+| --------- | -------- | --------------- |
+| `error`   | `string` | Unauthorized.   |
+
+```json
+{
+    'error': 'Unauthorized'
+}
+```
+
+---
 
 ## Status Codes
 
