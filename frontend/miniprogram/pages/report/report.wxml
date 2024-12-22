@@ -37,6 +37,34 @@
   </view>
 </view>
 
+<!-- 每日小贴士 -->
+<view class="section"style="background-color: {{buttonBackgroundColor}}">
+  <view class="title">
+    <text>睡眠与健康</text>
+  </view>
+  <view style="display: flex; flex-direction: row; justify-content: space-between;">
+    <image src="{{healthImage}}" class="status-image"/>
+    
+  <view class="status-container" style="display: flex; flex-direction:column; justify-content: space-between; margin-top: 20px;">
+    <view class="status-box" style="background-color:{{mentalState == '优' ? '#5CC46F' : (mentalState == '良' ? '#F08650' : '#F05F5F')}};">
+      <text class="status-type">精神状态</text>
+      <text class="status-value" style="color: {{mentalState == '优' ? '#3D750A' : (mentalState == '良' ? '#753C04' : '#750000')}}">{{mentalState}}</text>
+    </view>
+    <view class="status-box" style="background-color:{{regularity == '优' ? '#5CC46F' : (regularity == '良' ? '#F08650' : '#F05F5F')}};">
+      <text class="status-type">规律情况</text>
+      <text class="status-value" style="color:{{regularity == '优' ? '#3D750A' : (regularity == '良' ? '#753C04' : '#750000')}}">{{regularity}}</text>
+    </view>
+    <view class="status-box" style="background-color:{{healthRisk == '低' ? '#5CC46F' : (healthRisk == '中' ? '#F08650' : '#F05F5F')}};">
+      <text class="status-type">健康风险</text>
+      <text class="status-value" style="color:{{healthRisk == '低' ? '#3D750A' : (healthRisk == '中' ? '#753C04' : '#750000')}}">{{healthRisk}}</text>
+    </view>
+  </view>
+  </view>
+  <view class="health-description">
+    <text>{{suggest}}</text>
+  </view>
+</view>
+
   <view class="section" style="background-color: {{buttonBackgroundColor}}">
   <view class="title">
     <text>翻看手机</text>
@@ -86,16 +114,6 @@
       </view>
       
     </view>
-  </view>
-</view>
-
-<!-- 每日小贴士 -->
-<view class="section"style="background-color: {{buttonBackgroundColor}}">
-  <view class="title">
-    <text>睡眠与健康</text>
-  </view>
-  <view class="health-description">
-    <text>睡前一小时放下手机，听轻柔音乐或冥想，有助于快速入睡！</text>
   </view>
 </view>
 
