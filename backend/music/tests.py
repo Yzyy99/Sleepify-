@@ -43,6 +43,7 @@ class MusicTestCase(TestCase):
                                     content_type='application/json')
         self.assertEqual(response.status_code, 200)
         self.saccess_token = response.json().get('access')
+        print(self.saccess_token)
 
     def test_music(self):
         response = self.client.get(reverse('music'))

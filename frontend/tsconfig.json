@@ -27,7 +27,7 @@
   },
   "include": [
     "./**/*.ts"
-  ],
+, "miniprogram/pages/music2/music2.ts"  ],
   "exclude": [
     "node_modules"
   ]
