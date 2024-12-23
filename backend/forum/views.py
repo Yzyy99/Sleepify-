@@ -18,6 +18,7 @@ from sentence_transformers import SentenceTransformer
 from forum.utils import batch_calculate_similarities
 from threading import Lock
 import os
+from forum.utils import get_embeddings
 
 '''
 # 全局变量缓存模型
@@ -41,8 +42,8 @@ def get_embedding_model():
     return _embedding_model
 '''
 
-if os.environ.get('DISABLE_MODEL_LOADING') != 'true':
-    model = SentenceTransformer('aspire/acge_text_embedding', cache_folder=r'/app/models/sentence_transformers')
+# if os.environ.get('DISABLE_MODEL_LOADING') != 'true':
+#     model = SentenceTransformer('aspire/acge_text_embedding', cache_folder=r'/app/models/sentence_transformers')
 
 class ForumPostSerializer(serializers.ModelSerializer):
     class Meta:
@@ -249,8 +250,8 @@ class GetForumPostsWithSimilairity(APIView):
             print(f"Combined input: {combined_input}")
 
             # 编码用户的睡眠记录嵌入向量
-            user_embedding = model.encode(combined_input, normalize_embeddings=True)
-
+            # user_embedding = model.encode(combined_input, normalize_embeddings=True)
+            user_embedding = get_embeddings(combined_input)
             # 获取帖子嵌入向量并批量计算相似度
             post_embeddings = []
             post_objects = []
@@ -259,7 +260,8 @@ class GetForumPostsWithSimilairity(APIView):
                 if post.embedding:  # 如果帖子已存储嵌入向量
                     post_embeddings.append(post.embedding)
                 else:  # 动态生成嵌入向量
-                    embedding = model.encode(post.content, normalize_embeddings=True)
+                    # embedding = model.encode(post.content, normalize_embeddings=True)
+                    embedding = get_embeddings(post.content)
                     post_embeddings.append(embedding)
 
                     # 动态生成后保存到数据库，避免下次重复计算
