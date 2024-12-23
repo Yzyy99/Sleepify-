@@ -74,7 +74,7 @@ Page({
     }
 
     wx.request({
-      url: 'http://127.0.0.1:8000/api/login/',
+      url: 'http://124.220.46.241:8000/api/login/',
       method: 'POST',
       data: {
         phone_number: phoneNumber,
