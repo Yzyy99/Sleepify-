@@ -7,6 +7,7 @@ from django.core.cache import cache
 from django.shortcuts import render
 import random
 from django.utils import timezone
+from django.utils.baseconv import base64
 from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken
@@ -29,6 +30,9 @@ from django.utils.timezone import now
 from .models import SleepRecord
 
 import os
+import base64
+
+from .utils import CustomUserSerializer
 
 client = OpenAI(
     base_url='https://xiaoai.plus/v1',
@@ -50,16 +54,16 @@ class RegisterAPIView(APIView):
             return Response({'error': 'Phone number is already registered.'}, status=status.HTTP_400_BAD_REQUEST)
 
         # 创建用户
-        user = CustomUser.objects.create_user(phone_number=phone_number, password=password)
+        user = CustomUser.objects.create_user(username=phone_number, phone_number=phone_number, password=password)
 
         # 注册成功，返回成功信息
         return Response({'message': 'Registration successful.'}, status=status.HTTP_201_CREATED)
 
 class LoginAPIView(APIView):
     def post(self, request, *args, **kwargs):
-        phone_number = request.data.get('username')
+        phone_number = request.data.get('phone_number')
         password = request.data.get('password')
-        print(f'{phone_number} {password}')
+        # print(f'{phone_number} {password}')
 
         # user = authenticate(request, phone_number=phone_number, password=password)
         # 检查用户是否存在
@@ -408,3 +412,45 @@ class SleepInformationAPIView(APIView):
             "sleep_status": sleep_status,
             "sleep_note": sleep_note
         }, status=status.HTTP_200_OK)
+
+
+class UserProfileView(APIView):
+
+    def get(self, request):
+        user = request.user
+        serializer = CustomUserSerializer(user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def put(self, request):
+        user = request.user
+        avatar = request.data.get('avatar')
+        username = request.data.get('username')
+        print(f"Received data: {request.data}")
+        if avatar:
+            if avatar.startswith('data:image/'):
+                avatar = avatar.split(',', 1)[1]
+            try:
+                avatar_bytes = base64.b64decode(avatar)
+            except Exception as e:
+                print(f"Error decoding base64 data: {e}")
+                return Response({'error': 'Invalid base64 data'}, status=400)
+            if len(avatar_bytes) > 256 * 1024:
+                return Response({'error': 'Image size exceeds 256KB'}, status=400)
+        if username and len(username) > 20:
+            return Response({'error': 'Username too long'}, status=400)
+        serializer = CustomUserSerializer(user, data=request.data, partial=True)
+        if 'id' in request.data or 'phone_number' in request.data:
+            return Response({'error': 'Cannot put ReadOnly fields'}, status=400)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        print(f"Serializer errors: {serializer.errors}")
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request):
+        try:
+            user = request.user
+            user.delete()
+            return Response({'message': 'User deleted successfully'}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)

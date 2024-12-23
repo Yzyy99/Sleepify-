@@ -15,15 +15,15 @@
   <view class="sleep-summary">
     <view class="sleep-item">
       <text class="label">入睡时间：</text>
-      <text class="value">{{sleepTime}}</text>
+      <text class="value" style="color: {{titleColor}}">{{sleepTime}}</text>
     </view>
     <view class="sleep-item">
       <text class="label">醒来时间：</text>
-      <text class="value">{{wakeTime}}</text>
+      <text class="value" style="color: {{titleColor}}">{{wakeTime}}</text>
     </view>
     <view class="sleep-item">
       <text class="label">睡眠时长：</text>
-      <text class="value">{{sleepDuration}}小时</text>
+      <text class="value" style="color: {{titleColor}}">{{sleepDuration}}小时</text>
     </view>
     <!-- <view class="sleep-item">
       <text class="label">睡眠状态：</text>
@@ -37,9 +37,37 @@
   </view>
 </view>
 
+<!-- 每日小贴士 -->
+<view class="section"style="background-color: {{buttonBackgroundColor}}">
+  <view class="title">
+    <text style="color: {{titleColor}}">睡眠与健康</text>
+  </view>
+  <view style="display: flex; flex-direction: row; justify-content: space-between;">
+    <image src="{{healthImage}}" class="status-image"/>
+    
+  <view class="status-container" style="display: flex; flex-direction:column; justify-content: space-between; margin-top: 20px;">
+    <view class="status-box" style="background-color:{{mentalState == '优' ? '#5CC46F' : (mentalState == '良' ? '#F08650' : '#F05F5F')}};">
+      <text class="status-type">精神状态</text>
+      <text class="status-value" style="color: {{mentalState == '优' ? '#3D750A' : (mentalState == '良' ? '#753C04' : '#750000')}}">{{mentalState}}</text>
+    </view>
+    <view class="status-box" style="background-color:{{regularity == '优' ? '#5CC46F' : (regularity == '良' ? '#F08650' : '#F05F5F')}};">
+      <text class="status-type">规律情况</text>
+      <text class="status-value" style="color:{{regularity == '优' ? '#3D750A' : (regularity == '良' ? '#753C04' : '#750000')}}">{{regularity}}</text>
+    </view>
+    <view class="status-box" style="background-color:{{healthRisk == '低' ? '#5CC46F' : (healthRisk == '中' ? '#F08650' : '#F05F5F')}};">
+      <text class="status-type">健康风险</text>
+      <text class="status-value" style="color:{{healthRisk == '低' ? '#3D750A' : (healthRisk == '中' ? '#753C04' : '#750000')}}">{{healthRisk}}</text>
+    </view>
+  </view>
+  </view>
+  <view class="health-description">
+    <text>{{suggest}}</text>
+  </view>
+</view>
+
   <view class="section" style="background-color: {{buttonBackgroundColor}}">
   <view class="title">
-    <text>翻看手机</text>
+    <text style="color: {{titleColor}}">翻看手机</text>
   </view>
   
   <!-- 固定高度的模块容器，图片位于中间 -->
@@ -59,7 +87,7 @@
 <view class="section"style="background-color: {{buttonBackgroundColor}}">
   <!-- 模块标题 -->
   <view class="title">
-    <text>声音</text>
+    <text style="color: {{titleColor}}">声音</text>
   </view>
   
   <!-- 内容部分 -->
@@ -89,20 +117,10 @@
   </view>
 </view>
 
-<!-- 每日小贴士 -->
-<view class="section"style="background-color: {{buttonBackgroundColor}}">
-  <view class="title">
-    <text>睡眠与健康</text>
-  </view>
-  <view class="health-description">
-    <text>睡前一小时放下手机，听轻柔音乐或冥想，有助于快速入睡！</text>
-  </view>
-</view>
-
 <!-- 专属推荐 -->
 <view class="section" style="background-color: {{buttonBackgroundColor}}">
   <view class="title">
-    <text>专属睡眠报告</text>
+    <text style="color: {{titleColor}}">专属睡眠报告</text>
   </view>
   <view class="recommendation">
     <text wx:if="{{report}}" class="report-text">{{report}}</text>

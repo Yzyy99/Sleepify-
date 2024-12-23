@@ -9,7 +9,7 @@ alibabacloud_tea_util
 python-dotenv
 django-redis
 pillow
-numpy
+numpy<2
 sentence-transformers
 urllib3==1.26.13
 httpx==0.27.2

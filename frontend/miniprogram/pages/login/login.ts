@@ -77,7 +77,7 @@ Page({
       url: 'http://127.0.0.1:8000/api/login/',
       method: 'POST',
       data: {
-        username: phoneNumber,
+        phone_number: phoneNumber,
         password: password,
       },
       success(res) {

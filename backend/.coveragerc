@@ -12,6 +12,12 @@ omit =
     *.ini
     *.md
     *.txt
+    */asgi.py
+    */wsgi.py
+    */settings_prod.py
+    insert_posts.py
+
+
 
 [report]
 show_missing = True

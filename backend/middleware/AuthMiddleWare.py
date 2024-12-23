@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from rest_framework_simplejwt.tokens import AccessToken
-
+from app.models import CustomUser
 blocks = [
     '/api/logout/',
     '/api/sleep-records/',
@@ -13,7 +13,15 @@ blocks = [
     '/api/forum/like_post/',
     '/api/forum/reply_post/',
     '/api/forum/delete_post/',
-    '/api/forum/similarity_posts/'
+    '/api/forum/similarity_posts/',
+    '/api/user/',
+    '/api/music/',
+    '/api/musiclist/'
+]
+
+admin_auth = [
+    ('/api/music/', 'POST'),
+    ('/api/music/', 'DELETE'),
 ]
 
 class AuthenticationMiddleware:
@@ -27,7 +35,10 @@ class AuthenticationMiddleware:
                 return JsonResponse({'error': 'Unauthorized'}, status=401)
             token = authorization_header.split(' ')[1]
             try:
-                AccessToken(token)
+                token = AccessToken(token)
             except Exception as e:
                 return JsonResponse({'error': str(e)}, status=401)
+            if (request.path, request.method) in admin_auth:
+                if not CustomUser.objects.get(id=token.get('user_id')).is_staff:
+                    return JsonResponse({'error': 'Non-staff'}, status=401)
         return self.get_response(request)
