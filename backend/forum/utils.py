@@ -1,5 +1,7 @@
 # forum/utils.py
 import numpy as np
+import requests
+
 
 def batch_calculate_similarities(user_embedding, post_embeddings):
     """
@@ -18,3 +20,14 @@ def batch_calculate_similarities(user_embedding, post_embeddings):
 
     similarities = dot_products / (post_norms * user_norm)
     return similarities
+
+def get_embeddings(content):
+    url = r'http://123.56.162.228:9124/embed'
+    try:
+        response = requests.post(url,
+                             json={'text': content})
+        response.raise_for_status()
+        return response.json().get('embedding')
+    except requests.exceptions.RequestException as e:
+        print(f"Error calling model API: {e}")
+        return None

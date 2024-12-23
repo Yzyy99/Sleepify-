@@ -28,8 +28,8 @@ class ForumPostTestCase(TestCase):
         if os.environ.get('DISABLE_MODEL_LOADING') == 'true':
             print("Model loading is disabled.")
             return
-        global embedding_model
-        embedding_model = SentenceTransformer('aspire/acge_text_embedding', cache_folder=r'/app/models/sentence_transformers')
+        # global embedding_model
+        # embedding_model = SentenceTransformer('aspire/acge_text_embedding', cache_folder=r'/app/models/sentence_transformers')
         
         # # 登录用户
         # self.client.login(phone_number='13800138000', password='testpass123')
