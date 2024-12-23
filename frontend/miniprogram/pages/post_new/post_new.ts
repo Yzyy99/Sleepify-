@@ -34,7 +34,11 @@ Page({
 
   // 应用主题
   themePostNew() {
-    const isDarkMode = this.data.isDarkMode;
+    const app = getApp();  // 获取全局小程序实例
+    this.setData({
+      isDarkMode: app.globalData.isDarkMode
+    })
+    const isDarkMode = app.globalData.isDarkMode;
 
     if (isDarkMode) {
       this.setData({

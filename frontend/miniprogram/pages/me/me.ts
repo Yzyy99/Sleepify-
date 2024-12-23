@@ -76,6 +76,12 @@ Page({
         });
       }
     });
+    const app = getApp();  // 获取全局小程序实例
+
+    // 更新全局状态
+    this.setData({
+      isDarkMode: app.globalData.isDarkMode
+    })
   },
 
   /**

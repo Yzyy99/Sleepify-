@@ -1,16 +1,22 @@
 const themeindex = require('../../utils/theme_index.js');
 Page({
   data: {
-        pageBackgroundColor: '', // 页面背景色
+    pageBackgroundColor: '', // 页面背景色
     textColor: '', // 页面文字颜色
     buttonBackgroundColor: '', // 按钮背景颜色
     buttonTextColor: '', // 按钮文字颜色
     highlightColor: '', // 高亮颜色
-    shadowColor: '' // 阴影颜色
+    shadowColor: '', // 阴影颜色
+    isDarkMode: false
   },
   onShow() {
     // 页面显示时根据全局夜间模式状态切换主题
     themeindex.applyTheme(this);
+
+    var app = getApp();
+    this.setData({
+      isDarkMode: app.globalData.isDarkMode
+    });
   },
   // 点击“设置睡眠提醒”跳转到提醒设置页面
   onSleepReminder() {
