@@ -13,6 +13,9 @@
         <view class="cell">{{item.date}}</view>
         <view class="cell">{{item.sleepStatus}}</view>
         <view class="cell">{{item.note}}</view>
+        <view class="delete-icon" bindtap="onDeleteRecord" data-id="{{item.id}}">
+    <image src="/assets/trash-icon.png" mode="aspectFill" style="width: 20px; height: 20px;"></image>
+       </view>
       </view>
     </block>
   </view>

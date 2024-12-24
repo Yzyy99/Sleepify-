@@ -67,6 +67,15 @@ input {
   border-radius: 4px;
 }
 
+.delete-icon {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
 button {
   margin-top: 50px;
   padding: 10px;
