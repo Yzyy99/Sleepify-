@@ -64,7 +64,7 @@ Page({
 
     // 发送验证码请求
     wx.request({
-      url: 'http://127.0.0.1:8000/api/send_verification_code_without_check/', 
+      url: 'http://124.220.46.241:8000/api/send_verification_code_without_check/', 
       method: 'POST',
       data: { phone_number: phoneNumber },
       success: (res:any) => {
@@ -141,7 +141,7 @@ Page({
 
     // 验证验证码并完成注册
     wx.request({
-      url: 'http://127.0.0.1:8000/api/verify-code/', 
+      url: 'http://124.220.46.241:8000/api/verify-code/', 
       method: 'POST',
       data: {
         token: token,
