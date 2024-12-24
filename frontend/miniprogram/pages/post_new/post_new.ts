@@ -148,7 +148,7 @@ Page({
           success: (res) => {
             const imageType = filePath.split('.').pop();
             wx.request({
-              url: 'http://124.220.46.241:8000/api/forum/create_picture/',
+              url: 'https://124.220.46.241:443/api/forum/create_picture/',
               method: 'POST',
               header: {
                 'content-type': 'application/json',
@@ -187,7 +187,7 @@ Page({
 
         // upload post
         wx.request({
-          url: 'http://124.220.46.241:8000/api/forum/create_post/',
+          url: 'https://124.220.46.241:443/api/forum/create_post/',
           method: 'POST',
           header: {
             'content-type': 'application/json',
