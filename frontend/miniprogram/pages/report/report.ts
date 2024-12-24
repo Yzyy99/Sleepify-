@@ -57,7 +57,7 @@ Page({
   },
 
   fetchSleepData() {
-    const url = "http://124.220.46.241:8000/api/sleep-data/";
+    const url = "https://124.220.46.241:443/api/sleep-data/";
     wx.request({
       url: url,
       method: "POST",
@@ -105,7 +105,7 @@ Page({
       generatingReport: true
     })
     const { sleepTime } = this.data;
-    const url = "http://124.220.46.241:8000/api/sleep-analysis/";
+    const url = "https://124.220.46.241:443/api/sleep-analysis/";
 
     wx.request({
       url: url,

@@ -22,6 +22,21 @@ Page({
   onShow() {
     // 页面显示时根据全局夜间模式状态切换主题
     thememusic.applyTheme(this);
+    // 检查当前是否有音乐在播放
+    const backgroundAudioManager = wx.getBackgroundAudioManager();
+
+    if (backgroundAudioManager.src) {
+      // 如果有音乐在播放，更新状态
+      this.setData({
+        isPlaying: !backgroundAudioManager.paused, // 播放状态
+        isPaused: backgroundAudioManager.paused,  // 暂停状态
+        currentStatus: backgroundAudioManager.paused ? '已暂停' : '播放中',
+        currentMusicUrl: backgroundAudioManager.src // 当前播放的音乐 URL
+      });
+
+      // 绑定事件监听器（如暂停、播放、结束）
+      this.bindBackgroundAudioEvents(backgroundAudioManager);
+    }
   },
   // 点击图片事件处理：播放对应的音乐
   onImageTap(e:any) {
@@ -38,7 +53,7 @@ Page({
   
     // 调用后端接口获取音乐文件流
     wx.request({
-      url: `http://124.220.46.241:8000/api/music/`, // 后端接口地址
+      url: `https://124.220.46.241:443/api/music/`, // 后端接口地址
       method: 'GET',
       data: { name: selectedMusicName }, // 传递音乐文件名
       responseType: 'arraybuffer', // 请求响应类型为文件流
