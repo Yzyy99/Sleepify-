@@ -1,5 +1,5 @@
 from django.apps import AppConfig
-from sentence_transformers import SentenceTransformer
+# from sentence_transformers import SentenceTransformer
 
 
 class ForumConfig(AppConfig):

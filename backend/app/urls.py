@@ -2,7 +2,7 @@
 from django.urls import path
 from .views import LoginAPIView, SendVerificationCodeView, VerifyCodeView, LogoutAPIView, RegisterAPIView, \
     SendVerificationCodeWithoutCheckView, UserProfileView
-from .views import VerifyCodeAndUpdatePhoneView, SleepRecordAPIView, SleepAnalysisAPIView, SleepInformationAPIView
+from .views import VerifyCodeAndUpdatePhoneView, SleepRecordAPIView, SleepAnalysisAPIView, SleepInformationAPIView, OtherUserProfileView
 
 urlpatterns = [
     path('login/', LoginAPIView.as_view(), name='login'),
@@ -16,4 +16,5 @@ urlpatterns = [
     path('sleep-analysis/', SleepAnalysisAPIView.as_view(), name='sleep_analysis'),
     path('sleep-data/', SleepInformationAPIView.as_view(), name='sleep_data'),
     path('user/', UserProfileView.as_view(), name='user_profile'),
+    path('otheruser/', OtherUserProfileView.as_view(), name='other_user')
 ]

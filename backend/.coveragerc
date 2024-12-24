@@ -16,6 +16,7 @@ omit =
     */wsgi.py
     */settings_prod.py
     insert_posts.py
+    */aliyunSMS.py
 
 
 

@@ -16,7 +16,8 @@ blocks = [
     '/api/forum/similarity_posts/',
     '/api/user/',
     '/api/music/',
-    '/api/musiclist/'
+    '/api/musiclist/',
+    '/api/otheruser/'
 ]
 
 admin_auth = [

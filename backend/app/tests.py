@@ -73,6 +73,14 @@ class APITestCase(TestCase):
                                      data={'phone_number': os.getenv('SMS_TEST_PHONE_NUMBER')},
                                      content_type='application/json')
         self.assertIn(response1.status_code, [200, 409, 429])
+        response1 = self.client.post(reverse('send_verification_code_without_check'),
+                                     data={'phone_number': os.getenv('SMS_TEST_PHONE_NUMBER')},
+                                     content_type='application/json')
+        self.assertIn(response1.status_code, [200, 429])
+        response1 = self.client.post(reverse('send_verification_code_without_check'),
+                                     data={'phone_number': os.getenv('SMS_TEST_PHONE_NUMBER')},
+                                     content_type='application/json')
+        self.assertEqual(response1.status_code,  429)
         """
             使用已经存在的账户注册，请求失败
         """
@@ -299,6 +307,11 @@ class APITestCase(TestCase):
                                            'password': str('password')}
                                      )
         token = response.json().get('access')
+        response4 = self.client.put(reverse('user_profile'),
+                                    data={'avatar': 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/4QAiRXhpZgAATU0AKgAAAAgAAQESAAMAAAABAAEAAAAAAAD/2wBDAAIBAQIBAQICAgICAgICAwUDAwMDAwYEBAMFBwYHBwcGBwcICQsJCAgKCAcHCg0KCgsMDAwMBwkODw0MDgsMDAz/2wBDAQICAgMDAwYDAwYMCAcIDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAz/wAARCAAEAAUDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD8K6KKK8s/QD//2Q=='},
+                                    content_type='application/json',
+                                    headers={'Authorization': 'Bearer ' + token})
+        self.assertEqual(response4.status_code, 200)
         response6 = self.client.delete(reverse('user_profile'),
                                        content_type='application/json',
                                        headers={'Authorization': f'Bearer {token}'})
@@ -310,6 +323,13 @@ class APITestCase(TestCase):
                                     )
         self.assertEqual(response.status_code, 401)
         self.assertEqual(CustomUser.objects.all().count(), init_user_num)
+
+    def test_other(self):
+        self.login_for_test()
+        response1 = self.client.get(reverse('other_user'),
+                                     headers={'Authorization': 'Bearer ' + self.access_token},
+                                    data={'phone_number': 'testcase'})
+        self.assertEqual(response1.status_code, 200)
 
 
 

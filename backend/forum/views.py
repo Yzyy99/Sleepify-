@@ -1,6 +1,7 @@
 import base64
 import json
 import numpy as np
+from django.conf import settings
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from .models import ForumPost, ForumPicture
@@ -14,7 +15,7 @@ from rest_framework.views import APIView
 from rest_framework import serializers
 import hashlib
 import time
-from sentence_transformers import SentenceTransformer
+# from sentence_transformers import SentenceTransformer
 from forum.utils import batch_calculate_similarities
 from threading import Lock
 import os
@@ -105,6 +106,8 @@ class CreateForumPost(APIView):
             return Response({'error': 'Invalid picture_count'}, status=400)
         # picture_names is a list of filenames, each is the response of the upload api
         picture_names = request.data.get('picture_names')
+        if picture_names == "" or picture_names is None:
+            picture_names = []
         if isinstance(picture_names, str):
             try:
                 picture_names = json.loads(picture_names)
@@ -164,12 +167,14 @@ class CreateForumPicture(APIView):
         
         if len(image_bytes) > 5 * 1024 * 1024:
             return Response({'error': 'Image size exceeds 5MB'}, status=400)
-        
-        image_hash = hashlib.sha256(image_bytes).hexdigest()
+
+        image_hash = hashlib.md5(image_bytes).hexdigest()
         # time = yyyy-mm-ddThh:mm:ssZ
         timenow = time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())
         filename = f'{image_hash}-{timenow}.{image_type}'
-        image_path = f'/app/staticfiles/media/forum_pictures/{filename}'
+        filename = filename.replace(':', '_')
+        savepath = os.path.join(settings.MEDIA_ROOT, 'forum_pictures')
+        image_path = os.path.join(savepath, filename)
         
         with open(image_path, 'wb') as f:
             f.write(image_bytes)
@@ -232,7 +237,7 @@ class GetForumPostsWithSimilairity(APIView):
 
         # 获取社区帖子
         if last_post_id:
-            posts = ForumPost.objects.filter(id__lt=last_post_id).distinct().order_by('-created_at')[:limit]
+            posts = ForumPost.objects.filter(postid__lt=last_post_id).distinct().order_by('-created_at')[:limit]
         else:
             posts = ForumPost.objects.all().distinct().order_by('-created_at')[:limit]
 
@@ -247,7 +252,7 @@ class GetForumPostsWithSimilairity(APIView):
 
             # 合并 note 和 sleep_status
             combined_input = f"{note},{sleep_status}"
-            print(f"Combined input: {combined_input}")
+            # print(f"Combined input: {combined_input}")
 
             # 编码用户的睡眠记录嵌入向量
             # user_embedding = model.encode(combined_input, normalize_embeddings=True)
@@ -277,15 +282,15 @@ class GetForumPostsWithSimilairity(APIView):
                 zip(post_objects, similarities), key=lambda x: x[1], reverse=True
             )
 
-            print("Sorted posts with similarities:")
-            for post, similarity in posts_with_similarity:
-                print(f"Post ID: {post.postid}, Similarity: {similarity:.4f}, Content: {post.content[:50]}")  # 只打印前50字符的内容
+            # print("Sorted posts with similarities:")
+            # for post, similarity in posts_with_similarity:
+                # print(f"Post ID: {post.postid}, Similarity: {similarity:.4f}, Content: {post.content[:50]}")  # 只打印前50字符的内容
 
             # 排序后提取帖子对象
             sorted_posts = [post for post, _ in posts_with_similarity]
         else:
             # 如果没有睡眠小记，按创建时间排序
-            print("No sleep record found, sorting by created time")
+            # print("No sleep record found, sorting by created time")
             sorted_posts = posts
 
         # 构建响应数据

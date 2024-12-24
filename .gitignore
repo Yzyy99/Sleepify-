@@ -110,3 +110,5 @@ build
 .conda
 db.sqlite3-journal
 .pytest_cache
+report.xml
+coverage.xml

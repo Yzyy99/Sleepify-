@@ -7,7 +7,7 @@ from django.core.cache import cache
 from django.shortcuts import render
 import random
 from django.utils import timezone
-from django.utils.baseconv import base64
+import base64
 from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken
@@ -41,24 +41,7 @@ client = OpenAI(
 
 class RegisterAPIView(APIView):
     def post(self, request, *args, **kwargs):
-        # 获取前端传递的手机号和密码
-        phone_number = request.data.get('username')  # 前端字段是 username
-        password = request.data.get('password')
-
-        # 验证输入是否合法
-        if not phone_number or not password:
-            return Response({'error': 'Phone number and password are required.'}, status=status.HTTP_400_BAD_REQUEST)
-
-        # 检查手机号是否已注册
-        if CustomUser.objects.filter(phone_number=phone_number).exists():
-            return Response({'error': 'Phone number is already registered.'}, status=status.HTTP_400_BAD_REQUEST)
-
-        # 创建用户
-        user = CustomUser.objects.create_user(username=phone_number, phone_number=phone_number, password=password)
-
-        # 注册成功，返回成功信息
-        return Response({'message': 'Registration successful.'}, status=status.HTTP_201_CREATED)
-
+        return Response({'error': 'Method Deprecated'}, status=status.HTTP_400_BAD_REQUEST)
 class LoginAPIView(APIView):
     def post(self, request, *args, **kwargs):
         phone_number = request.data.get('phone_number')
@@ -454,3 +437,13 @@ class UserProfileView(APIView):
             return Response({'message': 'User deleted successfully'}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+class OtherUserProfileView(APIView):
+    def get(self, request):
+        req_phone = request.GET.get('phone_number')
+        if CustomUser.objects.filter(phone_number=req_phone).exists():
+            user = CustomUser.objects.get(phone_number=req_phone)
+            serializer = CustomUserSerializer(user)
+            data = {'username': serializer.data['username'], 'avatar': serializer.data['avatar']}
+            return Response(data, status=status.HTTP_200_OK)
+        return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
