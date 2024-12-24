@@ -191,7 +191,7 @@ Page({
     // 如果有填写内容，则保存到后端
     const today = new Date();
     const date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
-    const url = "http://127.0.0.1:8000/api/sleep-records/";
+    const url = "https://124.220.46.241:443/api/sleep-records/";
 
     wx.request({
       url: url,

@@ -71,7 +71,7 @@ Page({
 
     // 发送验证码请求
     wx.request({
-      url: "http://127.0.0.1:8000/api/send_verification_code/", // 替换为后端接口地址
+      url: "https://124.220.46.241:443/api/send_verification_code/", // 替换为后端接口地址
       method: "POST",
       data: { phone_number: newPhoneNumber },
       success: (res: any) => {
@@ -142,7 +142,7 @@ Page({
 
     // 提交修改请求
     wx.request({
-      url: "http://127.0.0.1:8000/api/verify-code-and-update-phone/", // 替换为后端接口地址
+      url: "https://124.220.46.241:443/api/verify-code-and-update-phone/", // 替换为后端接口地址
       method: "POST",
       data: {
         code: verificationCode, // 验证码

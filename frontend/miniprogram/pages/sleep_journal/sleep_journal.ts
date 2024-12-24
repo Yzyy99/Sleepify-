@@ -18,7 +18,7 @@ Page({
   },
 
   fetchRecords() {
-    const url = "http://127.0.0.1:8000/api/sleep-records/";
+    const url = "https://124.220.46.241:443/api/sleep-records/";
 
     wx.request({
       url: url,
@@ -64,7 +64,7 @@ Page({
       success: (res) => {
         if (res.confirm) {
           // 调用后端接口删除记录
-          const url = "http://127.0.0.1:8000/api/sleep-records/";
+          const url = "https://124.220.46.241:443/api/sleep-records/";
   
           wx.request({
             url: url,
@@ -139,7 +139,7 @@ Page({
     const date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`; // YYYY-MM-DD 格式
 
     // 后端接口 URL
-    const url = "http://127.0.0.1:8000/api/sleep-records/";
+    const url = "https://124.220.46.241:443/api/sleep-records/";
 
     // 提交数据到后端
     wx.request({
