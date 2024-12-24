@@ -284,7 +284,7 @@ Page({
     },
     
     delete() {
-      const token = wx.getStorageSync('token'); // 从本地存储中获取用户的 Token
+      const token = wx.getStorageSync('access_token'); // 从本地存储中获取用户的 Token
       if (!token) {
         wx.showToast({
           title: '用户未登录',

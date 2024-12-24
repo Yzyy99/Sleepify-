@@ -7,7 +7,7 @@
   </view>
   <view class="post_main">
     <view class="post_head" style="display: flex; flex-direction: row;">
-    <view class="post_user_name" style="flex:2">
+    <view class="post_user_name" style="flex:2" color="{{textColor}}">
       <text>{{item.username}}</text>
     </view>
     <view class="post_time" style="flex: 3">
