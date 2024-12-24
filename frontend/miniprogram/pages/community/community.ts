@@ -101,10 +101,10 @@ Page({
         "content-type": "application/json",
         Authorization: "Bearer " + wx.getStorageSync("access_token"),
       },
-      success: (res) => {
+      success: async(res) => {
         if (res.statusCode === 200) {
           const datan = Array.isArray(res.data) ? res.data : [];
-          this.processPosts(datan); // 处理帖子数据
+          await this.processPosts(datan); // 处理帖子数据
         } else {
           console.error("Failed to load default posts:", res);
         }
@@ -126,10 +126,10 @@ Page({
         "content-type": "application/json",
         Authorization: "Bearer " + wx.getStorageSync("access_token"),
       },
-      success: (res) => {
+      success: async(res) => {
         if (res.statusCode === 200) {
           const datan = Array.isArray(res.data) ? res.data : [];
-          this.processPosts(datan); // 处理帖子数据
+          await this.processPosts(datan); // 处理帖子数据
         } else {
           console.error("Failed to load personalized posts:", res);
         }
@@ -140,28 +140,59 @@ Page({
     });
   },
 
-  processPosts(posts: any[]) {
-    const processedPosts = posts.map((post: any) => ({
-      id: post.id,
-      userphotosrc: "../../assets/photo_default.png",
-      username: post.username,
-      content: post.content,
-      time: new Date(post.created_at).toLocaleString(),
-      imagenum: post.picture_count,
-      images: post.picture_names
-        ? post.picture_names.map(
-            (name: string) => `https://124.220.46.241:443/static/media/forum_pictures/${name}`
-          )
-        : [],
-      like: post.likes,
-      commentnum: post.replies,
-      comments: post.reply_content.map((reply: any) => ({
-        username: reply.username,
-        content: reply.content,
-      })),
-      isliked: post.isliked,
-    }));
+  async processPosts(posts: any[]) {
+    const fetchUserPhoto = async (username: string): Promise<string> => {
+      return new Promise((resolve) => {
+        wx.request({
+          url: `https://124.220.46.241:443/api/otheruser/?phone_number=${username}`,
+          method: 'GET',
+          header: {
+            'Authorization': "Bearer " + wx.getStorageSync("access_token")
+          },
+          success: (res: any) => {
+            if (res.statusCode === 200 && res.data.avatar) {
+              resolve(res.data.avatar);
+            } else {
+              // 当状态码不是200或没有avatar时返回默认图片
+              resolve("../../assets/photo_default.png");
+            }
+          },
+          fail: () => {
+            // 请求失败时返回默认图片
+            resolve("../../assets/photo_default.png");
+          }
+        });
+      });
+    };
+  
+    const processedPosts = await Promise.all(posts.map(async (post: any) => {
+      let userPhoto = "../../assets/photo_default.png";
+      if (post.username && post.username.length === 11) {
+        userPhoto = await fetchUserPhoto(post.username);
+      }
 
+      return {
+        id: post.id,
+        userphotosrc: userPhoto,
+        username: post.username,
+        content: post.content,
+        time: new Date(post.created_at).toLocaleString(),
+        imagenum: post.picture_count,
+        images: post.picture_names
+          ? post.picture_names.map(
+              (name: string) => `https://124.220.46.241:443/static/media/forum_pictures/${name}`
+            )
+          : [],
+        like: post.likes,
+        commentnum: post.replies,
+        comments: post.reply_content.map((reply: any) => ({
+          username: reply.username,
+          content: reply.content,
+        })),
+        isliked: post.isliked,
+      };
+    }));
+  
     this.setData({ posts: processedPosts });
   },
 

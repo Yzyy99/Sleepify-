@@ -185,6 +185,16 @@ Page({
         }
         console.log('image_names', image_names);
 
+        const requestData = {
+          content: this.data.content,
+          picture_count: image_names.length,
+          picture_names: image_names
+        };
+        
+        // 打印即将发送的数据
+        console.log('Request data:', requestData);
+        
+
         // upload post
         wx.request({
           url: 'https://124.220.46.241:443/api/forum/create_post/',
