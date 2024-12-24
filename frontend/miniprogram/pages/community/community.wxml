@@ -7,14 +7,14 @@
   </view>
   <view class="post_main">
     <view class="post_head" style="display: flex; flex-direction: row;">
-    <view class="post_user_name" style="flex:2">
+    <view class="post_user_name" style="flex:2;color:{{textColor}}">
       <text>{{item.username}}</text>
     </view>
-    <view class="post_time" style="flex: 3">
+    <view class="post_time" style="flex: 3;color:{{textColor}};">
       <text>{{item.time}}</text>
     </view>
     </view>
-    <view class="post_content">
+    <view class="post_content" style="flex:2;color:{{textColor}}">
       <text>{{item.content}}</text>
     </view>
     <view class="post_image_box" style="display:{{item.imagenum == 0 ? 'none' : 'display'}}; margin-top: 10px">
@@ -22,7 +22,7 @@
         <image src="{{item}}" style="width: 150px; height: 150px; object-fit: cover;"></image>
       </view>
     </view>
-    <view class="post_action">
+    <view class="post_action" style="flex:2;color:{{textColor}}">
       <view class="post_like" bindtap="like_post" data-index="{{index}}">
         <image style="height:15px; width:15px;" src="{{item.isliked ? '../../assets/thumb-up-fill.png' : '../../assets/thumb-up-line.png'}}"/><text>  {{item.like}}</text>
       </view>

@@ -54,7 +54,7 @@ Page({
   onLoad() {
     // 获取用户信息
     wx.request({
-      url: 'http://127.0.0.1:8000/api/user/', // 替换为你的后端接口地址
+      url: 'http://124.220.46.241:8000/api/user/', // 替换为你的后端接口地址
       method: 'GET',
       header: {
         Authorization: "Bearer " + wx.getStorageSync("access_token"), // 携带用户登录时保存的 token
@@ -165,7 +165,7 @@ Page({
 
           // 调用后端接口上传头像
           wx.request({
-            url: 'http://127.0.0.1:8000/api/user/', // 替换为你的后端接口地址
+            url: 'http://124.220.46.241:8000/api/user/', // 替换为你的后端接口地址
             method: 'PUT',
             header: {
               Authorization: "Bearer " + wx.getStorageSync("access_token"), // 携带用户登录时保存的 token
@@ -227,7 +227,7 @@ Page({
 
         // 调用后端接口更新用户名
         wx.request({
-          url: 'http://127.0.0.1:8000/api/user/', // 替换为你的后端接口地址
+          url: 'http://124.220.46.241:8000/api/user/', // 替换为你的后端接口地址
           method: 'PUT',
           header: {
             Authorization: "Bearer " + wx.getStorageSync("access_token"), // 携带用户登录时保存的 token
@@ -302,7 +302,7 @@ Page({
           if (res.confirm) {
             // 用户确认后调用后端接口
             wx.request({
-              url: 'http://127.0.0.1:8000/api/user/', // 替换为你的后端接口地址
+              url: 'http://124.220.46.241:8000/api/user/', // 替换为你的后端接口地址
               method: 'DELETE',
               header: {
                 Authorization: "Bearer " + wx.getStorageSync("access_token"), // 将 Token 添加到请求头中
