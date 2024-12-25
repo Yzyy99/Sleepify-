@@ -141,40 +141,44 @@ Page({
     });
   },
   async processPosts(posts: any[]) {
-    const fetchUserPhoto = async (username: string): Promise<string> => {
+    const fetchUserInfo = async (username: string): Promise<{ avatar: string; realUsername: string }> => {
       return new Promise((resolve) => {
         wx.request({
           url: `https://124.220.46.241:443/api/otheruser/?phone_number=${username}`,
-          method: 'GET',
+          method: "GET",
           header: {
-            'Authorization': "Bearer " + wx.getStorageSync("access_token")
+            Authorization: "Bearer " + wx.getStorageSync("access_token"), // 添加用户认证
           },
           success: (res: any) => {
-            if (res.statusCode === 200 && res.data.avatar) {
-              resolve(res.data.avatar);
+            if (res.statusCode === 200 && res.data) {
+              const avatar = res.data.avatar || "../../assets/photo_default.png"; // 如果 avatar 为空则返回默认图片
+              const realUsername = res.data.username || username; // 如果真实用户名为空则使用原始 username
+              resolve({ avatar, realUsername });
             } else {
-              // 当状态码不是200或没有avatar时返回默认图片
-              resolve("../../assets/photo_default.png");
+              // 请求失败时返回默认值
+              resolve({ avatar: "../../assets/photo_default.png", realUsername: username });
             }
           },
           fail: () => {
-            // 请求失败时返回默认图片
-            resolve("../../assets/photo_default.png");
-          }
+            // 请求失败时返回默认值
+            resolve({ avatar: "../../assets/photo_default.png", realUsername: username });
+          },
         });
       });
     };
 
     const processedPosts = await Promise.all(posts.map(async (post: any) => {
       let userPhoto = "../../assets/photo_default.png";
+      let user_name = post.username;
       if (post.username && post.username.length === 11) {
-        userPhoto = await fetchUserPhoto(post.username);
+        const userInfo = await fetchUserInfo(post.username);
+        userPhoto = userInfo.avatar; // 设置头像
+        user_name = userInfo.realUsername; // 设置真实用户名
       }
-
       return {
         id: post.id,
         userphotosrc: userPhoto,
-        username: post.username,
+        username: user_name,
         content: post.content,
         time: new Date(post.created_at).toLocaleString(),
         imagenum: post.picture_count,
@@ -279,7 +283,7 @@ Page({
     // TODO: post to backend
     const id = this.data.posts[index].id;
     wx.request({
-      url: 'http://124.220.46.241:443/api/forum/like_post/',
+      url: 'https://124.220.46.241:443/api/forum/like_post/',
       method: 'POST',
       header: {
         'content-type': 'application/json',

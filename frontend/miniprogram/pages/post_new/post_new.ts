@@ -44,7 +44,9 @@ Page({
       this.setData({
         pageBackgroundColor: '#1E1E2F', // 深蓝灰背景
         textColor: '#F4F4F9', // 柔和白色文字
-        bubbleColor: '#28293E' // 深色气泡颜色
+        bubbleColor: '#28293E', // 深色气泡颜色
+        buttonBackgroundColor: '#28293E', // 按钮背景深蓝灰
+        buttonTextColor: '#FFFFFF', // 按钮文字白色
       });
       wx.setNavigationBarColor({
         frontColor: '#ffffff', // 导航栏文字白色
@@ -53,11 +55,14 @@ Page({
       wx.setTabBarStyle({
         backgroundColor: '#1E1E2F' // 导航栏背景深蓝灰
       });
+      
     } else {
       this.setData({
         pageBackgroundColor: '#f5f5dc', // 浅米色背景
         textColor: '#333', // 深灰色文字
-        bubbleColor: '#DCE4C9' // 浅色气泡颜色
+        bubbleColor: '#D3D3D3', // 浅色气泡颜色
+        buttonBackgroundColor: '#dce4c9', 
+        buttonTextColor: '#432e54', // 按钮文字深紫色
       });
       wx.setNavigationBarColor({
         frontColor: '#000000', // 导航栏文字黑色
@@ -101,6 +106,24 @@ Page({
    */
   onShareAppMessage() {
 
+  },
+
+  cancel() {
+    wx.showModal({
+      title: '提示',
+      content: '确定放弃编辑？',
+      success: (res) => {
+        if (res.confirm) {
+          // 用户点击确定，清除数据并返回上一页面
+          this.setData({
+            content: '',
+            chooseImgs: [],
+            image_full: false
+          });
+          wx.navigateBack(); // 返回上一页面
+        }
+      }
+    });
   },
 
   content_input(e: any) {

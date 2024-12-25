@@ -1,14 +1,28 @@
 /* pages/post_new/post_new.wxss */
 
-.post_new_title{
-  padding: 8px 8px 8px 8px;
+/* 上传图片样式 */
+.upload_img_item {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.upload_img_item{
-  position: relative; 
-  width: 200rpx; height: 200rpx; 
-  display: inline-block; 
-  box-sizing: border-box; left: 0rpx; top: 0rpx;
-  padding: auto;
-  margin: auto;
+.image_item {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10rpx;
+  overflow: hidden;
+}
+
+textarea {
+  font-size: 28rpx;
+  line-height: 1.5;
+}
+
+/* 修改发表按钮的阴影效果 */
+button {
+  box-shadow: 0 2rpx 5rpx rgba(0, 0, 0, 0.1);
+  margin-left: 100px;
 }
