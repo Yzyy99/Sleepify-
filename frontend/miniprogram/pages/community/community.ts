@@ -166,19 +166,43 @@ Page({
         });
       });
     };
-
+  
     const processedPosts = await Promise.all(posts.map(async (post: any) => {
       let userPhoto = "../../assets/photo_default.png";
       let user_name = post.username;
+      let originalUsername = post.username; // 保留原始的手机号
+  
+      // 处理发帖人的用户名和头像
       if (post.username && post.username.length === 11) {
         const userInfo = await fetchUserInfo(post.username);
         userPhoto = userInfo.avatar; // 设置头像
         user_name = userInfo.realUsername; // 设置真实用户名
       }
+  
+      // 处理评论中的用户名和头像
+      const processedComments = await Promise.all(post.reply_content.map(async (reply: any) => {
+        let replyUserPhoto = "../../assets/photo_default.png";
+        let replyUserName = reply.username;
+  
+        // 处理评论者的用户名和头像
+        if (reply.username && reply.username.length === 11) {
+          const replyUserInfo = await fetchUserInfo(reply.username);
+          replyUserPhoto = replyUserInfo.avatar; // 设置头像
+          replyUserName = replyUserInfo.realUsername; // 设置真实用户名
+        }
+  
+        return {
+          avatar: replyUserPhoto, // 头像
+          username: replyUserName, // 真实用户名
+          content: reply.content, // 回复内容
+        };
+      }));
+  
       return {
         id: post.id,
         userphotosrc: userPhoto,
         username: user_name,
+        originalUsername, // 新增字段，保存原始手机号
         content: post.content,
         time: new Date(post.created_at).toLocaleString(),
         imagenum: post.picture_count,
@@ -189,19 +213,16 @@ Page({
           : [],
         like: post.likes,
         commentnum: post.replies,
-        comments: post.reply_content.map((reply: any) => ({
-          username: reply.username,
-          content: reply.content,
-        })),
+        comments: processedComments, // 更新为处理后的评论
         isliked: post.isliked,
       };
     }));
-
+  
     this.setData({
       loading: false,
       posts: processedPosts
     });
-  },
+  },  
 
   themeCommunity() {
 
