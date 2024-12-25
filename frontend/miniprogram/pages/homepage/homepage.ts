@@ -12,6 +12,32 @@ Page({
       isDarkMode: app.globalData.isDarkMode
     });
     theme.applyTheme(this);  // 应用主题
+    if (wx.getStorageSync('access_token')) {
+      wx.request({
+        url: 'https://124.220.46.241:443/api/user/',
+        method: 'GET',
+        header: {
+          Authorization: "Bearer " + wx.getStorageSync("access_token"), // 携带用户登录时保存的 token
+        },
+        success: (res: any) => {
+          wx.showToast({
+            title: '自动登录',
+            icon: 'error',
+            duration: 500
+          });
+          wx.switchTab({
+            url: '/pages/index/index',
+          });
+        },
+        fail: (err) => {
+          wx.showToast({
+            title: '登录状态失效',
+            icon: 'error',
+            duration: 500
+          });
+        }
+      });
+    }
   },
 
   onToggleDarkMode(e: any) {
