@@ -1,5 +1,5 @@
 <!--pages/community/community.wxml-->
-<view style="font-size: 28px; padding: 20px; background-color: {{pageBackgroundColor}}; color:{{titleColor}};">发帖列表</view>
+<view style="font-size: 28px; padding: 20px; background-color: {{pageBackgroundColor}}; color:{{titleColor}};">社区</view>
 <view class="post_list" style="background:{{pageBackgroundColor}};">
 <view class="loading_box" style="display:{{loading ? 'display' : 'none'}};">
   <text style="color:{{titleColor}};">加载中...</text>
