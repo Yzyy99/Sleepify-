@@ -14,7 +14,7 @@ Page({
     theme.applyTheme(this);  // 应用主题
     if (wx.getStorageSync('access_token')) {
       wx.request({
-        url: 'https://124.220.46.241:443/api/user/',
+        url: 'https://sleepify.top:8000/api/user/',
         method: 'GET',
         header: {
           Authorization: "Bearer " + wx.getStorageSync("access_token"), // 携带用户登录时保存的 token

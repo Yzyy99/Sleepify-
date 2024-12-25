@@ -54,7 +54,7 @@ Page({
   onLoad() {
     // 获取用户信息
     wx.request({
-      url: 'https://124.220.46.241:443/api/user/',
+      url: 'https://sleepify.top:8000/api/user/',
       method: 'GET',
       header: {
         Authorization: "Bearer " + wx.getStorageSync("access_token"), // 携带用户登录时保存的 token
@@ -165,7 +165,7 @@ Page({
 
           // 调用后端接口上传头像
           wx.request({
-            url: 'https://124.220.46.241:443/api/user/', 
+            url: 'https://sleepify.top:8000/api/user/', 
             method: 'PUT',
             header: {
               Authorization: "Bearer " + wx.getStorageSync("access_token"), // 携带用户登录时保存的 token
@@ -227,7 +227,7 @@ Page({
 
         // 调用后端接口更新用户名
         wx.request({
-          url: 'https://124.220.46.241:443/api/user/', 
+          url: 'https://sleepify.top:8000/api/user/', 
           method: 'PUT',
           header: {
             Authorization: "Bearer " + wx.getStorageSync("access_token"), // 携带用户登录时保存的 token
@@ -302,7 +302,7 @@ Page({
           if (res.confirm) {
             // 用户确认后调用后端接口
             wx.request({
-              url: 'https://124.220.46.241:443/api/user/', 
+              url: 'https://sleepify.top:8000/api/user/', 
               method: 'DELETE',
               header: {
                 Authorization: "Bearer " + wx.getStorageSync("access_token"), // 将 Token 添加到请求头中

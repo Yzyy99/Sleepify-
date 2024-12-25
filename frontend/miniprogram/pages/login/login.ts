@@ -58,7 +58,7 @@ Page({
     }
 
     wx.request({
-      url: 'https://124.220.46.241:443/api/login/',
+      url: 'https://sleepify.top:8000/api/login/',
       method: 'POST',
       data: {
         phone_number: phoneNumber,

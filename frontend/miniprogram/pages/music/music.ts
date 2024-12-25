@@ -60,7 +60,7 @@ Page({
   
     // 调用后端接口获取音乐文件流
     wx.request({
-      url: `https://124.220.46.241:443/api/music/`, // 后端接口地址
+      url: `https://sleepify.top:8000/api/music/`, // 后端接口地址
       method: 'GET',
       data: { name: selectedMusicName }, // 传递音乐文件名
       responseType: 'arraybuffer', // 请求响应类型为文件流

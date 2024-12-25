@@ -96,7 +96,7 @@ Page({
 
   fetchDefaultPosts() {
     wx.request({
-      url: "https://124.220.46.241:443/api/forum/posts/", // 默认推荐接口
+      url: "https://sleepify.top:8000/api/forum/posts/", // 默认推荐接口
       method: "POST",
       header: {
         "content-type": "application/json",
@@ -121,7 +121,7 @@ Page({
    */
   fetchPersonalizedPosts() {
     wx.request({
-      url: "https://124.220.46.241:443/api/forum/similarity_posts/", // 个性化推荐接口
+      url: "https://sleepify.top:8000/api/forum/similarity_posts/", // 个性化推荐接口
       method: "POST",
       header: {
         "content-type": "application/json",
@@ -144,7 +144,7 @@ Page({
     const fetchUserInfo = async (username: string): Promise<{ avatar: string; realUsername: string }> => {
       return new Promise((resolve) => {
         wx.request({
-          url: `https://124.220.46.241:443/api/otheruser/?phone_number=${username}`,
+          url: `https://sleepify.top:8000/api/otheruser/?phone_number=${username}`,
           method: "GET",
           header: {
             Authorization: "Bearer " + wx.getStorageSync("access_token"), // 添加用户认证
@@ -208,7 +208,7 @@ Page({
         imagenum: post.picture_count,
         images: post.picture_names
           ? post.picture_names.map(
-            (name: string) => `https://124.220.46.241:443/static/media/forum_pictures/${name}`
+            (name: string) => `https://www.sleepify.top/static/media/forum_pictures/${name}`
           )
           : [],
         like: post.likes,
@@ -304,7 +304,7 @@ Page({
     // TODO: post to backend
     const id = this.data.posts[index].id;
     wx.request({
-      url: 'https://124.220.46.241:443/api/forum/like_post/',
+      url: 'https://sleepify.top:8000/api/forum/like_post/',
       method: 'POST',
       header: {
         'content-type': 'application/json',
@@ -345,7 +345,7 @@ Page({
     console.log("send to " + index + ": " + this.data.comment_value);
     const id = this.data.posts[index].id;
     wx.request({
-      url: 'https://124.220.46.241:443/api/forum/reply_post/',
+      url: 'https://sleepify.top:8000/api/forum/reply_post/',
       method: 'POST',
       header: {
         'content-type': 'application/json',
@@ -390,7 +390,7 @@ Page({
     console.log("delete " + index);
     const id = this.data.posts[index].id;
     wx.request({
-      url: 'https://124.220.46.241:443/api/forum/delete_post/',
+      url: 'https://sleepify.top:8000/api/forum/delete_post/',
       method: 'POST',
       header: {
         'content-type': 'application/json',
