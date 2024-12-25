@@ -13,7 +13,7 @@
     <view class="post_user_name" style="flex:2" color="{{titleColor}}">
       <text style="color: {{titleColor}};">{{item.username}}</text>
     </view>
-    <view class="post_time" style="flex: 3">
+    <view class="post_time" style="flex: 3;color:{{textColor}};">
       <text>{{item.time}}</text>
     </view>
     </view>
@@ -25,7 +25,7 @@
         <image src="{{item}}" style="width: 150px; height: 150px; object-fit: cover;"></image>
       </view>
     </view>
-    <view class="post_action">
+    <view class="post_action" style="flex:2;color:{{textColor}}">
       <view class="post_like" bindtap="like_post" data-index="{{index}}">
         <image style="height:15px; width:15px;" src="{{isDarkMode ? (item.isliked ? '../../assets/thumbfill_night.png' : '../../assets/thumb_night.png') : (item.isliked ? '../../assets/thumb-up-fill.png' : '../../assets/thumb-up-line.png')}}"/><text  style="color: {{titleColor}};">  {{item.like}}</text>
       </view>

@@ -123,7 +123,7 @@
     <text style="color: {{titleColor}}">专属睡眠报告</text>
   </view>
   <view class="recommendation">
-    <text wx:if="{{report}}" class="report-text">{{report}}</text>
+    <text wx:if="{{report}}" class="report-text" style="color: {{textColor}};">{{report}}</text>
     <button 
       class="report-button"
       style="font-size: 14px; color: #444444; background-color: {{highlightColor}}; margin-top: 20px;" 

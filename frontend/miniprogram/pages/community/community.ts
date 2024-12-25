@@ -140,7 +140,6 @@ Page({
       },
     });
   },
-
   async processPosts(posts: any[]) {
     const fetchUserPhoto = async (username: string): Promise<string> => {
       return new Promise((resolve) => {
@@ -280,7 +279,7 @@ Page({
     // TODO: post to backend
     const id = this.data.posts[index].id;
     wx.request({
-      url: 'https://124.220.46.241:443/api/forum/like_post/',
+      url: 'http://124.220.46.241:8000/api/forum/like_post/',
       method: 'POST',
       header: {
         'content-type': 'application/json',
