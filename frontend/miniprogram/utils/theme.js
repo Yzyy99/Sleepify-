@@ -4,13 +4,42 @@ function applyTheme(pageInstance) {
 
   if (isDarkMode) {
     // 设置夜间模式的导航栏颜色和页面样式
+    console.log('夜间模式');
     wx.setNavigationBarColor({
       frontColor: '#ffffff', // 导航栏文字白色
       backgroundColor: '#1E1E2F' // 导航栏背景深蓝灰
     });
     wx.setTabBarStyle({
-      backgroundColor: '#1E1E2F' // 导航栏背景深蓝灰
+      backgroundColor: '#1E1E2F', // 导航栏背景深蓝灰
+      color: '#AAAAAA', // 导航栏文字白色
+      selectedColor: '#F4F4F9', // 导航栏文字白色
+      borderStyle: 'white', // 导航栏底线白色
     });
+    wx.setTabBarItem({
+      index: 0,
+      iconPath: 'assets/nightbar/home-3-line.png',
+      selectedIconPath: 'assets/nightbar/home-3-fill.png',
+    })
+    wx.setTabBarItem({
+      index: 1,
+      iconPath: 'assets/nightbar/discuss-line.png',
+      selectedIconPath: 'assets/nightbar/discuss-fill.png',
+    })
+    wx.setTabBarItem({
+      index: 2,
+      iconPath: 'assets/nightbar/file-add-line.png',
+      selectedIconPath: 'assets/nightbar/file-add-fill.png',
+    })
+    wx.setTabBarItem({
+      index: 3,
+      iconPath: 'assets/nightbar/file-chart-line.png',
+      selectedIconPath: 'assets/nightbar/file-chart-fill.png',
+    })
+    wx.setTabBarItem({
+      index: 4,
+      iconPath: 'assets/nightbar/account-box-line.png',
+      selectedIconPath: 'assets/nightbar/account-box-fill.png',
+    })
     pageInstance.setData({
       pageBackgroundColor: '#1E1E2F', // 页面背景深蓝灰
       textColor: '#F4F4F9', // 页面文字白色
@@ -29,7 +58,35 @@ function applyTheme(pageInstance) {
       backgroundColor: '#f5f5dc' // 导航栏背景浅米色
     });
     wx.setTabBarStyle({
-      backgroundColor:'#f5f5dc'
+      backgroundColor: '#f5f5dc',
+      color: '#a9b7b7',
+      selectedColor: '#222222',
+      borderStyle: 'white',
+    });
+    wx.setTabBarItem({
+      index: 0,
+      iconPath: 'assets/home-3-line.png',
+      selectedIconPath: 'assets/home-3-fill.png',
+    })
+    wx.setTabBarItem({
+      index: 1,
+      iconPath: 'assets/discuss-line.png',
+      selectedIconPath: 'assets/discuss-fill.png',
+    })
+    wx.setTabBarItem({
+      index: 2,
+      iconPath: 'assets/file-add-line.png',
+      selectedIconPath: 'assets/file-add-fill.png',
+    })
+    wx.setTabBarItem({
+      index: 3,
+      iconPath: 'assets/file-chart-line.png',
+      selectedIconPath: 'assets/file-chart-fill.png',
+    })
+    wx.setTabBarItem({
+      index: 4,
+      iconPath: 'assets/account-box-line.png',
+      selectedIconPath: 'assets/account-box-fill.png',
     })
     pageInstance.setData({
       pageBackgroundColor: '#f5f5dc', // 页面背景浅米色
