@@ -50,6 +50,13 @@ Page({
     if (this.data.currentAudio) {
       this.data.currentAudio.stop();
     }
+
+    // 更新状态为“加载中”
+    this.setData({
+      currentStatus: '加载中',
+      isPlaying: false,
+      isPaused: false
+    });
   
     // 调用后端接口获取音乐文件流
     wx.request({
