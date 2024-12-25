@@ -1,5 +1,5 @@
 // pages/community/community.ts\
-const app4=getApp();
+const app4 = getApp();
 Page({
 
   /**
@@ -9,9 +9,10 @@ Page({
     isDarkMode: app4.globalData.isDarkMode, // 是否夜间模式
     replynow: -1,
     comment_value: "",
+    loading: true,
     posts: [
     ] as Array<{ [key: string]: any }>,
-    personalizedRecommendation : false,
+    personalizedRecommendation: false,
   },
 
   /**
@@ -78,10 +79,10 @@ Page({
   onShow() {
     console.log("社区页面 onShow 被触发");
     const personalizedRecommendation = wx.getStorageSync("personalizedRecommendation") || false;
-  console.log("页面显示时个性化推荐状态:", personalizedRecommendation); // 打印状态
+    console.log("页面显示时个性化推荐状态:", personalizedRecommendation); // 打印状态
     this.setData({ personalizedRecommendation });
-    this.loadPosts(); 
-    this.themeCommunity(); 
+    this.loadPosts();
+    this.themeCommunity();
   },
 
   loadPosts() {
@@ -101,7 +102,7 @@ Page({
         "content-type": "application/json",
         Authorization: "Bearer " + wx.getStorageSync("access_token"),
       },
-      success: async(res) => {
+      success: async (res) => {
         if (res.statusCode === 200) {
           const datan = Array.isArray(res.data) ? res.data : [];
           await this.processPosts(datan); // 处理帖子数据
@@ -126,7 +127,7 @@ Page({
         "content-type": "application/json",
         Authorization: "Bearer " + wx.getStorageSync("access_token"),
       },
-      success: async(res) => {
+      success: async (res) => {
         if (res.statusCode === 200) {
           const datan = Array.isArray(res.data) ? res.data : [];
           await this.processPosts(datan); // 处理帖子数据
@@ -164,7 +165,7 @@ Page({
         });
       });
     };
-  
+
     const processedPosts = await Promise.all(posts.map(async (post: any) => {
       let userPhoto = "../../assets/photo_default.png";
       if (post.username && post.username.length === 11) {
@@ -180,8 +181,8 @@ Page({
         imagenum: post.picture_count,
         images: post.picture_names
           ? post.picture_names.map(
-              (name: string) => `https://124.220.46.241:443/static/media/forum_pictures/${name}`
-            )
+            (name: string) => `https://124.220.46.241:443/static/media/forum_pictures/${name}`
+          )
           : [],
         like: post.likes,
         commentnum: post.replies,
@@ -192,12 +193,15 @@ Page({
         isliked: post.isliked,
       };
     }));
-  
-    this.setData({ posts: processedPosts });
+
+    this.setData({
+      loading: false,
+      posts: processedPosts
+    });
   },
 
   themeCommunity() {
-    
+
     const app = getApp();  // 获取全局小程序实例
     this.setData({
       isDarkMode: app.globalData.isDarkMode
@@ -232,7 +236,7 @@ Page({
         backgroundColor: '#f5f5dc' // 导航栏背景浅米色
       });
       wx.setTabBarStyle({
-        backgroundColor:'#f5f5dc'
+        backgroundColor: '#f5f5dc'
       })
     }
   },
