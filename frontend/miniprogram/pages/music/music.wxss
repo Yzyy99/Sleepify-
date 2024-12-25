@@ -36,13 +36,14 @@
 /* 每一节的容器 */
 .section {
   margin-bottom: 100rpx;
+  margin-left: 15rpx;
 }
 
 .section-title {
   font-size: 36rpx;
   font-weight: bold;
   color: #333;
-  margin-bottom: 50rpx;
+  margin-bottom: 60rpx;
 }
 
 /* 最近播放和歌单推荐的图片行 */
@@ -61,6 +62,7 @@
 
 /* 图片样式 */
 .grid-image {
+  margin-left: 10rpx;
   width: 200rpx;
   height: 200rpx;
   border-radius: 20rpx;
@@ -74,34 +76,40 @@
   margin-right: 55rpx; /* 调整图片之间的间隔 */
   margin-top: 20rpx;
 }
-
 /* 播放器控制栏 */
 .player-bar {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  padding: 20rpx;
+  padding: 20rpx 30rpx; /* 调整内边距 */
   background-color: #fff; /* 默认背景白色 */
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start; /* 子元素顶部对齐 */
+  justify-content: space-between; /* 左右对齐 */
+  align-items: center; /* 子元素垂直居中 */
   border-radius: 10rpx 10rpx 0 0;
   box-shadow: 0 -10rpx 20rpx rgba(0, 0, 0, 0.1);
 }
 
 /* 播放器文字 */
 .player-text {
-  margin-top: -22rpx;
+  flex-grow: 1; /* 左侧文字占据更多空间 */
   font-size: 32rpx;
   color: #333; /* 默认文字深灰色 */
+  line-height: 1; /* 确保文字垂直居中 */
+  margin-bottom: 25rpx; /* 去除外边距 */
+  margin-left: 30rpx;
 }
 
 /* 按钮样式 */
-button {
-  font-size: 28rpx;
-  border: none;
-  background: none;
+.player-button {
+  font-size: 32rpx; /* 调整按钮文字大小 */
+  border: none; /* 移除边框 */
+  background: none; /* 移除背景色 */
   cursor: pointer;
+  padding: 20rpx; /* 移除按钮默认内边距 */
+  line-height: 1; /* 确保按钮文字垂直居中 */
+  height: auto; /* 自动高度 */
+  margin-left: -20rpx;
+  text-align: left;
 }
-
