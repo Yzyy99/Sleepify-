@@ -36,7 +36,7 @@
 /* 每一节的容器 */
 .section {
   margin-bottom: 100rpx;
-  margin-left: 15rpx;
+  margin-left: 20rpx;
 }
 
 .section-title {
@@ -58,6 +58,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 10rpx;
+  margin-left: 20rpx;
 }
 
 /* 图片样式 */
