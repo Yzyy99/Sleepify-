@@ -1,14 +1,14 @@
 <view class="container" style="background-color: {{pageBackgroundColor}}; color: {{textColor}};">
   <!-- 返回按钮和标题 -->
-  <view class="header">
+  <view class="header" >
     <navigator url="/pages/index/index" class="back-btn"></navigator>
-    <text class="title">音乐</text>
+    <text class="title"style="color:{{textColor}}">音乐</text>
     <view class="home-btn">🏠</view>
   </view>
 
   <!-- 最近播放 -->
   <view class="section">
-    <text class="section-title">最近播放</text>
+    <text class="section-title"style="color:{{textColor}}">最近播放</text>
     <view class="image-row">
       <block wx:for="{{recentPlayList}}" wx:key="index">
         <image src="{{item.src}}" class="grid-image" data-index="{{index}}" data-type="recent" bindtap="onImageTap" />
@@ -18,7 +18,7 @@
 
   <!-- 歌单推荐 -->
   <view class="section">
-    <text class="section-title">歌单推荐</text>
+    <text class="section-title"style="color:{{textColor}}">歌单推荐</text>
     <view class="image-grid">
       <block wx:for="{{recommendedPlayList}}" wx:key="index">
         <view class="grid-item">

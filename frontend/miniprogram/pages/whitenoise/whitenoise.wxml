@@ -1,11 +1,11 @@
 <view class="container" style="background-color: {{pageBackgroundColor}}; color: {{textColor}};">
 <!-- 页面标题 -->
 <view class="main-title">
-    <text class="main-title-text">白噪音</text>
+    <text class="main-title-text"style="color:{{textColor}}">白噪音</text>
   </view>
   <!-- 第一行：雨幕轻吟 -->
   <view class="section">
-    <text class="section-title">雨幕轻吟</text>
+    <text class="section-title"style="color:{{textColor}}">雨幕轻吟</text>
     <view class="image-row">
       <image src="{{imageList[0].src}}" class="grid-image" data-index="0" bindtap="onImageTap" />
       <image src="{{imageList[1].src}}" class="grid-image" data-index="1" bindtap="onImageTap" />
@@ -15,7 +15,7 @@
 
   <!-- 第二行：炉火低语 -->
   <view class="section">
-    <text class="section-title">炉火低语</text>
+    <text class="section-title"style="color:{{textColor}}">炉火低语</text>
     <view class="image-row">
       <image src="{{imageList[3].src}}" class="grid-image" data-index="3" bindtap="onImageTap" />
       <image src="{{imageList[4].src}}" class="grid-image" data-index="4" bindtap="onImageTap" />
@@ -25,7 +25,7 @@
 
   <!-- 第三行：风驰鸣响 -->
   <view class="section">
-    <text class="section-title">风驰鸣响</text>
+    <text class="section-title"style="color:{{textColor}}">风驰鸣响</text>
     <view class="image-row">
       <image src="{{imageList[6].src}}" class="grid-image" data-index="6" bindtap="onImageTap" />
       <image src="{{imageList[7].src}}" class="grid-image" data-index="7" bindtap="onImageTap" />
