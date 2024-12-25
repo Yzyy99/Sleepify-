@@ -1,5 +1,5 @@
 <!--pages/community/community.wxml-->
-<view style="font-size: 28px; padding: 20px; background-color: {{pageBackgroundColor}}; color:{{textColor}};">发帖列表</view>
+<view style="font-size: 28px; padding: 20px; background-color: {{pageBackgroundColor}}; color:{{titleColor}};">发帖列表</view>
 <view class="post_list" style="background:{{pageBackgroundColor}};">
 <view class="post_box" wx:for="{{posts}}" wx:key="index">
   <view class="post_user_photo">
@@ -7,15 +7,15 @@
   </view>
   <view class="post_main">
     <view class="post_head" style="display: flex; flex-direction: row;">
-    <view class="post_user_name" style="flex:2" color="{{textColor}}">
-      <text>{{item.username}}</text>
+    <view class="post_user_name" style="flex:2" color="{{titleColor}}">
+      <text style="color: {{titleColor}};">{{item.username}}</text>
     </view>
     <view class="post_time" style="flex: 3">
       <text>{{item.time}}</text>
     </view>
     </view>
     <view class="post_content">
-      <text>{{item.content}}</text>
+      <text style="color: {{textColor}};">{{item.content}}</text>
     </view>
     <view class="post_image_box" style="display:{{item.imagenum == 0 ? 'none' : 'display'}}; margin-top: 10px">
       <view class="post_image_item" wx:for="{{item.images}}" wx:key="index">
@@ -24,10 +24,10 @@
     </view>
     <view class="post_action">
       <view class="post_like" bindtap="like_post" data-index="{{index}}">
-        <image style="height:15px; width:15px;" src="{{item.isliked ? '../../assets/thumb-up-fill.png' : '../../assets/thumb-up-line.png'}}"/><text>  {{item.like}}</text>
+        <image style="height:15px; width:15px;" src="{{isDarkMode ? (item.isliked ? '../../assets/thumbfill_night.png' : '../../assets/thumb_night.png') : (item.isliked ? '../../assets/thumb-up-fill.png' : '../../assets/thumb-up-line.png')}}"/><text style="color: {{titleColor}};>  {{item.like}}</text>
       </view>
       <view class="post_comment" bindtap="comment_post" data-index="{{index}}">
-        <image style="height:15px; width:15px" src="../../assets/message-3-line.png"/><text>  {{item.commentnum}}</text>
+        <image style="height:15px; width:15px" src="{{isDarkMode ? '../../assets/discuss_night.png' : '../../assets/message-3-line.png'}}"/><text  style="color: {{titleColor}};>  {{item.commentnum}}</text>
       </view>
       <view class="post_delete" bindtap="delete_post" data-index="{{index}}" style="display:{{item.username==phone_number ? 'display' : 'none'}};">
         <image style="height:15px; width:15px" src="../../assets/delete-bin-2-line.png"/>
@@ -37,9 +37,9 @@
     <input class="post_comment_input" bindinput="get_comment_value"/>
     <button class="post_comment_send" bindtap="send_comment" data-index="{{index}}">✔</button>
     </view>
-    <view class="post_comment_box" style="display:{{item.commentnum == 0 ? 'none' : 'display'}};">
+    <view class="post_comment_box" style="display:{{item.commentnum == 0 ? 'none' : 'display'}}; background-color: {{commentColor}};">
       <view class="post_comment_item" wx:for="{{item.comments}}" wx:key="index">
-        <text style="color: {{textColor}};">{{item.username}}: </text>
+        <text style="color: {{titleColor}};">{{item.username}}: </text>
         <text style="color: {{textColor}};">{{item.content}}</text>
       </view>
     </view>

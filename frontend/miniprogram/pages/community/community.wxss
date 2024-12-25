@@ -71,7 +71,6 @@
 }
 
 .post_comment_box{
-  background-color: #E5E5CC;
   margin-top: 3px;
   padding: 3px;
 }

@@ -207,8 +207,10 @@ Page({
     if (isDarkMode) {
       this.setData({
         pageBackgroundColor: '#1E1E2F', // 深蓝灰背景
-        textColor: '#F4F4F9', // 柔和白色文字
-        bubbleColor: '#28293E' // 深色气泡颜色
+        textColor: "#E4E4E9",
+        titleColor: '#F4F4F9', // 柔和白色文字
+        bubbleColor: '#28293E', // 深色气泡颜色
+        commentColor: "#28293E"
       });
       wx.setNavigationBarColor({
         frontColor: '#ffffff', // 导航栏文字白色
@@ -220,8 +222,10 @@ Page({
     } else {
       this.setData({
         pageBackgroundColor: '#f5f5dc', // 浅米色背景
-        textColor: '#333', // 深灰色文字
-        bubbleColor: '#DCE4C9' // 浅色气泡颜色
+        textColor: "#444",
+        titleColor: '#333', // 深灰色文字
+        bubbleColor: '#DCE4C9', // 浅色气泡颜色
+        commentColor: "#E5E5CC"
       });
       wx.setNavigationBarColor({
         frontColor: '#000000', // 导航栏文字黑色
